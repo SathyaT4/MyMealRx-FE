@@ -1,0 +1,142 @@
+[
+  {
+    "recipe-ids": {
+      "example-recipe-id": {
+        "recipe_name": "Classic Pancakes",
+        "food_role": [
+          "Breakfast"
+        ],
+        "ingredients": [
+          {
+            "name": "Flour",
+            "quantity": {
+              "measure": "1 cup",
+              "unit": ""
+            },
+            "allergies": {
+              "id": "4",
+              "category": "Gluten",
+              "ref": "",
+              "details": "Contains gluten, which can cause allergies."
+            },
+            "alternative": "",
+            "quality_characteristic": "",
+            "image": ""
+          },
+          {
+            "name": "Milk",
+            "quantity": {
+              "measure": "1 cup",
+              "unit": ""
+            },
+            "allergies": {
+              "id": "1",
+              "category": "Dairy",
+              "ref": "",
+              "details": "Contains milk, which is a common allergen."
+            },
+            "alternative": "",
+            "quality_characteristic": "",
+            "image": ""
+          },
+          {
+            "name": "Egg",
+            "quantity": {
+              "measure": "1",
+              "unit": ""
+            },
+            "allergies": {
+              "id": "2",
+              "category": "Eggs",
+              "ref": "",
+              "details": "Contains eggs, which are a common allergen."
+            },
+            "alternative": "",
+            "quality_characteristic": "",
+            "image": ""
+          },
+          {
+            "name": "Sugar",
+            "quantity": {
+              "measure": "2 tablespoons",
+              "unit": ""
+            },
+            "allergies": {
+              "id": "",
+              "category": "",
+              "ref": "",
+              "details": ""
+            },
+            "alternative": "",
+            "quality_characteristic": "",
+            "image": ""
+          },
+          {
+            "name": "Baking Powder",
+            "quantity": {
+              "measure": "2 teaspoons",
+              "unit": ""
+            },
+            "allergies": {
+              "id": "",
+              "category": "",
+              "ref": "",
+              "details": ""
+            },
+            "alternative": "",
+            "quality_characteristic": "",
+            "image": ""
+          },
+          {
+            "name": "Salt",
+            "quantity": {
+              "measure": "1/4 teaspoon",
+              "unit": ""
+            },
+            "allergies": {
+              "id": "",
+              "category": "",
+              "ref": "",
+              "details": ""
+            },
+            "alternative": "",
+            "quality_characteristic": "",
+            "image": ""
+          },
+          {
+            "name": "Butter",
+            "quantity": {
+              "measure": "2 tablespoons",
+              "unit": ""
+            },
+            "allergies": {
+              "id": "3",
+              "category": "Dairy",
+              "ref": "",
+              "details": "Contains butter, which is a dairy product."
+            },
+            "alternative": "",
+            "quality_characteristic": "",
+            "image": ""
+          },
+          {
+            "name": "Vanilla Extract",
+            "quantity": {
+              "measure": "1 teaspoon",
+              "unit": ""
+            },
+            "allergies": {
+              "id": "",
+              "category": "",
+              "ref": "",
+              "details": ""
+            },
+            "alternative": "",
+            "quality_characteristic": "",
+            "image": ""
+          }
+        ]
+      }
+    }
+  }
+]

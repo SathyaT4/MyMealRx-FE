@@ -1,0 +1,355 @@
+Converted Format:
+
+```
+{
+    "recipe-ids": {
+        "66c5977954ebcb54f1ceacf4": {
+            "recipe_name": "Chicken Tikka Masala",
+            "food_role": [
+                "Dinner"
+            ],
+            "ingredients": [
+                {
+                    "name": "Chicken Breast",
+                    "quantity": {
+                        "measure": "200g",
+                        "unit": "cubed"
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Yogurt",
+                    "quantity": {
+                        "measure": "1/2 cup",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "Dairy",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "Non-dairy yogurt",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Tomato Sauce",
+                    "quantity": {
+                        "measure": "1 cup",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Cream",
+                    "quantity": {
+                        "measure": "1/4 cup",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "Dairy",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "Non-dairy cream",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Garam Masala",
+                    "quantity": {
+                        "measure": "1 tsp",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Ginger",
+                    "quantity": {
+                        "measure": "1 tsp",
+                        "unit": "grated"
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "Ginger powder",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Garlic",
+                    "quantity": {
+                        "measure": "2 cloves",
+                        "unit": "minced"
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "Garlic powder",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Turmeric",
+                    "quantity": {
+                        "measure": "1/2 tsp",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Cumin",
+                    "quantity": {
+                        "measure": "1/2 tsp",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Coriander",
+                    "quantity": {
+                        "measure": "1/2 tsp",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Cilantro",
+                    "quantity": {
+                        "measure": "for garnish",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "Parsley",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Vegetable Oil",
+                    "quantity": {
+                        "measure": "2 tbsp",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "Olive oil",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Salt",
+                    "quantity": {
+                        "measure": "to taste",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                }
+            ],
+            "hasDairy": true,
+            "hasMeat": true,
+            "hasNuts": false,
+            "prep_time": "",
+            "cook_time": "",
+            "total_time": "",
+            "serves": "",
+            "instructions": [
+                {
+                    "original_text": "1. Marinate chicken with yogurt, garam masala, ginger, garlic, turmeric, cumin, and salt for at least 1 hour.",
+                    "input_condition": [],
+                    "task": [
+                        {
+                            "action_name": "Marinate Chicken",
+                            "output_quality": [
+                                "Chicken should be well coated with marinade."
+                            ],
+                            "background_knowledge": {
+                                "tool": [],
+                                "failure": [
+                                    "Inadequate marination"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                },
+                {
+                    "original_text": "2. Heat oil in a pan and cook chicken until browned. Remove and set aside.",
+                    "input_condition": [],
+                    "task": [
+                        {
+                            "action_name": "Cook Chicken",
+                            "output_quality": [
+                                "Chicken should be browned and cooked through."
+                            ],
+                            "background_knowledge": {
+                                "tool": [],
+                                "failure": [
+                                    "Undercooking or overcooking"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                },
+                {
+                    "original_text": "3. In the same pan, add tomato sauce and cook for 5 minutes.",
+                    "input_condition": [],
+                    "task": [
+                        {
+                            "action_name": "Cook Tomato Sauce",
+                            "output_quality": [
+                                "Tomato sauce should be heated and mixed with pan drippings."
+                            ],
+                            "background_knowledge": {
+                                "tool": [],
+                                "failure": [
+                                    "Overcooking"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                },
+                {
+                    "original_text": "4. Add cream and cooked chicken. Simmer for 10 minutes.",
+                    "input_condition": [],
+                    "task": [
+                        {
+                            "action_name": "Simmer Chicken",
+                            "output_quality": [
+                                "Chicken and cream mixture should be well incorporated and heated through."
+                            ],
+                            "background_knowledge": {
+                                "tool": [],
+                                "failure": [
+                                    "Undercooking or overcooking"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                },
+                {
+                    "original_text": "5. Garnish with cilantro and serve with rice or naan.",
+                    "input_condition": [],
+                    "task": [
+                        {
+                            "action_name": "Garnish and Serve",
+                            "output_quality": [
+                                "Chicken Tikka Masala should be topped with fresh cilantro and ready to serve."
+                            ],
+                            "background_knowledge": {
+                                "tool": [],
+                                "failure": [
+                                    "Missing garnish"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                }
+            ],
+            "allergens": [
+                "Dairy"
+            ],
+            "notes": [
+                "Adjust seasoning according to taste.",
+                "Top with additional garnishes for enhanced flavor."
+            ]
+        }
+    }
+}
+```

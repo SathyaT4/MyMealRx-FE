@@ -1,0 +1,276 @@
+Converted Recipe Data:
+
+```
+{
+    "recipe-ids": {
+        "66c5977954ebcb54f1ceacf5": {
+            "recipe_name": "Sushi Rolls",
+            "food_role": [
+                "Lunch"
+            ],
+            "ingredients": [
+                {
+                    "name": "Sushi Rice",
+                    "quantity": {
+                        "measure": "1 cup",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Nori Sheets",
+                    "quantity": {
+                        "measure": "4",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Cucumber",
+                    "quantity": {
+                        "measure": "1",
+                        "unit": "julienned"
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Avocado",
+                    "quantity": {
+                        "measure": "1",
+                        "unit": "sliced"
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Imitation Crab",
+                    "quantity": {
+                        "measure": "100g",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "Seafood",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Soy Sauce",
+                    "quantity": {
+                        "measure": "for dipping",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "Soy",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Wasabi",
+                    "quantity": {
+                        "measure": "for dipping",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Pickled Ginger",
+                    "quantity": {
+                        "measure": "for serving",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                }
+            ],
+            "hasDairy": false,
+            "hasMeat": true,
+            "hasNuts": false,
+            "prep_time": "",
+            "cook_time": "",
+            "total_time": "",
+            "serves": "",
+            "instructions": [
+                {
+                    "original_text": "1. Cook sushi rice according to package instructions and let cool.",
+                    "input_condition": [],
+                    "task": [
+                        {
+                            "action_name": "Cook sushi rice",
+                            "output_quality": [
+                                "Rice should be fully cooked and cool."
+                            ],
+                            "background_knowledge": {
+                                "tool": [],
+                                "failure": [
+                                    "Inadequate cooking or cooling"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                },
+                {
+                    "original_text": "2. Place a nori sheet on a bamboo mat. Spread a thin layer of rice on top.",
+                    "input_condition": [],
+                    "task": [
+                        {
+                            "action_name": "Prepare nori sheet",
+                            "output_quality": [
+                                "Nori sheet should have a thin layer of rice on it."
+                            ],
+                            "background_knowledge": {
+                                "tool": [],
+                                "failure": [
+                                    "Applying too much or too little rice"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                },
+                {
+                    "original_text": "3. Arrange cucumber, avocado, and imitation crab in a line across the rice.",
+                    "input_condition": [],
+                    "task": [
+                        {
+                            "action_name": "Arrange ingredients",
+                            "output_quality": [
+                                "Ingredients should be evenly arranged across the rice."
+                            ],
+                            "background_knowledge": {
+                                "tool": [],
+                                "failure": [
+                                    "Inadequate arrangement"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                },
+                {
+                    "original_text": "4. Roll up the nori tightly using the bamboo mat.",
+                    "input_condition": [],
+                    "task": [
+                        {
+                            "action_name": "Roll sushi",
+                            "output_quality": [
+                                "Sushi roll should be tight and even."
+                            ],
+                            "background_knowledge": {
+                                "tool": [],
+                                "failure": [
+                                    "Inadequate tightness or evenness"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                },
+                {
+                    "original_text": "5. Slice into bite-sized pieces and serve with soy sauce, wasabi, and pickled ginger.",
+                    "input_condition": [],
+                    "task": [
+                        {
+                            "action_name": "Serve sushi",
+                            "output_quality": [
+                                "Sushi should be served bite-sized pieces with soy sauce, wasabi, and pickled ginger."
+                            ],
+                            "background_knowledge": {
+                                "tool": [],
+                                "failure": [
+                                    "Inadequate slicing or serving"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                }
+            ],
+            "allergens": [
+                "Seafood",
+                "Soy"
+            ],
+            "notes": [
+                "Adjust seasoning according to taste.",
+                "Top with additional garnishes for enhanced flavor."
+            ]
+        }
+    }
+}
+```

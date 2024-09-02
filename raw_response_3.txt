@@ -1,0 +1,206 @@
+Converted Recipe (only one allergen "Soy" is mentioned in the original data):
+
+```
+{
+    "recipe-ids": {
+        "66c5977954ebcb54f1ceacf6": {
+            "recipe_name": "Beef Bulgogi",
+            "food_role": [
+                "Dinner"
+            ],
+            "ingredients": [
+                {
+                    "name": "Beef",
+                    "quantity": {
+                        "measure": "200g",
+                        "unit": "thinly sliced"
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Soy Sauce",
+                    "quantity": {
+                        "measure": "3 tbsp",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "Soy",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Sugar",
+                    "quantity": {
+                        "measure": "1 tbsp",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Garlic",
+                    "quantity": {
+                        "measure": "2 cloves",
+                        "unit": "minced"
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Pear",
+                    "quantity": {
+                        "measure": "1/2",
+                        "unit": "grated"
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Sesame Oil",
+                    "quantity": {
+                        "measure": "1 tbsp",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Green Onion",
+                    "quantity": {
+                        "measure": "2",
+                        "unit": "chopped"
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Sesame Seeds",
+                    "quantity": {
+                        "measure": "1 tsp",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                },
+                {
+                    "name": "Pepper",
+                    "quantity": {
+                        "measure": "to taste",
+                        "unit": ""
+                    },
+                    "allergies": {
+                        "id": "",
+                        "category": "",
+                        "ref": "",
+                        "details": ""
+                    },
+                    "alternative": "",
+                    "quality_characteristic": "",
+                    "image": ""
+                }
+            ],
+            "hasDairy": false,
+            "hasMeat": true,
+            "hasNuts": false,
+            "prep_time": "",
+            "cook_time": "",
+            "total_time": "",
+            "serves": "",
+            "instructions": [
+                {
+                    "original_text": "1. Marinate beef with soy sauce, sugar, garlic, grated pear, sesame oil, green onion, and pepper for at least 1 hour.",
+                    "input_condition": [],
+                    "task": [],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                },
+                {
+                    "original_text": "2. Heat a pan and cook the marinated beef until fully cooked.",
+                    "input_condition": [],
+                    "task": [],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                },
+                {
+                    "original_text": "3. Sprinkle with sesame seeds and serve with rice.",
+                    "input_condition": [],
+                    "task": [],
+                    "output_condition": [],
+                    "modality": {
+                        "image": [],
+                        "video": ""
+                    }
+                }
+            ],
+            "allergens": [
+                "Soy"
+            ],
+            "notes": [
+                "Adjust seasoning according to taste.",
+                "Top with additional garnishes for enhanced flavor."
+            ]
+        }
+    }
+}
+```

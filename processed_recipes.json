@@ -1,0 +1,488 @@
+[
+  {
+    "name": "Classic Pancakes",
+    "meal_type": "Breakfast",
+    "diet_type": "Vegetarian",
+    "cuisine": "",
+    "health_benefits": [],
+    "ingredients": [
+      {
+        "name": "Flour",
+        "quantity": {
+          "measure": "1 cup",
+          "unit": ""
+        },
+        "allergies": "Gluten",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Milk",
+        "quantity": {
+          "measure": "1 cup",
+          "unit": ""
+        },
+        "allergies": "Dairy",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Egg",
+        "quantity": {
+          "measure": "1",
+          "unit": ""
+        },
+        "allergies": "Eggs",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Sugar",
+        "quantity": {
+          "measure": "2 tablespoons",
+          "unit": ""
+        },
+        "allergies": "",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Baking Powder",
+        "quantity": {
+          "measure": "2 teaspoons",
+          "unit": ""
+        },
+        "allergies": "",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Salt",
+        "quantity": {
+          "measure": "1/4 teaspoon",
+          "unit": ""
+        },
+        "allergies": "",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Butter",
+        "quantity": {
+          "measure": "2 tablespoons",
+          "unit": ""
+        },
+        "allergies": "Dairy",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Vanilla Extract",
+        "quantity": {
+          "measure": "1 teaspoon",
+          "unit": ""
+        },
+        "allergies": "",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      }
+    ],
+    "instructions": [
+      {
+        "original_text": "In a large bowl, whisk together the flour, sugar, baking powder, and salt.",
+        "input_condition": [
+          "dry and wet ingredients in separate bowls"
+        ],
+        "task": [
+          {
+            "action_name": "In",
+            "output_quality": [
+              "Achieve the described result."
+            ],
+            "background_knowledge": {
+              "tool": [
+                "bowl",
+                "whisk"
+              ],
+              "failure": [
+                "Ingredients not fully combined"
+              ]
+            }
+          }
+        ],
+        "output_condition": [
+          "well-mixed ingredients"
+        ],
+        "modality": {
+          "image": [],
+          "video": ""
+        }
+      },
+      {
+        "original_text": "In another bowl, beat the milk, egg, and melted butter.",
+        "input_condition": [
+          "milk, egg, and melted butter"
+        ],
+        "task": [
+          {
+            "action_name": "In",
+            "output_quality": [
+              "Achieve the described result."
+            ],
+            "background_knowledge": {
+              "tool": [
+                "bowl",
+                "whisk or fork"
+              ],
+              "failure": [
+                "Mixture not well combined"
+              ]
+            }
+          }
+        ],
+        "output_condition": [
+          "well-beaten mixture"
+        ],
+        "modality": {
+          "image": [],
+          "video": ""
+        }
+      },
+      {
+        "original_text": "Pour the wet ingredients into the dry ingredients and mix until just combined.",
+        "input_condition": [
+          "dry and wet ingredients in separate bowls"
+        ],
+        "task": [
+          {
+            "action_name": "Pour",
+            "output_quality": [
+              "Achieve the described result."
+            ],
+            "background_knowledge": {
+              "tool": [
+                "bowl",
+                "whisk"
+              ],
+              "failure": [
+                "Ingredients not fully combined"
+              ]
+            }
+          }
+        ],
+        "output_condition": [
+          "well-mixed ingredients"
+        ],
+        "modality": {
+          "image": [],
+          "video": ""
+        }
+      },
+      {
+        "original_text": "Heat a non-stick skillet over medium heat and lightly grease it.",
+        "input_condition": [
+          "cold skillet or oven"
+        ],
+        "task": [
+          {
+            "action_name": "Heat",
+            "output_quality": [
+              "Achieve the described result."
+            ],
+            "background_knowledge": {
+              "tool": [
+                "skillet"
+              ],
+              "failure": [
+                "Pan overheated or underheated"
+              ]
+            }
+          }
+        ],
+        "output_condition": [
+          "hot skillet or oven"
+        ],
+        "modality": {
+          "image": [],
+          "video": ""
+        }
+      },
+      {
+        "original_text": "Pour 1/4 cup of batter onto the skillet and cook until bubbles form on the surface. Flip and cook until golden brown.",
+        "input_condition": [
+          "mixed batter or rice"
+        ],
+        "task": [
+          {
+            "action_name": "Pour",
+            "output_quality": [
+              "Achieve the described result."
+            ],
+            "background_knowledge": {
+              "tool": [
+                "skillet"
+              ],
+              "failure": [
+                "Uneven spreading or pouring"
+              ]
+            }
+          }
+        ],
+        "output_condition": [
+          "batter spread evenly on skillet or rice spread on nori"
+        ],
+        "modality": {
+          "image": [],
+          "video": ""
+        }
+      }
+    ]
+  },
+  {
+    "name": "Sushi Rolls",
+    "meal_type": "Lunch",
+    "diet_type": "Non-Veg",
+    "cuisine": "Japanese",
+    "health_benefits": [
+      "Low in fat",
+      "Fresh and light"
+    ],
+    "ingredients": [
+      {
+        "name": "Sushi Rice",
+        "quantity": {
+          "measure": "1 cup",
+          "unit": ""
+        },
+        "allergies": "",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Nori Sheets",
+        "quantity": {
+          "measure": "4",
+          "unit": ""
+        },
+        "allergies": "",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Cucumber",
+        "quantity": {
+          "measure": "1",
+          "unit": "julienned"
+        },
+        "allergies": "",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Avocado",
+        "quantity": {
+          "measure": "1",
+          "unit": "sliced"
+        },
+        "allergies": "",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Imitation Crab",
+        "quantity": {
+          "measure": "100g",
+          "unit": ""
+        },
+        "allergies": "Seafood",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Soy Sauce",
+        "quantity": {
+          "measure": "for dipping",
+          "unit": ""
+        },
+        "allergies": "Soy",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Wasabi",
+        "quantity": {
+          "measure": "for dipping",
+          "unit": ""
+        },
+        "allergies": "",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      },
+      {
+        "name": "Pickled Ginger",
+        "quantity": {
+          "measure": "for serving",
+          "unit": ""
+        },
+        "allergies": "",
+        "alternative": "",
+        "quality_characteristic": "",
+        "image": ""
+      }
+    ],
+    "instructions": [
+      {
+        "original_text": "1. Cook sushi rice according to package instructions and let cool.",
+        "input_condition": [
+          "raw food"
+        ],
+        "task": [
+          {
+            "action_name": "1.",
+            "output_quality": [
+              "Achieve the described result."
+            ],
+            "background_knowledge": {
+              "tool": [
+                "pan"
+              ],
+              "failure": [
+                "Food undercooked or burnt"
+              ]
+            }
+          }
+        ],
+        "output_condition": [
+          "cooked food"
+        ],
+        "modality": {
+          "image": [],
+          "video": ""
+        }
+      },
+      {
+        "original_text": "2. Place a nori sheet on a bamboo mat. Spread a thin layer of rice on top.",
+        "input_condition": [
+          "mixed batter or rice"
+        ],
+        "task": [
+          {
+            "action_name": "2.",
+            "output_quality": [
+              "Achieve the described result."
+            ],
+            "background_knowledge": {
+              "tool": [
+                "bamboo mat"
+              ],
+              "failure": [
+                "Uneven spreading or pouring"
+              ]
+            }
+          }
+        ],
+        "output_condition": [
+          "batter spread evenly on skillet or rice spread on nori"
+        ],
+        "modality": {
+          "image": [],
+          "video": ""
+        }
+      },
+      {
+        "original_text": "3. Arrange cucumber, avocado, and imitation crab in a line across the rice.",
+        "input_condition": [],
+        "task": [
+          {
+            "action_name": "3.",
+            "output_quality": [
+              "Achieve the described result."
+            ],
+            "background_knowledge": {
+              "tool": [],
+              "failure": []
+            }
+          }
+        ],
+        "output_condition": [],
+        "modality": {
+          "image": [],
+          "video": ""
+        }
+      },
+      {
+        "original_text": "4. Roll up the nori tightly using the bamboo mat.",
+        "input_condition": [
+          "rice and fillings on nori sheet"
+        ],
+        "task": [
+          {
+            "action_name": "4.",
+            "output_quality": [
+              "Achieve the described result."
+            ],
+            "background_knowledge": {
+              "tool": [
+                "bamboo mat"
+              ],
+              "failure": [
+                "Sushi roll falls apart"
+              ]
+            }
+          }
+        ],
+        "output_condition": [
+          "rolled sushi"
+        ],
+        "modality": {
+          "image": [],
+          "video": ""
+        }
+      },
+      {
+        "original_text": "5. Slice into bite-sized pieces and serve with soy sauce, wasabi, and pickled ginger.",
+        "input_condition": [
+          "whole food"
+        ],
+        "task": [
+          {
+            "action_name": "5.",
+            "output_quality": [
+              "Achieve the described result."
+            ],
+            "background_knowledge": {
+              "tool": [
+                "knife"
+              ],
+              "failure": [
+                "Inconsistent cuts"
+              ]
+            }
+          }
+        ],
+        "output_condition": [
+          "chopped or sliced food"
+        ],
+        "modality": {
+          "image": [],
+          "video": ""
+        }
+      }
+    ]
+  }
+]

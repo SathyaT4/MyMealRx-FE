@@ -1,0 +1,128 @@
+{
+    "recipe-ids": {
+        "001": {
+            "recipe_name": "Chicken Parmesan",
+            "food_role": [
+                "Main Course",
+                "Italian Cuisine"
+            ],
+            "ingredients": [
+                {
+                    "name": "Chicken Breast",
+                    "quantity": {
+                        "measure": "2",
+                        "unit": "Pieces"
+                    },
+                    "allergies": {
+                        "id": "001",
+                        "category": [
+                            "Poultry"
+                        ],
+                        "ref": [
+                            "https://www.foodallergy.org/common-allergens"
+                        ],
+                        "details": "Chicken is a common allergen"
+                    },
+                    "alternative": "Turkey Breast",
+                    "quality_characteristic": "Boneless, Skinless",
+                    "image": "Image of raw chicken breast"
+                },
+                {
+                    "name": "Parmesan Cheese",
+                    "quantity": {
+                        "measure": "1",
+                        "unit": "Cup"
+                    },
+                    "allergies": {
+                        "id": "002",
+                        "category": [
+                            "Dairy"
+                        ],
+                        "ref": [
+                            "https://www.foodallergy.org/common-allergens"
+                        ],
+                        "details": "Cheese is a dairy product and can trigger allergies"
+                    },
+                    "alternative": "Vegan Cheese",
+                    "quality_characteristic": "Grated",
+                    "image": "Image of grated parmesan cheese"
+                }
+            ],
+            "hasDairy": true,
+            "hasMeat": true,
+            "hasNuts": false,
+            "prep_time": "15 minutes",
+            "cook_time": "30 minutes",
+            "total_time": "45 minutes",
+            "serves": "2 servings",
+            "instructions": [
+                {
+                    "original_text": "Preheat the oven to 375\u00b0F (190\u00b0C).",
+                    "input_condition": [
+                        "Oven is off"
+                    ],
+                    "task": [
+                        {
+                            "action_name": "Preheat",
+                            "output_quality": [
+                                "Oven is hot"
+                            ],
+                            "background_knowledge": {
+                                "tool": [
+                                    "Oven"
+                                ],
+                                "failure": [
+                                    "Oven not reaching correct temperature"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [
+                        "Oven is preheated"
+                    ],
+                    "modality": {
+                        "image": [
+                            "Image of preheated oven"
+                        ],
+                        "video": "Video link of oven preheating"
+                    }
+                },
+                {
+                    "original_text": "Place chicken in a baking dish and sprinkle with cheese. Bake for 30 minutes.",
+                    "input_condition": [
+                        "Chicken is raw",
+                        "Cheese is grated"
+                    ],
+                    "task": [
+                        {
+                            "action_name": "Bake",
+                            "output_quality": [
+                                "Chicken is cooked",
+                                "Cheese is melted"
+                            ],
+                            "background_knowledge": {
+                                "tool": [
+                                    "Baking Dish",
+                                    "Oven"
+                                ],
+                                "failure": [
+                                    "Chicken is undercooked",
+                                    "Cheese is not melted"
+                                ]
+                            }
+                        }
+                    ],
+                    "output_condition": [
+                        "Chicken is baked"
+                    ],
+                    "modality": {
+                        "image": [
+                            "Image of baked chicken"
+                        ],
+                        "video": "Video link of chicken baking"
+                    }
+                }
+            ]
+        }
+    }
+}
