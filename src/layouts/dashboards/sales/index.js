@@ -6,29 +6,30 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import TextField from '@mui/material/TextField';
-import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
-import RestaurantIcon from "@mui/icons-material/Restaurant";
-import GenerateIcon from '@mui/icons-material/PlayArrow'; // Import an icon for the Generate button
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDAlert from "components/MDAlert"; // Import MDAlert
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Header from 'layouts/pages/profile/components/Header';
+import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import GenerateIcon from '@mui/icons-material/PlayArrow'; // Import an icon for the Generate button
 
 function Sales() {
   const navigate = useNavigate();
   const [mealType, setMealType] = useState('');
   const [err, setError] = useState('');
+  console.log(err)
   const [preferences, setPreferences] = useState([]);
   const [numMeals, setNumMeals] = useState('');
-  const [numUsers, setNumUsers] = useState('');
-  const [numDays , setNumDays] = useState('')
-  console.log(err);
+  const [numDays, setNumDays] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); // State for error message
 
   const fetchMealSuggestions = async () => {
     try {
-      const response = await axios.get('http://10.1.0.105:7000/meal/getPreferences', {
+      const response = await axios.get('https://mymealrx-api.tantiv4.com/meal/getPreferences', {
         params: { email: localStorage.getItem('email') },
         headers: {
           'jwt-token': `${localStorage.getItem('jwtToken')}`
@@ -43,12 +44,17 @@ function Sales() {
   };
 
   const handleGenerate = () => {
-  navigate('/applications/recipes', {
-    state: {
-      numDays
+    if (!numMeals || !numDays) {
+      setErrorMessage('Number of meals and number of days are required');
+      return;
     }
-  });
-};
+    navigate('/applications/recipes', {
+      state: {
+        numDays
+      }
+    });
+  };
+
   useEffect(() => {
     fetchMealSuggestions();
   }, [mealType]);
@@ -71,6 +77,11 @@ function Sales() {
             <Grid container spacing={4}>
               <Grid item xs={12} md={6}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, px: 2 }}>
+                  {errorMessage && (
+                    <MDAlert severity="error" sx={{ mb: 2 }}>
+                      {errorMessage}
+                    </MDAlert>
+                  )}
                   <MDTypography variant="subtitle1" fontWeight="medium">
                     Preferences (Exclusions)
                   </MDTypography>
@@ -166,42 +177,23 @@ function Sales() {
                       }}
                     />
                   </Box>
-                  <MDTypography variant="subtitle1" fontWeight="medium" sx={{ mt: 2 }}>
-                    Number of Users
-                  </MDTypography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <TextField
-                      type="number"
-                      value={numUsers}
-                      onChange={(e) => setNumUsers(e.target.value)}
-                      inputProps={{ min: 0 }}
-                      sx={{
-                        '& .MuiInputBase-input': {
-                          padding: '12px',
-                        },
-                        '& .MuiOutlinedInput-root': {
-                          borderRadius: '8px',
-                        }
-                      }}
-                    />
-                  </Box>
                   <Button
-                      variant="contained"
-                      color="primary"
-                      startIcon={<GenerateIcon />}
-                      sx={{
-                        backgroundColor: 'orange',
-                        color: 'white',
-                        '&:hover': {
-                          backgroundColor: 'darkorange',
-                        },
-                        borderRadius: '8px',
-                        padding: '8px 16px',
-                      }}
-                      onClick={handleGenerate}
-                    >
-                      Generate
-                    </Button>
+                    variant="contained"
+                    color="primary"
+                    startIcon={<GenerateIcon />}
+                    sx={{
+                      backgroundColor: 'orange',
+                      color: 'white',
+                      '&:hover': {
+                        backgroundColor: 'darkorange',
+                      },
+                      borderRadius: '8px',
+                      padding: '8px 16px',
+                    }}
+                    onClick={handleGenerate}
+                  >
+                    Generate
+                  </Button>
                 </Box>
               </Grid>
             </Grid>

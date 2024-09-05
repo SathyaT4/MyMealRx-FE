@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Grid, Typography, Card, CardContent, Button } from '@mui/material';
+import { Grid, Typography, Card, CardContent, Button, Box } from '@mui/material';
 import { styled } from '@mui/system';
-import Box from '@mui/material/Box';
 import { Balance, Recommend, Assessment } from '@mui/icons-material';
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'; // Check the correct path
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar'; // Check the correct path
 import Footer from 'examples/Footer'; // Check the correct path
-import balanceddiet from '../../../assets/images/balanced-diet.jpg'
-import mealreccomend from '../../../assets/images/diet-reccomd.jpg'
-import mealevaluation from '../../../assets/images/meal-evaluation.jpeg'
-import school from '../../../assets/images/schools.jpeg'
+import balanceddiet from '../../../assets/images/balanced-diet.jpg';
+import mealreccomend from '../../../assets/images/diet-reccomd.jpg';
+import mealevaluation from '../../../assets/images/meal-evaluation.jpeg';
+import school from '../../../assets/images/schools.jpeg';
+
+// Keyframes for blinking effect
+const blinkAnimation = `
+  @keyframes blink {
+    0% { background-color: #FFA500; }
+    50% { background-color: #FF5722; }
+    100% { background-color: #FFA500; }
+  }
+`;
 
 // Custom styled components
 const CustomCard = styled(Card)(({ theme }) => ({
@@ -42,6 +50,13 @@ const ImageContainer = styled('img')(({ theme }) => ({
   '&:hover': {
     opacity: 0.8,
   },
+}));
+
+const BlinkingButton = styled(Button)(() => ({
+  mt: 2,
+  backgroundColor: '#FFA500',
+  '&:hover': { backgroundColor: '#FF5722' },
+  animation: `${blinkAnimation} 1s step-start infinite`, // Apply the blinking style
 }));
 
 // Data for the home page
@@ -158,20 +173,21 @@ ApplicationCard.propTypes = {
 function HomePage() {
   const navigate = useNavigate(); // Hook to navigate programmatically
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  console.log(isAuthenticated)
   // Check for token on component mount
   useEffect(() => {
     const token = localStorage.getItem('jwtToken'); // Assuming token is stored in localStorage
     if (token) {
       setIsAuthenticated(true);
-      console.log(isAuthenticated)
     } else {
       navigate('/authentication/sign-in'); 
     }
   }, [navigate]);
+
   const handleClick = () => {
     navigate('/dashboards/generator'); // Replace '/generator' with the actual route to your generator page
   };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -184,19 +200,14 @@ function HomePage() {
           <Typography variant="h6" color="textSecondary" gutterBottom>
             Balancing Convenience and Nutrition in Meals
           </Typography>
-          <Button
+          <BlinkingButton
             variant="contained"
             color="warning"
             size="large"
-            sx={{
-              mt: 2,
-              backgroundColor: '#FFA500',
-              '&:hover': { backgroundColor: '#FF5722' },
-            }}
             onClick={handleClick}
           >
             Get Started
-          </Button>
+          </BlinkingButton>
         </Box>
 
         {/* My Meal RX Features */}

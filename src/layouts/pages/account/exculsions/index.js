@@ -6,11 +6,12 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import ErrorIcon from '@mui/icons-material/Error';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Image from 'mui-image';
+import MDAlert from 'components/MDAlert'; // Import MDAlert
+
 // MyExclusions page components
 import BaseLayout from "layouts/pages/account/components/BaseLayout";
 import Header from 'layouts/pages/profile/components/Header';
@@ -21,17 +22,17 @@ function MyExclusions() {
   const [dietPreferences, setDietPreferences] = useState([]);
   const [loading, setLoading] = useState(true);
   const [apiError, setApiError] = useState('');
+  const [showAlert, setShowAlert] = useState(false); // State for alert visibility
 
   // Fetch user exclusions from API
   const fetchExclusions = async () => {
     try {
-      const response = await axios.get('http://10.1.0.105:7000/meal/getPreferences', {
+      const response = await axios.get('https://mymealrx-api.tantiv4.com/meal/getPreferences', {
         params: { email: localStorage.getItem('email') },
         headers: {
           'jwt-token': `${localStorage.getItem('jwtToken')}`
         }
       });
-      // /const {  } = response.data;
       setSelectedDiet(response.data.data.mealType);
       setSelectedAllergens(response.data.data.preferences);
       setDietPreferences(response.data.data.preferences);
@@ -46,7 +47,7 @@ function MyExclusions() {
   // Update user exclusions
   const updateExclusions = async () => {
     try {
-      await axios.post('http://10.1.0.105:7000/meal/addPreferences', {
+      await axios.post('https://mymealrx-api.tantiv4.com/meal/addPreferences', {
         email: localStorage.getItem('email'),
         mealType: selectedDiet,
         preferences: selectedAllergens,
@@ -55,8 +56,10 @@ function MyExclusions() {
           'jwt-token': `${localStorage.getItem('jwtToken')}`
         }
       });
-      alert('Exclusions updated successfully');
-      fetchExclusions()
+      setApiError('Exclusions updated successfully');
+      setShowAlert(true); // Show the alert
+      setTimeout(() => setShowAlert(false), 3000); // Hide the alert after 3 seconds
+      fetchExclusions();
     } catch (error) {
       console.error('Error updating exclusions:', error);
       setApiError('Failed to update exclusions');
@@ -71,7 +74,6 @@ function MyExclusions() {
     setSelectedAllergens((prev) =>
       prev.includes(allergen) ? prev.filter(a => a !== allergen) : [...prev, allergen]
     );
-    console.log()
   };
 
   if (loading) {
@@ -87,6 +89,22 @@ function MyExclusions() {
       <Header title="My Exclusions" subtitle="Manage your diet preferences and allergen exclusions here." />
 
       <Box mt={4} mb={3} px={2}>
+        {/* Error Alert */}
+        {showAlert && (
+          <Box
+            position="fixed"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)"
+            zIndex="tooltip"
+            sx={{ width: '80%', maxWidth: '400px' }}
+          >
+            <MDAlert color="success" dismissible>
+              {apiError}
+            </MDAlert>
+          </Box>
+        )}
+
         {/* User Diet Preferences */}
         <Box
           mb={3}
@@ -239,11 +257,6 @@ function MyExclusions() {
           >
             Apply Filters
           </Button>
-          {apiError && (
-            <Box mt={2} sx={{ color: 'red' }}>
-              <Typography variant="body2">{apiError}</Typography>
-            </Box>
-          )}
         </Box>
 
         {/* Image Section */}
@@ -257,7 +270,7 @@ function MyExclusions() {
             duration={300}
             easing="ease-in-out"
             showLoading={<CircularProgress />}
-            errorIcon={<ErrorIcon />}
+            // errorIcon={<ErrorIcon />}
             shift="left"
             shiftDuration={300}
           />
