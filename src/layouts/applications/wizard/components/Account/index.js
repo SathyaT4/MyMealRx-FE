@@ -1,122 +1,154 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState } from "react";
-
-// @mui material components
+import React from 'react';
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
-
-// Material Dashboard 2 PRO React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import PropTypes from 'prop-types';
 
-function Account() {
-  const [design, setDesign] = useState(false);
-  const [code, setCode] = useState(false);
-  const [develop, setDevelop] = useState(false);
+const selectedButtonStyles = {
+  backgroundColor: '#FF6F00', // Orange
+  color: '#FFFFFF',
+  width: '200px',
+  height: '150px',
+  fontSize: '24px',
+  '&:hover': {
+    backgroundColor: '#FF8C00',
+  },
+};
 
-  const handleSetDesign = () => setDesign(!design);
-  const handleSetCode = () => setCode(!code);
-  const handleSetDevelop = () => setDevelop(!develop);
+const unselectedButtonStyles = {
+  backgroundColor: '#FFF3E0', // Light Orange
+  color: '#000000',
+  width: '200px',
+  height: '150px',
+  fontSize: '24px',
+  '&:hover': {
+    backgroundColor: '#FF6F00',
+  },
+};
+let preferences = []
+let mealType = ''
+function Diet({ handleDataChange }) {
+  const [selectedDiet, setSelectedDiet] = React.useState('');
 
-  const customButtonStyles = ({
-    functions: { pxToRem, rgba },
-    borders: { borderWidth },
-    palette: { transparent, info },
-    typography: { size },
-  }) => ({
-    width: pxToRem(164),
-    height: pxToRem(130),
-    borderWidth: borderWidth[2],
-    mb: 1,
-    ml: 0.5,
+  const handleDietSelect = (diet) => {
+    setSelectedDiet(diet);
+    console.log(diet)
+    if (diet === 'paleo')
+    {
+      mealType = 'Nonveg'
+      preferences = []
+    }
+    if (diet === 'vegan')
+    {
+      mealType = 'Veg'
+      preferences = ['Dairy','Eggs','Meat','Fish']
+    }
+    if (diet === 'anything')
+    {
+      mealType = 'Nonveg'
+      preferences = []
+    }
+    else
+    {
+      mealType = 'Veg'
+      preferences = ['Meat',"Fish"]
+    }
+    handleDataChange({ mealType, preferences });
 
-    "&.MuiButton-contained, &.MuiButton-contained:hover": {
-      boxShadow: "none",
-      border: `${borderWidth[2]} solid ${transparent.main}`,
-    },
-
-    "&:hover": {
-      backgroundColor: `${transparent.main} !important`,
-      border: `${borderWidth[2]} solid ${info.main} !important`,
-      color: rgba(info.main, 0.75),
-    },
-
-    "& .material-icons-round": {
-      fontSize: `${size["3xl"]} !important`,
-    },
-  });
+  };
 
   return (
     <MDBox>
       <MDBox width="80%" textAlign="center" mx="auto" my={4}>
         <MDBox mb={1}>
           <MDTypography variant="h5" fontWeight="regular">
-            What are you doing? (checkboxes)
+            What is your dietary preference?
           </MDTypography>
         </MDBox>
         <MDTypography variant="body2" color="text">
-          Give us more details about you. What do you enjoy doing in your spare time?
+          Select your dietary preference to help us provide better recommendations.
         </MDTypography>
       </MDBox>
       <MDBox mt={2}>
         <Grid container spacing={3} justifyContent="center">
+          {/* Paleo Option */}
           <Grid item xs={12} sm={3}>
             <MDBox textAlign="center">
               <MDButton
-                color="info"
-                variant={design ? "contained" : "outlined"}
-                onClick={handleSetDesign}
-                sx={customButtonStyles}
+                color="error"
+                variant={selectedDiet === 'paleo' ? "contained" : "outlined"}
+                onClick={() => handleDietSelect('paleo')}
+                sx={selectedDiet === 'paleo' ? selectedButtonStyles : unselectedButtonStyles}
               >
-                <Icon sx={{ color: design ? "white" : "inherit" }}>brush</Icon>
+                <Icon sx={{ color: selectedDiet === 'paleo' ? "white" : "inherit" }}>local_dining</Icon>
               </MDButton>
               <MDTypography variant="h6" sx={{ mt: 1 }}>
-                Design
+                Paleo
+              </MDTypography>
+              <MDTypography variant="body2" color="text">
+                Emphasizes whole foods like lean meats, fish, fruits, and vegetables.
               </MDTypography>
             </MDBox>
           </Grid>
+
+          {/* Vegan Option */}
           <Grid item xs={12} sm={3}>
             <MDBox textAlign="center">
               <MDButton
-                color="info"
-                variant={code ? "contained" : "outlined"}
-                onClick={handleSetCode}
-                sx={customButtonStyles}
+                color="error"
+                variant={selectedDiet === 'vegan' ? "contained" : "outlined"}
+                onClick={() => handleDietSelect('vegan')}
+                sx={selectedDiet === 'vegan' ? selectedButtonStyles : unselectedButtonStyles}
               >
-                <Icon sx={{ color: design ? "white" : "inherit" }}>integration_instructions</Icon>
+                <Icon sx={{ color: selectedDiet === 'vegan' ? "white" : "inherit" }}>spa</Icon>
               </MDButton>
               <MDTypography variant="h6" sx={{ mt: 1 }}>
-                Code
+                Vegan
+              </MDTypography>
+              <MDTypography variant="body2" color="text">
+                Excludes all animal products, including meat, dairy, and eggs.
               </MDTypography>
             </MDBox>
           </Grid>
+
+          {/* Vegetarian Option */}
           <Grid item xs={12} sm={3}>
             <MDBox textAlign="center">
               <MDButton
-                color="info"
-                variant={develop ? "contained" : "outlined"}
-                onClick={handleSetDevelop}
-                sx={customButtonStyles}
+                color="error"
+                variant={selectedDiet === 'vegetarian' ? "contained" : "outlined"}
+                onClick={() => handleDietSelect('vegetarian')}
+                sx={selectedDiet === 'vegetarian' ? selectedButtonStyles : unselectedButtonStyles}
               >
-                <Icon sx={{ color: design ? "white" : "inherit" }}>developer_mode</Icon>
+                <Icon sx={{ color: selectedDiet === 'vegetarian' ? "white" : "inherit" }}>eco</Icon>
               </MDButton>
               <MDTypography variant="h6" sx={{ mt: 1 }}>
-                Develop
+                Vegetarian
+              </MDTypography>
+              <MDTypography variant="body2" color="text">
+                Avoids meat and fish, but may include dairy and eggs.
+              </MDTypography>
+            </MDBox>
+          </Grid>
+
+          {/* Anything Option */}
+          <Grid item xs={12} sm={6}>
+            <MDBox textAlign="center">
+              <MDButton
+                color="error"
+                variant={selectedDiet === 'anything' ? "contained" : "outlined"}
+                onClick={() => handleDietSelect('anything')}
+                sx={selectedDiet === 'anything' ? selectedButtonStyles : unselectedButtonStyles}
+              >
+                <Icon sx={{ color: selectedDiet === 'anything' ? "white" : "inherit" }}>more_horiz</Icon>
+              </MDButton>
+              <MDTypography variant="h6" sx={{ mt: 1 }}>
+                Anything
+              </MDTypography>
+              <MDTypography variant="body2" color="text">
+                No specific dietary restrictions or preferences.
               </MDTypography>
             </MDBox>
           </Grid>
@@ -126,4 +158,7 @@ function Account() {
   );
 }
 
-export default Account;
+Diet.propTypes = {
+  handleDataChange: PropTypes.func.isRequired,
+};
+export default Diet;

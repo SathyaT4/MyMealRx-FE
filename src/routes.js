@@ -37,7 +37,10 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 PRO React layouts
 import Analytics from "layouts/dashboards/home";
-// import Sales from "layouts/dashboards/sales";
+import Sales from "layouts/dashboards/sales";
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import ProfileOverview from "layouts/pages/profile/profile-overview";
 // import AllProjects from "layouts/pages/profile/all-projects";
 // import NewUser from "layouts/pages/users/new-user";
@@ -50,10 +53,8 @@ import MyExculsions from "layouts/pages/account/exculsions";
 // import RTL from "layouts/pages/rtl";
 // import Charts from "layouts/pages/charts";
 // import Notifications from "layouts/pages/notifications";
-import Kanban from "layouts/applications/kanban";
+import Recipes from "layouts/applications/recipes";
 import Wizard from "layouts/applications/wizard";
-import DataTables from "layouts/applications/data-tables";
-import Calendar from "layouts/applications/calendar";
 // import NewProduct from "layouts/ecommerce/products/new-product";
 // import EditProduct from "layouts/ecommerce/products/edit-product";
 // import ProductPage from "layouts/ecommerce/products/product-page";
@@ -61,7 +62,7 @@ import Calendar from "layouts/applications/calendar";
 // import OrderDetails from "layouts/ecommerce/orders/order-details";
 import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpCover from "layouts/authentication/sign-up/cover";
-// import ResetCover from "layouts/authentication/reset-password/cover";
+import User from "assets/images/user.png"
 
 
 // @mui icons
@@ -69,12 +70,19 @@ import Icon from "@mui/material/Icon";
 
 // Images
 
-
+const usernme = localStorage.getItem('usernme')
 const routes = [
   {
     type: "collapse",
-    name: "Sathyagnana",
-    key: "brooklyn-alice",
+  name: (
+    <Box display="flex" alignItems="center" sx={{marginRight: 2}}>
+      <Avatar src={User} alt='name' sx={{ width: 40, height: 40, marginRight: 2 }} />
+      <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'black' ,marginRight: 2}}>
+      {usernme}
+      </Typography>
+    </Box>
+  ),
+  key: "userName",
     collapse: [
       {
         name: "My Profile",
@@ -104,17 +112,17 @@ const routes = [
     icon: <Icon fontSize="medium">dashboard</Icon>,
     collapse: [
       {
-        name: "Analytics",
+        name: "Home",
         key: "analytics",
         route: "/dashboards/analytics",
         component: <Analytics />,
       },
-      // {
-      //   name: "Sales",
-      //   key: "sales",
-      //   route: "/dashboards/sales",
-      //   component: <Sales />,
-      // },
+      {
+        name: "Generator",
+        key: "generator",
+        route: "/dashboards/generator",
+        component: <Sales />,
+      },
     ],
   },
   // { type: "title", title: "Pages", key: "title-pages" },
@@ -207,38 +215,32 @@ const routes = [
   //     },
   //   ],
   // },
-  {
-    type: "collapse",
-    name: "Applications",
-    key: "applications",
-    icon: <Icon fontSize="medium">apps</Icon>,
-    collapse: [
+  // {
+  //   type: "collapse",
+  //   name: "Applications",
+  //   key: "applications",
+  //   icon: <Icon fontSize="medium">apps</Icon>,
+  //   collapse: [
+      //         {
+      //           name: "New Product",
+      //           key: "new-product",
+      //           route: "/ecommerce/products/new-product",
+      //           component: <NewProduct />,
+      //         },
       {
-        name: "Kanban",
+        name: "Recipes",
         key: "kanban",
-        route: "/applications/kanban",
-        component: <Kanban />,
+        route: "/applications/recipes",
+        component: <Recipes />,
       },
       {
-        name: "Wizard",
-        key: "wizard",
-        route: "/applications/wizard",
+        name: "NewUser",
+        key: "newuser",
+        route: "/applications/newuser",
         component: <Wizard />,
       },
-      {
-        name: "Data Tables",
-        key: "data-tables",
-        route: "/applications/data-tables",
-        component: <DataTables />,
-      },
-      {
-        name: "Calendar",
-        key: "calendar",
-        route: "/applications/calendar",
-        component: <Calendar />,
-      },
-    ],
-  },
+  //   ],
+  // },
   // {
   //   type: "collapse",
   //   name: "Ecommerce",

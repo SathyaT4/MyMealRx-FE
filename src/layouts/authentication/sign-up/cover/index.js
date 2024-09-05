@@ -33,19 +33,20 @@ function Cover() {
         return;
       }
 
-      const response = await axios.post("https://api.yourdomain.com/auth/register", {
+      const response = await axios.post("http://localhost:7000/auth/new", {
         name,
         email,
         password,
       });
 
       const { token } = response.data;
+  
 
       // Store token in localStorage or sessionStorage
       localStorage.setItem("jwtToken", token);
 
       // Redirect to sign-in or another page
-      navigate("/authentication/sign-in");
+      navigate("/authentication/sign-in?redirectFromSignUp=true');");
     } catch (signupError) {
       setError("Failed to register. Please try again.");
       console.error("Registration error: ", signupError);

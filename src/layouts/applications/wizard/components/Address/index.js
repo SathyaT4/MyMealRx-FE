@@ -1,55 +1,138 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+import { useState } from "react";
+import PropTypes from 'prop-types';
 
 // @mui material components
 import Grid from "@mui/material/Grid";
+import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 PRO React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
 
-// Wizard application components
-import FormField from "layouts/applications/wizard/components/FormField";
+// Custom styles
+const selectedButtonStyles = {
+  backgroundColor: '#FF6F00', // Orange
+  color: '#FFFFFF',
+  width: '120px', // Smaller width
+  height: '100px', // Smaller height
+  fontSize: '16px', // Smaller font size
+  '&:hover': {
+    backgroundColor: '#FF8C00', // Darker Orange
+  },
+};
 
-function Address() {
+const unselectedButtonStyles = {
+  backgroundColor: '#FFF3E0', // Light Orange
+  color: '#000000',
+  width: '120px', // Smaller width
+  height: '100px', // Smaller height
+  fontSize: '16px', // Smaller font size
+  '&:hover': {
+    backgroundColor: '#FF6F00', // Orange
+  },
+};
+
+function Allergens({handleDataChange}) {
+  const [selectedAllergen, setSelectedAllergen] = useState('');
+
+  const handleAllergenSelect = (allergen) => {
+    setSelectedAllergen(allergen);
+    handleDataChange({ allergen });
+  };
+
   return (
     <MDBox>
       <MDBox width="80%" textAlign="center" mx="auto" my={4}>
         <MDBox mb={1}>
           <MDTypography variant="h5" fontWeight="regular">
-            Are you living in a nice area?
+            Do you have any allergies?
           </MDTypography>
         </MDBox>
         <MDTypography variant="body2" color="text">
-          One thing I love about the later sunsets is the chance to go for a walk through the
-          neighborhood woods before dinner
+          Select any allergens you need to avoid.
         </MDTypography>
       </MDBox>
       <MDBox mt={2}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
-            <FormField type="text" label="Street Name" InputLabelProps={{ shrink: true }} />
+        <Grid container spacing={3} justifyContent="center">
+          {/* Peanuts Option */}
+          <Grid item xs={12} sm={3}>
+            <MDBox textAlign="center">
+              <MDButton
+                color="error"
+                variant={selectedAllergen === 'Peanuts' ? "contained" : "outlined"}
+                onClick={() => handleAllergenSelect('Peanuts')}
+                sx={selectedAllergen === 'Peanuts' ? selectedButtonStyles : unselectedButtonStyles}
+              >
+                <Icon sx={{ color: selectedAllergen === 'Peanuts' ? "white" : "inherit" }}>local_offer</Icon> {/* Example icon */}
+              </MDButton>
+              <MDTypography variant="h6" sx={{ mt: 1 }}>
+                Peanuts
+              </MDTypography>
+              <MDTypography variant="body2" color="text">
+                Avoid peanuts and peanut-based products.
+              </MDTypography>
+            </MDBox>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <FormField type="number" label="Street Number" InputLabelProps={{ shrink: true }} />
+
+          {/* Tree Nuts Option */}
+          <Grid item xs={12} sm={3}>
+            <MDBox textAlign="center">
+              <MDButton
+                color="error"
+                variant={selectedAllergen === 'Tree_nuts' ? "contained" : "outlined"}
+                onClick={() => handleAllergenSelect('Tree_nuts')}
+                sx={selectedAllergen === 'tree_nuts' ? selectedButtonStyles : unselectedButtonStyles}
+              >
+                <Icon sx={{ color: selectedAllergen === 'Tree_nuts' ? "white" : "inherit" }}>ac_unit</Icon> {/* Example icon */}
+              </MDButton>
+              <MDTypography variant="h6" sx={{ mt: 1 }}>
+                Tree Nuts
+              </MDTypography>
+              <MDTypography variant="body2" color="text">
+                Includes almonds, walnuts, cashews, and more.
+              </MDTypography>
+            </MDBox>
           </Grid>
-          <Grid item xs={12} md={7}>
-            <FormField type="text" label="City" InputLabelProps={{ shrink: true }} />
+
+          {/* Dairy Option */}
+          <Grid item xs={12} sm={3}>
+            <MDBox textAlign="center">
+              <MDButton
+                color="error"
+                variant={selectedAllergen === 'Dairy' ? "contained" : "outlined"}
+                onClick={() => handleAllergenSelect('Dairy')}
+                sx={selectedAllergen === 'Dairy' ? selectedButtonStyles : unselectedButtonStyles}
+              >
+                <Icon sx={{ color: selectedAllergen === 'Dairy' ? "white" : "inherit" }}>local_drink</Icon> {/* Example icon */}
+              </MDButton>
+              <MDTypography variant="h6" sx={{ mt: 1 }}>
+                Dairy
+              </MDTypography>
+              <MDTypography variant="body2" color="text">
+                Avoid milk, cheese, and other dairy products.
+              </MDTypography>
+            </MDBox>
           </Grid>
-          <Grid item xs={12} md={5}>
-            <FormField type="text" label="Country" InputLabelProps={{ shrink: true }} />
+
+          {/* Gluten Option */}
+          <Grid item xs={12} sm={3}>
+            <MDBox textAlign="center">
+              <MDButton
+                color="error"
+                variant={selectedAllergen === 'Gluten' ? "contained" : "outlined"}
+                onClick={() => handleAllergenSelect('Gluten')}
+                sx={selectedAllergen === 'Gluten' ? selectedButtonStyles : unselectedButtonStyles}
+              >
+                <Icon sx={{ color: selectedAllergen === 'Gluten' ? "white" : "inherit" }}>grain</Icon> {/* Example icon */}
+              </MDButton>
+              <MDTypography variant="h6" sx={{ mt: 1 }}>
+                Gluten
+              </MDTypography>
+              <MDTypography variant="body2" color="text">
+                Avoid wheat and gluten-containing products.
+              </MDTypography>
+            </MDBox>
           </Grid>
         </Grid>
       </MDBox>
@@ -57,4 +140,8 @@ function Address() {
   );
 }
 
-export default Address;
+Allergens.propTypes = {
+  handleDataChange: PropTypes.func.isRequired,
+};
+
+export default Allergens;

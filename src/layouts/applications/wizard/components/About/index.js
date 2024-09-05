@@ -1,72 +1,212 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React - v2.1.0
-=========================================================
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
+import Grid from '@mui/material/Grid';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
+import MDBox from 'components/MDBox';
+import MDTypography from 'components/MDTypography';
+import FormField from 'layouts/applications/wizard/components/FormField';
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+// Custom styles
+const selectedButtonStyles = {
+  backgroundColor: '#FF8C00',
+  color: '#FFFFFF',
+  '&:hover': {
+    backgroundColor: '#FF6F00',
+  },
+};
 
-Coded by www.creative-tim.com
+const unselectedButtonStyles = {
+  backgroundColor: '#FFBE8C',
+  color: '#000000',
+  '&:hover': {
+    backgroundColor: '#FF8C00',
+  },
+};
 
- =========================================================
+function About({ handleDataChange }) {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [age, setAge] = useState('');
+  const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
+  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedBodyFat, setSelectedBodyFat] = useState('');
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+  useEffect(() => {
+    // Notify parent component of initial state
+    handleDataChange({
+      firstName,
+      lastName,
+      phoneNumber,
+      age,
+      weight,
+      height,
+      gender: selectedGender,
+      bodyFat: selectedBodyFat
+    });
+  }, []); // Empty dependency array to run only on mount
 
-// @mui material components
-import Grid from "@mui/material/Grid";
-import Icon from "@mui/material/Icon";
-import Tooltip from "@mui/material/Tooltip";
+  useEffect(() => {
+    // Notify parent component whenever any field changes
+    handleDataChange({
+      firstName,
+      lastName,
+      phoneNumber,
+      age,
+      weight,
+      height,
+      gender: selectedGender,
+      bodyFat: selectedBodyFat
+    });
+  }, [firstName, lastName, phoneNumber, age, weight, height, selectedGender, selectedBodyFat]);
 
-// Material Dashboard 2 PRO React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
-import MDButton from "components/MDButton";
+  const handleGenderSelect = (gender) => {
+    setSelectedGender(gender);
+  };
 
-// Wizard application components
-import FormField from "layouts/applications/wizard/components/FormField";
+  const handleBodyFatSelect = (bodyFat) => {
+    setSelectedBodyFat(bodyFat);
+  };
 
-// Images
-import team2 from "assets/images/team-2.jpg";
-
-function About() {
   return (
     <MDBox>
       <MDBox width="82%" textAlign="center" mx="auto" my={4}>
         <MDBox mb={1}>
           <MDTypography variant="h5" fontWeight="regular">
-            Let&apos;s start with the basic information
+            Update Your Information
           </MDTypography>
         </MDBox>
         <MDTypography variant="body2" color="text">
-          Let us know your name and email address. Use an address you don&apos;t mind other users
-          contacting you at
+          Provide your personal details below. This information will help us tailor your experience.
         </MDTypography>
       </MDBox>
       <MDBox mt={2}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={4} container justifyContent="center">
-            <MDBox position="relative" height="max-content" mx="auto">
-              <MDAvatar src={team2} alt="profile picture" size="xxl" variant="rounded" />
-              <MDBox alt="spotify logo" position="absolute" right={0} bottom={0} mr={-1} mb={-1}>
-                <Tooltip title="Edit" placement="top">
-                  <MDButton variant="gradient" color="info" size="small" iconOnly>
-                    <Icon>edit</Icon>
-                  </MDButton>
-                </Tooltip>
-              </MDBox>
+          {/* Row 1 */}
+          <Grid item xs={12} sm={6}>
+            <MDBox mb={2}>
+              <FormField
+                type="text"
+                label="First Name"
+                required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
             </MDBox>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={6}>
             <MDBox mb={2}>
-              <FormField type="text" label="First Name" />
+              <FormField
+                type="text"
+                label="Last Name"
+                required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
             </MDBox>
+          </Grid>
+
+          {/* Row 2 */}
+          <Grid item xs={12} sm={6}>
             <MDBox mb={2}>
-              <FormField type="text" label="Last Name" />
+              <FormField
+                type="text"
+                label="Phone Number"
+                required
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
             </MDBox>
-            <MDBox>
-              <FormField type="email" label="Email Address" />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <MDBox mb={2}>
+              <FormField
+                type="number"
+                label="Age"
+                required
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+              />
+            </MDBox>
+          </Grid>
+
+          {/* Row 3 */}
+          <Grid item xs={12} sm={6}>
+            <MDBox mb={2}>
+              <FormField
+                type="number"
+                label="Weight (kg)"
+                required
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+              />
+            </MDBox>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <MDBox mb={2}>
+              <FormField
+                type="number"
+                label="Height (cm)"
+                required
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}
+              />
+            </MDBox>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <MDBox mb={2}>
+              <MDTypography variant="body1">
+                Gender
+              </MDTypography>
+              <ButtonGroup fullWidth>
+                <Button
+                  sx={selectedGender === 'Male' ? selectedButtonStyles : unselectedButtonStyles}
+                  onClick={() => handleGenderSelect('Male')}
+                >
+                  Male
+                </Button>
+                <Button
+                  sx={selectedGender === 'Female' ? selectedButtonStyles : unselectedButtonStyles}
+                  onClick={() => handleGenderSelect('Female')}
+                >
+                  Female
+                </Button>
+                <Button
+                  sx={selectedGender === 'non-binary' ? selectedButtonStyles : unselectedButtonStyles}
+                  onClick={() => handleGenderSelect('non-binary')}
+                >
+                  Non-binary
+                </Button>
+              </ButtonGroup>
+            </MDBox>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <MDBox mb={2}>
+              <MDTypography variant="body1">
+                Body Fat Level
+              </MDTypography>
+              <ButtonGroup fullWidth>
+                <Button
+                  sx={selectedBodyFat === 'low' ? selectedButtonStyles : unselectedButtonStyles}
+                  onClick={() => handleBodyFatSelect('low')}
+                >
+                  Low
+                </Button>
+                <Button
+                  sx={selectedBodyFat === 'medium' ? selectedButtonStyles : unselectedButtonStyles}
+                  onClick={() => handleBodyFatSelect('medium')}
+                >
+                  Medium
+                </Button>
+                <Button
+                  sx={selectedBodyFat === 'high' ? selectedButtonStyles : unselectedButtonStyles}
+                  onClick={() => handleBodyFatSelect('high')}
+                >
+                  High
+                </Button>
+              </ButtonGroup>
             </MDBox>
           </Grid>
         </Grid>
@@ -74,5 +214,10 @@ function About() {
     </MDBox>
   );
 }
+
+// Define prop types for the About component
+About.propTypes = {
+  handleDataChange: PropTypes.func.isRequired,
+};
 
 export default About;

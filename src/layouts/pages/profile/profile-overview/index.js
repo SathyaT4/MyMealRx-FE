@@ -27,7 +27,7 @@ import Header from "layouts/pages/profile/components/Header";
 
 function Overview() {
   const [gender, setGender] = useState('male');
-  const [bodyFat, setBodyFat] = useState('medium');
+  const [bodyFat, setBodyFat] = useState('Medium');
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [age, setAge] = useState('');
@@ -36,36 +36,26 @@ function Overview() {
 
   // Function to fetch user data from API
   const fetchUserData = async () => {
-    try {
-      const response = await axios.get('https://api.yourdomain.com/user/profile'); // Replace with your API endpoint
-      setUserData(response.data);
-      setGender(response.data.gender || 'male');
-      setBodyFat(response.data.bodyFat || 'medium');
-      setWeight(response.data.weight || '');
-      setHeight(response.data.height || '');
-      setAge(response.data.age || '');
-    } catch (error) {
-      console.error('Error fetching user data:', err);
-      setError('Failed to fetch user data');
-    }
-  };
+      try {
+        const response = await axios.get('http://localhost:7000/meal/getPreferences', {
+          params: { email: localStorage.getItem('email') },
+          headers: {
+            'jwt-token': `${localStorage.getItem('jwtToken')}`
+          }
+        });
+        setUserData(response.data.data)
+        setGender(response.data.data.gender)
+        setBodyFat(response.data.data.bodyFatLevel)
+        setHeight(response.data.data.height)
+        setWeight(response.data.data.weight)
+        setAge(response.data.data.age)
+      } catch (error) {
+        console.error('Error fetching meal suggestions:', error);
+        setError('Failed to fetch meal suggestions');
+      } 
+    };
 
   // Function to update user profile
-  const updateUserProfile = async () => {
-    try {
-      await axios.put('https://api.yourdomain.com/user/profile', {
-        gender,
-        bodyFat,
-        weight,
-        height,
-        age,
-      });
-      alert('Profile updated successfully');
-    } catch (error) {
-      console.error('Error updating user profile:', err);
-      setError('Failed to update profile');
-    }
-  };
 
   // Fetch user data when component mounts
   useEffect(() => {
@@ -92,24 +82,24 @@ function Overview() {
                 <ProfileInfoCard
                   title="Personal Information"
                   info={{
-                    fullName: userData.fullName || "Sathyagnana",
-                    mobile: userData.mobile || "8105063177",
-                    email: userData.email || "sathya@mail.com",
-                    location: userData.location || "India",
+                    fullName: userData.name,
+                    mobile: userData.phoneNumber ,
+                    email: userData.email,
+                    location: "India",
                   }}
                   social={[
                     {
-                      link: "https://www.facebook.com/CreativeTim/",
+                      link: "",
                       icon: <FacebookIcon />,
                       color: "facebook",
                     },
                     {
-                      link: "https://twitter.com/creativetim",
+                      link: "",
                       icon: <TwitterIcon />,
                       color: "twitter",
                     },
                     {
-                      link: "https://www.instagram.com/creativetimofficial/",
+                      link: "",
                       icon: <InstagramIcon />,
                       color: "instagram",
                     },
@@ -128,12 +118,12 @@ function Overview() {
                   <ButtonGroup variant="outlined" color="primary" sx={{ mb: 3 }}>
                     <Button
                       startIcon={<MaleIcon />}
-                      variant={gender === 'male' ? 'outlined' : 'contained'}
+                      variant={gender === 'Male' ? 'outlined' : 'contained'}
                       sx={{
-                        backgroundColor: gender === 'male' ? 'orange' : 'lightgrey',
-                        color: buttonTextColor(gender === 'male'),
-                        borderColor: gender === 'male' ? 'orange' : 'grey',
-                        boxShadow: gender === 'male' ? 'orange' : 'none',
+                        backgroundColor: gender === 'Male' ? 'orange' : 'lightgrey',
+                        color: buttonTextColor(gender === 'Male'),
+                        borderColor: gender === 'Male' ? 'orange' : 'grey',
+                        boxShadow: gender === 'Male' ? 'orange' : 'none',
                       }}
                       onClick={() => setGender('male')}
                     >
@@ -141,14 +131,14 @@ function Overview() {
                     </Button>
                     <Button
                       startIcon={<FemaleIcon />}
-                      variant={gender === 'female' ? 'outlined' : 'contained'}
+                      variant={gender === 'Female' ? 'outlined' : 'contained'}
                       sx={{
-                        backgroundColor: gender === 'female' ? 'orange' : 'lightgrey',
-                        color: buttonTextColor(gender === 'female'),
-                        borderColor: gender === 'female' ? 'orange' : 'grey',
-                        boxShadow: gender === 'female' ? 'orange' : 'none',
+                        backgroundColor: gender === 'Female' ? 'orange' : 'lightgrey',
+                        color: buttonTextColor(gender === 'Female'),
+                        borderColor: gender === 'Female' ? 'orange' : 'grey',
+                        boxShadow: gender === 'Female' ? 'orange' : 'none',
                       }}
-                      onClick={() => setGender('female')}
+                      onClick={() => setGender('Female')}
                     >
                       Female
                     </Button>
@@ -192,50 +182,42 @@ function Overview() {
                   </MDTypography>
                   <ButtonGroup variant="outlined" color="primary">
                     <Button
-                      variant={bodyFat === 'low' ? 'outlined' : 'contained'}
+                      variant={bodyFat === 'Low' ? 'outlined' : 'contained'}
                       sx={{
-                        backgroundColor: bodyFat === 'low' ? 'orange' : 'lightgrey',
-                        color: buttonTextColor(bodyFat === 'low'),
-                        borderColor: bodyFat === 'low' ? 'orange' : 'grey',
-                        boxShadow: bodyFat === 'low' ? 'orange' : 'none',
+                        backgroundColor: bodyFat === 'Low' ? 'orange' : 'lightgrey',
+                        color: buttonTextColor(bodyFat === 'Low'),
+                        borderColor: bodyFat === 'Low' ? 'orange' : 'grey',
+                        boxShadow: bodyFat === 'Low' ? 'orange' : 'none',
                       }}
-                      onClick={() => setBodyFat('low')}
+                      onClick={() => setBodyFat('Low')}
                     >
                       Low
                     </Button>
                     <Button
-                      variant={bodyFat === 'medium' ? 'outlined' : 'contained'}
+                      variant={bodyFat === 'Medium' ? 'outlined' : 'contained'}
                       sx={{
-                        backgroundColor: bodyFat === 'medium' ? 'orange' : 'lightgrey',
-                        color: buttonTextColor(bodyFat === 'medium'),
-                        borderColor: bodyFat === 'medium' ? 'orange' : 'grey',
-                        boxShadow: bodyFat === 'medium' ? 'orange' : 'none',
+                        backgroundColor: bodyFat === 'Medium' ? 'orange' : 'lightgrey',
+                        color: buttonTextColor(bodyFat === 'Medium'),
+                        borderColor: bodyFat === 'Medium' ? 'orange' : 'grey',
+                        boxShadow: bodyFat === 'Medium' ? 'orange' : 'none',
                       }}
-                      onClick={() => setBodyFat('medium')}
+                      onClick={() => setBodyFat('Medium')}
                     >
                       Medium
                     </Button>
                     <Button
-                      variant={bodyFat === 'high' ? 'outlined' : 'contained'}
+                      variant={bodyFat === 'High' ? 'outlined' : 'contained'}
                       sx={{
-                        backgroundColor: bodyFat === 'high' ? 'orange' : 'lightgrey',
-                        color: buttonTextColor(bodyFat === 'high'),
-                        borderColor: bodyFat === 'high' ? 'orange' : 'grey',
-                        boxShadow: bodyFat === 'high' ? 'orange' : 'none',
+                        backgroundColor: bodyFat === 'High' ? 'orange' : 'lightgrey',
+                        color: buttonTextColor(bodyFat === 'High'),
+                        borderColor: bodyFat === 'High' ? 'orange' : 'grey',
+                        boxShadow: bodyFat === 'High' ? 'orange' : 'none',
                       }}
-                      onClick={() => setBodyFat('high')}
+                      onClick={() => setBodyFat('High')}
                     >
                       High
                     </Button>
                   </ButtonGroup>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={updateUserProfile}
-                    sx={{ mt: 2 }}
-                  >
-                    Update Profile
-                  </Button>
                   {err && (
                     <MDTypography variant="caption" color="error">
                       {err}

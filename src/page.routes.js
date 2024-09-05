@@ -15,8 +15,8 @@ const pageRoutes = [
             route: "/dashboards/analytics",
           },
           {
-            name: "sales",
-            route: "/dashboards/sales",
+            name: "Generator",
+            route: "/dashboards/generator",
           },
         ],
       },
@@ -133,13 +133,13 @@ const pageRoutes = [
     name: "application",
     collapse: [
       {
-        name: "kanban",
-        route: "/applications/kanban",
+        name: "Recipes",
+        route: "/applications/recipes",
         icon: "widgets",
       },
       {
         name: "wizard",
-        route: "/applications/wizard",
+        route: "/applications/newuser",
         icon: "import_contacts",
       },
       {

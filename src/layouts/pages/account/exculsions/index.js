@@ -16,23 +16,28 @@ import BaseLayout from "layouts/pages/account/components/BaseLayout";
 import Header from 'layouts/pages/profile/components/Header';
 
 function MyExclusions() {
-  const [selectedDiet, setSelectedDiet] = useState('Vegetarian');
+  const [selectedDiet, setSelectedDiet] = useState('');
   const [selectedAllergens, setSelectedAllergens] = useState([]);
   const [dietPreferences, setDietPreferences] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [apiError, setApiError] = useState(''); // Renamed to apiError
+  const [apiError, setApiError] = useState('');
 
   // Fetch user exclusions from API
   const fetchExclusions = async () => {
     try {
-      const response = await axios.get('https://api.yourdomain.com/user/exclusions'); // Replace with your API endpoint
-      const { diet, allergens, preferences } = response.data;
-      setSelectedDiet(diet);
-      setSelectedAllergens(allergens);
-      setDietPreferences(preferences || ['Exclude Red Meat', 'Exclude Vegetables', 'Exclude Dairy']);
+      const response = await axios.get('http://localhost:7000/meal/getPreferences', {
+        params: { email: localStorage.getItem('email') },
+        headers: {
+          'jwt-token': `${localStorage.getItem('jwtToken')}`
+        }
+      });
+      // /const {  } = response.data;
+      setSelectedDiet(response.data.data.mealType);
+      setSelectedAllergens(response.data.data.preferences);
+      setDietPreferences(response.data.data.preferences);
     } catch (error) {
-      console.error('Error fetching exclusions:', error);
-      setApiError('Failed to fetch exclusions'); // Use apiError instead of error
+      console.error('Error fetching meal suggestions:', error);
+      setApiError('Failed to fetch meal suggestions');
     } finally {
       setLoading(false);
     }
@@ -41,14 +46,20 @@ function MyExclusions() {
   // Update user exclusions
   const updateExclusions = async () => {
     try {
-      await axios.put('https://api.yourdomain.com/user/exclusions', {
-        diet: selectedDiet,
-        allergens: selectedAllergens,
+      await axios.post('http://localhost:7000/meal/addPreferences', {
+        email: localStorage.getItem('email'),
+        mealType: selectedDiet,
+        preferences: selectedAllergens,
+      }, {
+        headers: {
+          'jwt-token': `${localStorage.getItem('jwtToken')}`
+        }
       });
       alert('Exclusions updated successfully');
+      fetchExclusions()
     } catch (error) {
       console.error('Error updating exclusions:', error);
-      setApiError('Failed to update exclusions'); // Use apiError instead of error
+      setApiError('Failed to update exclusions');
     }
   };
 
@@ -60,6 +71,7 @@ function MyExclusions() {
     setSelectedAllergens((prev) =>
       prev.includes(allergen) ? prev.filter(a => a !== allergen) : [...prev, allergen]
     );
+    console.log()
   };
 
   if (loading) {
@@ -72,7 +84,6 @@ function MyExclusions() {
 
   return (
     <BaseLayout>
-      {/* Include Header Component */}
       <Header title="My Exclusions" subtitle="Manage your diet preferences and allergen exclusions here." />
 
       <Box mt={4} mb={3} px={2}>
@@ -104,15 +115,15 @@ function MyExclusions() {
                   variant="contained"
                   sx={{
                     color: 'white',
-                    backgroundColor: 'orange', // All buttons appear selected
+                    backgroundColor: 'orange',
                     marginRight: '8px',
                     marginBottom: '8px',
                     borderColor: 'black',
                     '&:hover': {
-                      backgroundColor: 'green', // No hover effect as it's already selected
+                      backgroundColor: 'green',
                     },
                     cursor: 'default',
-                    pointerEvents: 'none', // Disable button interactions
+                    pointerEvents: 'none',
                   }}
                   startIcon={<CheckCircleIcon />}
                 >
@@ -143,30 +154,30 @@ function MyExclusions() {
             </Typography>
             <ButtonGroup variant="contained" sx={{ mt: 2 }}>
               <Button
-                variant={selectedDiet === 'Vegetarian' ? 'outlined' : 'contained'}
+                variant={selectedDiet === 'Veg' ? 'outlined' : 'contained'}
                 sx={{
-                  color: selectedDiet === 'Vegetarian' ? 'white' : 'orange',
-                  backgroundColor: selectedDiet === 'Vegetarian' ? 'orange' : 'inherit',
+                  color: selectedDiet === 'Veg' ? 'white' : 'orange',
+                  backgroundColor: selectedDiet === 'Veg' ? 'orange' : 'inherit',
                   borderColor: 'orange',
                   '&:hover': {
-                    backgroundColor: selectedDiet === 'Vegetarian' ? 'orange' : 'inherit',
+                    backgroundColor: selectedDiet === 'Veg' ? 'orange' : 'inherit',
                   },
                 }}
-                onClick={() => setSelectedDiet('Vegetarian')}
+                onClick={() => setSelectedDiet('Veg')}
               >
                 Vegetarian
               </Button>
               <Button
-                variant={selectedDiet === 'Non-Vegetarian' ? 'outlined' : 'contained'}
+                variant={selectedDiet === 'Nonveg' ? 'outlined' : 'contained'}
                 sx={{
-                  color: selectedDiet === 'Non-Vegetarian' ? 'white' : 'orange',
-                  backgroundColor: selectedDiet === 'Non-Vegetarian' ? 'orange' : 'inherit',
+                  color: selectedDiet === 'Nonveg' ? 'white' : 'orange',
+                  backgroundColor: selectedDiet === 'Nonveg' ? 'orange' : 'inherit',
                   borderColor: 'orange',
                   '&:hover': {
-                    backgroundColor: selectedDiet === 'Non-Vegetarian' ? 'orange' : 'inherit',
+                    backgroundColor: selectedDiet === 'Nonveg' ? 'orange' : 'inherit',
                   },
                 }}
-                onClick={() => setSelectedDiet('Non-Vegetarian')}
+                onClick={() => setSelectedDiet('Nonveg')}
               >
                 Non-Vegetarian
               </Button>

@@ -23,7 +23,7 @@ function Header({ children }) {
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
 
-  const name = 'Sathyagnana';
+  const name = localStorage.getItem('usernme');
 
   return (
     <MDBox position="relative" mb={5}>

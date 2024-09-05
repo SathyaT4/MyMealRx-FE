@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Grid, Typography, Card, CardContent, Button } from '@mui/material';
 import { styled } from '@mui/system';
@@ -11,6 +12,7 @@ import balanceddiet from '../../../assets/images/balanced-diet.jpg'
 import mealreccomend from '../../../assets/images/diet-reccomd.jpg'
 import mealevaluation from '../../../assets/images/meal-evaluation.jpeg'
 import school from '../../../assets/images/schools.jpeg'
+
 // Custom styled components
 const CustomCard = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -21,6 +23,7 @@ const CustomCard = styled(Card)(({ theme }) => ({
     transform: 'scale(1.05)',
     backgroundColor: theme.palette.action.hover,
   },
+  height: '100%', // Ensure cards fill the available height
 }));
 
 const CustomIcon = styled('div')(({ theme }) => ({
@@ -153,6 +156,11 @@ ApplicationCard.propTypes = {
 };
 
 function HomePage() {
+  const navigate = useNavigate(); // Hook to navigate programmatically
+
+  const handleClick = () => {
+    navigate('/dashboards/generator'); // Replace '/generator' with the actual route to your generator page
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -174,6 +182,7 @@ function HomePage() {
               backgroundColor: '#FFA500',
               '&:hover': { backgroundColor: '#FF5722' },
             }}
+            onClick={handleClick}
           >
             Get Started
           </Button>

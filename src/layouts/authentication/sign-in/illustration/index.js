@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import Switch from "@mui/material/Switch";
@@ -7,36 +7,65 @@ import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import IllustrationLayout from "layouts/authentication/components/IllustrationLayout";
+import MDAlert from "components/MDAlert"; // Import the MDAlert component
 import bgImage from "assets/images/illustrations/reset.jpg";
 
 function Illustration() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [err, setError] = useState("");
+  const [error, setError] = useState("");
+  const [showAlert, setShowAlert] = useState(false); // State for managing alert visibility
   const navigate = useNavigate();
-
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const redirectFromSignUp = queryParams.get('redirectFromSignUp');
+  const handleSetRememberMe = () => setRememberMe(prev => !prev);
+  localStorage.setItem("jwtToken", '');
+  localStorage.setItem("email",'')
+  localStorage.setItem('usernme','')
+  const showError = (message) => {
+    setError(message);
+    setShowAlert(true);
+    setTimeout(() => setShowAlert(false), 5000); // Hide alert after 5 seconds
+  };
 
   const handleSignIn = async () => {
     try {
-      const response = await axios.post("https://api.yourdomain.com/auth/login", {
+      const response = await axios.post("http://localhost:7000/auth/login", {
         email,
         password,
       });
 
-      const { token } = response.data;
+      const { type, user, token } = response.data;
 
-      if (rememberMe) {
-        localStorage.setItem("jwtToken", token);
+      if (type === 'success' && user) {
+        if (token) {
+          if (rememberMe) {
+            localStorage.setItem("jwtToken", token);
+            localStorage.setItem("email",email)
+            localStorage.setItem('usernme',user.name)
+          } else {
+            localStorage.setItem("jwtToken", token);
+            localStorage.setItem("email",email)
+            localStorage.setItem('usernme',user.name)
+          }
+          console.log(redirectFromSignUp)
+          if (redirectFromSignUp === `true');`) {
+            navigate('/applications/newuser');
+          } else {
+            navigate("/dashboard/analytics");
+          }
+          
+        } else {
+          showError("Unexpected error occurred. Please try again.");
+        }
       } else {
-        sessionStorage.setItem("jwtToken", token);
+        showError("Login failed. Please check your credentials and try again.");
       }
-
-      // Redirect to dashboard or any other page
-      navigate("/dashboard/analytics");
     } catch (loginError) {
-      setError("Invalid email or password");
+      const message = loginError.response?.data?.message || "An error occurred. Please try again.";
+      showError(message);
       console.error("Login error: ", loginError);
     }
   };
@@ -100,11 +129,11 @@ function Illustration() {
             &nbsp;&nbsp;Remember me
           </MDTypography>
         </MDBox>
-        {err && (
+        {showAlert && (
           <MDBox mb={2}>
-            <MDTypography variant="caption" color="error">
-              {err}
-            </MDTypography>
+            <MDAlert color="error" dismissible>
+              {error}
+            </MDAlert>
           </MDBox>
         )}
         <MDBox mt={4} mb={1}>
