@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Grid, Typography, Card, CardContent, Button, Box } from '@mui/material';
+import { Grid, Typography, Card, CardContent, Button, Box, Alert } from '@mui/material';
 import { styled } from '@mui/system';
 import { Balance, Recommend, Assessment } from '@mui/icons-material';
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'; // Check the correct path
@@ -58,7 +58,6 @@ const BlinkingButton = styled(Button)(() => ({
   '&:hover': { backgroundColor: '#FF5722' },
   animation: `${blinkAnimation} 1s step-start infinite`, // Apply the blinking style
 }));
-
 // Data for the home page
 const MyMealRXFeatures = [
   {
@@ -173,6 +172,7 @@ ApplicationCard.propTypes = {
 function HomePage() {
   const navigate = useNavigate(); // Hook to navigate programmatically
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showAlert, setShowAlert] = useState(true); // State for alert visibility
   console.log(isAuthenticated)
   // Check for token on component mount
   useEffect(() => {
@@ -184,6 +184,16 @@ function HomePage() {
     }
   }, [navigate]);
 
+  useEffect(() => {
+    // Set timeout to hide alert after 5 seconds
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 5000);
+
+    // Clear the timer if the component is unmounted before the timer expires
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleClick = () => {
     navigate('/dashboards/generator'); // Replace '/generator' with the actual route to your generator page
   };
@@ -191,7 +201,23 @@ function HomePage() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Box py={3} sx={{ backgroundColor: '#FFF8E1' }}>
+      <Box py={3} sx={{ backgroundColor: '#FFF8E1', position: 'relative' }}>
+        {/* Alert */}
+        {showAlert && (
+          <Alert
+            severity="info"
+            sx={{
+              position: 'absolute',
+              top: 16,
+              right: 16,
+              width: 'auto',
+              zIndex: 1300, // Ensure it's above other content
+            }}
+          >
+            Welcome! Click on Get Started to generate your meals.
+          </Alert>
+        )}
+
         {/* Header */}
         <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
           <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: '#FFA500' }}>

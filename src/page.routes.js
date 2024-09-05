@@ -11,7 +11,7 @@ const pageRoutes = [
         icon: <Icon>dashboard</Icon>,
         collapse: [
           {
-            name: "analytics",
+            name: "home",
             route: "/dashboards/analytics",
           },
           {

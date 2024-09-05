@@ -154,7 +154,7 @@ function Kanban() {
                                 transition: 'background-color 0.3s, box-shadow 0.3s',
                                 borderRadius: 1,
                                 padding: 0.5,
-                                marginLeft : 2,
+                                marginLeft : 1,
                               }}
                             >
                               {expandedMeal ? <ExpandLess sx={{ fontSize: 20 }} /> : <ExpandMore sx={{ fontSize: 20 }} />}
