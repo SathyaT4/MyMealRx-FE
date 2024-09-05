@@ -93,7 +93,7 @@ function Wizard() {
     if (isLastStep) {
       try {
         const list = append(formData.allergen ,  formData.preferences)
-        const response = await axios.post("http://localhost:7000/meal/addPreferences", {
+        const response = await axios.post("http://10.1.0.105:7000/meal/addPreferences", {
           email: localStorage.getItem('email'),
           phoneNumber: formData.phoneNumber,
           age: formData.age,
