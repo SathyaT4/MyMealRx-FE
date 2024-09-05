@@ -22,8 +22,8 @@ function Sales() {
   const [err, setError] = useState('');
   const [preferences, setPreferences] = useState([]);
   const [numMeals, setNumMeals] = useState('');
-  const [numDays, setNumDays] = useState('');
   const [numUsers, setNumUsers] = useState('');
+  const [numDays , setNumDays] = useState('')
   console.log(err);
 
   const fetchMealSuggestions = async () => {
@@ -43,8 +43,12 @@ function Sales() {
   };
 
   const handleGenerate = () => {
-    navigate('/applications/recipes');
-  };
+  navigate('/applications/recipes', {
+    state: {
+      numDays
+    }
+  });
+};
   useEffect(() => {
     fetchMealSuggestions();
   }, [mealType]);

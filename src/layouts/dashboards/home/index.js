@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Grid, Typography, Card, CardContent, Button } from '@mui/material';
@@ -157,7 +157,18 @@ ApplicationCard.propTypes = {
 
 function HomePage() {
   const navigate = useNavigate(); // Hook to navigate programmatically
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // Check for token on component mount
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken'); // Assuming token is stored in localStorage
+    if (token) {
+      setIsAuthenticated(true);
+      console.log(isAuthenticated)
+    } else {
+      navigate('/authentication/sign-in'); 
+    }
+  }, [navigate]);
   const handleClick = () => {
     navigate('/dashboards/generator'); // Replace '/generator' with the actual route to your generator page
   };
