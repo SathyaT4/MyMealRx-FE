@@ -48,7 +48,7 @@ function Kanban() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://mymealrx-api.tantiv4.com/recommendation/recipeRecommendation", {
+        const response = await axios.get("http://localhost:7000/recommendation/recipeRecommendation", {
           params: { days: numDays },
           headers: {
             'jwt-token': `${localStorage.getItem('jwtToken')}`

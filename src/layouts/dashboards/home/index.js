@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Grid, Typography, Card, CardContent, Button, Box, Alert } from '@mui/material';
 import { styled } from '@mui/system';
 import { Balance, Recommend, Assessment } from '@mui/icons-material';
-import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'; // Check the correct path
-import DashboardNavbar from 'examples/Navbars/DashboardNavbar'; // Check the correct path
-import Footer from 'examples/Footer'; // Check the correct path
+import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'; // Adjust the path accordingly
+import DashboardNavbar from 'examples/Navbars/DashboardNavbar'; // Adjust the path accordingly
+import Footer from 'examples/Footer'; // Adjust the path accordingly
 import balanceddiet from '../../../assets/images/balanced-diet.jpg';
 import mealreccomend from '../../../assets/images/diet-reccomd.jpg';
 import mealevaluation from '../../../assets/images/meal-evaluation.jpeg';
@@ -31,7 +31,7 @@ const CustomCard = styled(Card)(({ theme }) => ({
     transform: 'scale(1.05)',
     backgroundColor: theme.palette.action.hover,
   },
-  height: '100%', // Ensure cards fill the available height
+  height: '100%',
 }));
 
 const CustomIcon = styled('div')(({ theme }) => ({
@@ -56,9 +56,9 @@ const BlinkingButton = styled(Button)(() => ({
   mt: 2,
   backgroundColor: '#FFA500',
   '&:hover': { backgroundColor: '#FF5722' },
-  animation: `${blinkAnimation} 1s step-start infinite`, // Apply the blinking style
+  animation: `${blinkAnimation} 1s step-start infinite`,
 }));
-// Data for the home page
+
 const MyMealRXFeatures = [
   {
     title: 'Balancing Convenience and Nutrition',
@@ -98,7 +98,6 @@ const MyMealRXApplications = [
   },
 ];
 
-// Custom reusable components
 function SectionTitle({ children }) {
   return (
     <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold', color: '#FFA500' }}>
@@ -113,7 +112,7 @@ SectionTitle.propTypes = {
 
 function FeatureCard({ feature }) {
   return (
-    <Grid item xs={12} sm={4}>
+    <Grid item xs={12} sm={6} md={4}>
       <CustomCard>
         <ImageContainer src={feature.image} alt={feature.title} />
         <CardContent>
@@ -143,7 +142,7 @@ FeatureCard.propTypes = {
 
 function ApplicationCard({ application }) {
   return (
-    <Grid item xs={12} sm={4}>
+    <Grid item xs={12} sm={6} md={4}>
       <CustomCard>
         <ImageContainer src={application.image} alt={application.title} />
         <CardContent>
@@ -170,39 +169,30 @@ ApplicationCard.propTypes = {
 };
 
 function HomePage() {
-  const navigate = useNavigate(); // Hook to navigate programmatically
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [showAlert, setShowAlert] = useState(true); // State for alert visibility
+  const [showAlert, setShowAlert] = useState(true);
   console.log(isAuthenticated)
-  // Check for token on component mount
   useEffect(() => {
-    const token = localStorage.getItem('jwtToken'); // Assuming token is stored in localStorage
+    const token = localStorage.getItem('jwtToken');
     if (token) {
       setIsAuthenticated(true);
-    } else {
-      navigate('/authentication/sign-in'); 
     }
-  }, [navigate]);
+  }, []);
 
   useEffect(() => {
-    // Set timeout to hide alert after 5 seconds
-    const timer = setTimeout(() => {
-      setShowAlert(false);
-    }, 5000);
-
-    // Clear the timer if the component is unmounted before the timer expires
+    const timer = setTimeout(() => setShowAlert(false), 5000);
     return () => clearTimeout(timer);
   }, []);
 
   const handleClick = () => {
-    navigate('/dashboards/generator'); // Replace '/generator' with the actual route to your generator page
+    navigate('/dashboards/generator');
   };
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Box py={3} sx={{ backgroundColor: '#FFF8E1', position: 'relative' }}>
-        {/* Alert */}
+      <Box py={3} sx={{ backgroundColor: '#FFF8E1', position: 'relative', width: '100%', mx: 'auto' }}>
         {showAlert && (
           <Alert
             severity="info"
@@ -210,15 +200,14 @@ function HomePage() {
               position: 'absolute',
               top: 16,
               right: 16,
+              zIndex: 1300,
               width: 'auto',
-              zIndex: 1300, // Ensure it's above other content
             }}
           >
             Welcome! Click on Get Started to generate your meals.
           </Alert>
         )}
 
-        {/* Header */}
         <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
           <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: '#FFA500' }}>
             Welcome to My Meal RX
@@ -226,17 +215,11 @@ function HomePage() {
           <Typography variant="h6" color="textSecondary" gutterBottom>
             Balancing Convenience and Nutrition in Meals
           </Typography>
-          <BlinkingButton
-            variant="contained"
-            color="warning"
-            size="large"
-            onClick={handleClick}
-          >
+          <BlinkingButton variant="contained" color="warning" size="large" onClick={handleClick}>
             Get Started
           </BlinkingButton>
         </Box>
 
-        {/* My Meal RX Features */}
         <Box mt={6}>
           <SectionTitle>Key Features</SectionTitle>
           <Grid container spacing={3}>
@@ -246,7 +229,6 @@ function HomePage() {
           </Grid>
         </Box>
 
-        {/* My Meal RX Applications */}
         <Box mt={6}>
           <SectionTitle>Applications</SectionTitle>
           <Grid container spacing={3}>

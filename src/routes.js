@@ -64,9 +64,9 @@ import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpCover from "layouts/authentication/sign-up/cover";
 import User from "assets/images/user.png"
 
-
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Landing from "layouts/dashboards/land";
 
 // Images
 
@@ -123,6 +123,12 @@ const routes = [
         route: "/dashboards/generator",
         component: <Sales />,
       },
+      {
+        name: "Landing",
+        key: "landing",
+        route: "dashboards/landing",
+        component: <Landing />
+      }
     ],
   },
   // { type: "title", title: "Pages", key: "title-pages" },

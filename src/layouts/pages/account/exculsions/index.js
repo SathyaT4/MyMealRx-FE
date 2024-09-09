@@ -27,7 +27,7 @@ function MyExclusions() {
   // Fetch user exclusions from API
   const fetchExclusions = async () => {
     try {
-      const response = await axios.get('https://mymealrx-api.tantiv4.com/meal/getPreferences', {
+      const response = await axios.get('http://localhost:7000/meal/getPreferences', {
         params: { email: localStorage.getItem('email') },
         headers: {
           'jwt-token': `${localStorage.getItem('jwtToken')}`
@@ -47,7 +47,7 @@ function MyExclusions() {
   // Update user exclusions
   const updateExclusions = async () => {
     try {
-      await axios.post('https://mymealrx-api.tantiv4.com/meal/addPreferences', {
+      await axios.post('http://localhost:7000/meal/addPreferences', {
         email: localStorage.getItem('email'),
         mealType: selectedDiet,
         preferences: selectedAllergens,

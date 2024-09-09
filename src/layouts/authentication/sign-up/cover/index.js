@@ -33,7 +33,7 @@ function Cover() {
         return;
       }
 
-      const response = await axios.post("https://mymealrx-api.tantiv4.com/auth/new", {
+      const response = await axios.post("http://localhost:7000/auth/new", {
         name,
         email,
         password,

@@ -101,6 +101,20 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken'); // Assuming token is stored in localStorage
+    if (token) {
+      setIsAuthenticated(true);
+      localStorage.setItem('authenticated',isAuthenticated)
+
+    } else {
+      console.log("authenticate")
+      localStorage.setItem('authenticated',false)
+      // navigate('/authentication/sign-in'); 
+    }
+  }, []);
+
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
       if (route.collapse) {
@@ -142,20 +156,21 @@ export default function App() {
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
         <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={mealicon}
-              brandName="My Meal RX"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-            <Configurator />
-            {/* {configsButton} */}
-          </>
-        )}
+        {layout === "dashboard" && localStorage.getItem('authenticated') === 'true' && (
+            <>
+              <Sidenav
+                color={sidenavColor}
+                brand={mealicon}
+                brandName="My Meal RX"
+                routes={routes}
+                onMouseEnter={handleOnMouseEnter}
+                onMouseLeave={handleOnMouseLeave}
+              />
+              <Configurator />
+              {/* {configsButton} */}
+            </>
+          )}
+
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
@@ -166,20 +181,20 @@ export default function App() {
   ) : (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
-      {layout === "dashboard" && (
-        <>
-          <Sidenav
-            color={sidenavColor}
-            brand={mealicon}
-            brandName="My Meal RX"
-            routes={routes}
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
-          />
-          {/* <Configurator /> */}
-          {/* {configsButton} */}
-        </>
-      )}
+      {layout === "dashboard" && localStorage.getItem('authenticated') === 'true' && (
+            <>
+              <Sidenav
+                color={sidenavColor}
+                brand={mealicon}
+                brandName="My Meal RX"
+                routes={routes}
+                onMouseEnter={handleOnMouseEnter}
+                onMouseLeave={handleOnMouseLeave}
+              />
+              <Configurator />
+              {/* {configsButton} */}
+            </>
+          )}
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
