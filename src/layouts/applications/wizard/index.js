@@ -38,13 +38,13 @@ const stepperStyles = {
 };
 
 const cardStyles = {
-  backgroundColor: '#FFF3E0',
+  backgroundImage: 'linear-gradient(to bottom right, #FFCC80, #FFE0B2)', // Light gradient
   boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
 };
 
 const buttonStyles = {
   gradient: {
-    backgroundImage: 'linear-gradient(45deg, #FF6F00 30%, #FF8C00 90%)',
+    backgroundImage: 'linear-gradient(45deg, #FF8C00 30%, #FF6F00 90%)',
     color: '#FFFFFF',
   },
   outlined: {
@@ -92,7 +92,7 @@ function Wizard() {
   const handleNext = async () => {
     if (isLastStep) {
       try {
-        const list = append(formData.allergen ,  formData.preferences)
+        const list = append(formData.allergen, formData.preferences);
         const response = await axios.post("http://localhost:7000/meal/addPreferences", {
           email: localStorage.getItem('email'),
           phoneNumber: formData.phoneNumber,
@@ -154,7 +154,7 @@ function Wizard() {
                 </Stepper>
               </MDBox>
               <MDBox p={2}>
-                <MDBox>
+                <MDBox >
                   {getStepContent(activeStep, { handleDataChange })}
                   <MDBox mt={3} width="100%" display="flex" justifyContent="space-between">
                     {activeStep === 0 ? (

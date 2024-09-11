@@ -101,19 +101,6 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  useEffect(() => {
-    const token = localStorage.getItem('jwtToken'); // Assuming token is stored in localStorage
-    if (token) {
-      setIsAuthenticated(true);
-      localStorage.setItem('authenticated',isAuthenticated)
-
-    } else {
-      console.log("authenticate")
-      localStorage.setItem('authenticated',false)
-      // navigate('/authentication/sign-in'); 
-    }
-  }, []);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
@@ -174,7 +161,7 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+          <Route path="*" element={<Navigate to="/dashboards/landing" />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -198,7 +185,7 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+        <Route path="*" element={<Navigate to="/dashboards/landing" />} />
       </Routes>
     </ThemeProvider>
   );

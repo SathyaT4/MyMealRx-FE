@@ -1,4 +1,4 @@
-import { Link, useNavigate,useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import Switch from "@mui/material/Switch";
@@ -7,7 +7,7 @@ import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import IllustrationLayout from "layouts/authentication/components/IllustrationLayout";
-import MDAlert from "components/MDAlert"; // Import the MDAlert component
+import MDAlert from "components/MDAlert";
 import bgImage from "assets/images/illustrations/reset.jpg";
 
 function Illustration() {
@@ -15,19 +15,18 @@ function Illustration() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
-  const [showAlert, setShowAlert] = useState(false); // State for managing alert visibility
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const redirectFromSignUp = queryParams.get('redirectFromSignUp');
-  const handleSetRememberMe = () => setRememberMe(prev => !prev);
-  localStorage.setItem("jwtToken", '');
-  localStorage.setItem("email",'')
-  localStorage.setItem('usernme','')
+
+  const handleSetRememberMe = () => setRememberMe((prev) => !prev);
+  
   const showError = (message) => {
     setError(message);
     setShowAlert(true);
-    setTimeout(() => setShowAlert(false), 5000); // Hide alert after 5 seconds
+    setTimeout(() => setShowAlert(false), 5000);
   };
 
   const handleSignIn = async () => {
@@ -36,32 +35,20 @@ function Illustration() {
         email,
         password,
       });
-
       const { type, user, token } = response.data;
 
-      if (type === 'success' && user) {
-        if (token) {
-          if (rememberMe) {
-            localStorage.setItem("jwtToken", token);
-            localStorage.setItem("email",email)
-            localStorage.setItem('usernme',user.name)
-          } else {
-            localStorage.setItem("jwtToken", token);
-            localStorage.setItem("email",email)
-            localStorage.setItem('usernme',user.name)
-          }
-          console.log(redirectFromSignUp)
-          if (redirectFromSignUp === `true');`) {
-            navigate('/applications/newuser');
-          } else {
-            navigate("/dashboard/analytics");
-          }
-          
+      if (type === "success" && user && token) {
+        localStorage.setItem("jwtToken", token);
+        localStorage.setItem("email", email);
+        localStorage.setItem("usernme", user.name);
+        localStorage.setItem("authenticated", true);
+        if (redirectFromSignUp === "true") {
+          navigate("/applications/newuser");
         } else {
-          showError("Unexpected error occurred. Please try again.");
+          navigate("/dashboards/generator");
         }
       } else {
-        showError("Login failed. Please check your credentials and try again.");
+        showError("Login failed. Please check your credentials.");
       }
     } catch (loginError) {
       const message = loginError.response?.data?.message || "An error occurred. Please try again.";
@@ -72,11 +59,10 @@ function Illustration() {
 
   return (
     <IllustrationLayout
-      title="Sign In"
-      description="Enter your email and password to sign in"
+      title="Welcome Back!"
+      description="Sign in with your credentials"
       illustration={bgImage}
     >
-
       <MDBox component="form" role="form" onSubmit={(e) => e.preventDefault()}>
         <MDBox mb={2}>
           <MDInput
@@ -86,9 +72,13 @@ function Illustration() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             sx={{
-              backgroundColor: '#fff3e0',
-              borderColor: '#ff9800',
-              '& .MuiInputLabel-root': { color: '#ff9800' }
+              backgroundColor: "#fff7e0",
+              borderColor: "#ff9800",
+              '& .MuiInputLabel-root': { color: "#ff9800" },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': { borderColor: "#ff9800" },
+                '&:hover fieldset': { borderColor: "#ff5722" },
+              },
             }}
           />
         </MDBox>
@@ -100,9 +90,13 @@ function Illustration() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             sx={{
-              backgroundColor: '#fff3e0',
-              borderColor: '#ff9800',
-              '& .MuiInputLabel-root': { color: '#ff9800' }
+              backgroundColor: "#fff7e0",
+              borderColor: "#ff9800",
+              '& .MuiInputLabel-root': { color: "#ff9800" },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': { borderColor: "#ff9800" },
+                '&:hover fieldset': { borderColor: "#ff5722" },
+              },
             }}
           />
         </MDBox>
@@ -111,8 +105,8 @@ function Illustration() {
             checked={rememberMe}
             onChange={handleSetRememberMe}
             sx={{
-              '& .MuiSwitch-thumb': { backgroundColor: '#ff9800' },
-              '& .MuiSwitch-track': { backgroundColor: '#ffcc80' }
+              '& .MuiSwitch-thumb': { backgroundColor: "#ff9800" },
+              '& .MuiSwitch-track': { backgroundColor: "#ffcc80" },
             }}
           />
           <MDTypography
@@ -124,7 +118,7 @@ function Illustration() {
               cursor: "pointer",
               userSelect: "none",
               ml: -1,
-              color: '#ff9800'
+              color: "#ff9800",
             }}
           >
             &nbsp;&nbsp;Remember me
@@ -145,10 +139,17 @@ function Illustration() {
             fullWidth
             onClick={handleSignIn}
             sx={{
-              background: 'linear-gradient(45deg, #ff9800 30%, #ff5722 90%)',
+              background: "linear-gradient(135deg, #ff7e5f 30%, #feb47b 90%)", // Vibrant gradient
+              color: "#fff",
+              fontWeight: "bold",
+              padding: "12px 0",
+              borderRadius: "8px",
+              boxShadow: "0px 4px 15px rgba(0,0,0,0.1)",
+              transition: "background 0.3s ease-in-out",
               '&:hover': {
-                background: 'linear-gradient(45deg, #ff5722 30%, #ff9800 90%)'
-              }
+                background: "linear-gradient(135deg, #feb47b 30%, #ff7e5f 90%)",
+                boxShadow: "0px 6px 20px rgba(0,0,0,0.15)",
+              },
             }}
           >
             Sign In
@@ -161,7 +162,7 @@ function Illustration() {
               component={Link}
               to="/authentication/sign-up"
               variant="button"
-              color="orange"
+              color="warning"
               fontWeight="medium"
               textGradient
             >

@@ -1,22 +1,28 @@
 import React, { useState } from "react";
 import { Button, TextField, Typography, Box, ToggleButton, ToggleButtonGroup, Grid, useTheme, useMediaQuery } from "@mui/material";
 import { styled } from "@mui/system";
-import { RestaurantMenu, LocalDining, FitnessCenter, MedicalServices } from "@mui/icons-material";
 import Header from "layouts/authentication/components/Header";
 import healthyFoodImage from "assets/images/balanced-diet.jpg";
 import balancedDietImage from "assets/images/food1.jpeg";
+import veganIcon from "assets/images/vegan.png";
+import vegetarianIcon from "assets/images/vegetarian.png";
+import paleoIcon from "assets/images/paleo.png";
+import diabeticIcon from "assets/images/sugarfree.png";
+import anythingIcon from "assets/images/icons8-bagel-94.png";
 
 // Custom styled components
 const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: "#FFA500",
+  background: "linear-gradient(to right, #FF7E5F, #FD3A69)",
   color: "#fff",
   fontWeight: "bold",
   padding: theme.spacing(1.5, 4),
   borderRadius: theme.shape.borderRadius,
+  boxShadow: "0px 5px 15px rgba(255, 123, 123, 0.4)",
   '&:hover': {
-    backgroundColor: "#FF5722",
+    background: "linear-gradient(to right, #FF6A5F, #FD2A55)",
+    boxShadow: theme.shadows[6],
   },
-  marginTop: theme.spacing(2),
+  marginTop: theme.spacing(3),
   [theme.breakpoints.down("sm")]: {
     width: "100%",
   },
@@ -30,9 +36,10 @@ const Container = styled(Box)(({ theme }) => ({
   minHeight: "90vh",
   textAlign: "center",
   padding: theme.spacing(4),
-  backgroundColor: "#FFF8E1",
+  background: "linear-gradient(to right, #FDCB82, #FEB47B)",
+
   borderRadius: theme.shape.borderRadius,
-  boxShadow: theme.shadows[2],
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)",
   margin: theme.spacing(3),
   [theme.breakpoints.down("sm")]: {
     margin: theme.spacing(1),
@@ -43,15 +50,15 @@ const Container = styled(Box)(({ theme }) => ({
 const DietButton = styled(ToggleButton)(({ theme }) => ({
   backgroundColor: "#FFF",
   color: "#555",
-  border: "2px solid #FFA500",
+  border: "2px solid #FF7E5F",
   borderRadius: theme.shape.borderRadius,
   margin: theme.spacing(1),
   '&.Mui-selected': {
-    backgroundColor: "#FFA500",
+    backgroundColor: "#FF7E5F",
     color: "#FFF",
   },
   '&:hover': {
-    backgroundColor: "#FF5722",
+    backgroundColor: "#FD3A69",
     color: "#FFF",
   },
   [theme.breakpoints.down("sm")]: {
@@ -65,6 +72,10 @@ const ImageContainer = styled('img')(({ theme }) => ({
   maxHeight: '300px',
   objectFit: 'cover',
   marginBottom: theme.spacing(4),
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)",
+  [theme.breakpoints.down("sm")]: {
+    maxHeight: '200px',
+  },
 }));
 
 const InputField = styled(TextField)(({ theme }) => ({
@@ -72,13 +83,15 @@ const InputField = styled(TextField)(({ theme }) => ({
   marginBottom: theme.spacing(3),
   backgroundColor: "#fff",
   borderRadius: theme.shape.borderRadius,
+  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
   [theme.breakpoints.down("sm")]: {
     width: "100%",
   },
 }));
 
 function Landing() {
-  const [diet, setDiet] = useState("Anything");
+
+  const [diet, setDiet] = useState("Diabetic Friendly");
   const [days, setDays] = useState(3);
 
   const theme = useTheme();
@@ -99,10 +112,10 @@ function Landing() {
       <Header />
       <Container>
         {/* Header and Welcome Text */}
-        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: "bold", color: "#FF5722" }}>
+        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: "bold", color: "#FD3A69", fontSize: { xs: "1.5rem", sm: "2rem" } }}>
           Take Control of Your Diet, Effortlessly
         </Typography>
-        <Typography variant="h6" gutterBottom sx={{ color: "#555", maxWidth: "600px", mb: 4 }}>
+        <Typography variant="h6" gutterBottom sx={{ color: "#555", maxWidth: "600px", mb: 4, fontSize: { xs: "0.9rem", sm: "1.1rem" } }}>
           MyMealRX provides personalized meal plans that fit your unique preferences, schedule, and goals. Generate a balanced meal plan tailored to your needs in just seconds.
         </Typography>
 
@@ -117,7 +130,7 @@ function Landing() {
         </Grid>
 
         {/* Prompt and Diet Selection */}
-        <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#FF5722", mt: 4 }}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#FF7E5F", mt: 4, fontSize: { xs: "1.2rem", sm: "1.5rem" } }}>
           Ready to Transform Your Diet? Select Your Preferences:
         </Typography>
         <ToggleButtonGroup
@@ -127,19 +140,24 @@ function Landing() {
           sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", mb: 3 }}
         >
           <DietButton value="Anything">
-            <RestaurantMenu sx={{ mr: 1 }} /> Anything
-          </DietButton>
-          <DietButton value="Vegan">
-            <RestaurantMenu sx={{ mr: 1 }} /> Vegan
-          </DietButton>
-          <DietButton value="Vegetarian">
-            <LocalDining sx={{ mr: 1 }} /> Vegetarian
-          </DietButton>
-          <DietButton value="Paleo">
-            <FitnessCenter sx={{ mr: 1 }} /> Paleo
+            <img src={anythingIcon} alt="Anything" style={{ width: 24, height: 24, marginRight: 8 }} />
+            Anything
           </DietButton>
           <DietButton value="Diabetic Friendly">
-            <MedicalServices sx={{ mr: 1 }} /> Diabetic Friendly
+            <img src={diabeticIcon} alt="Diabetic Friendly" style={{ width: 24, height: 24, marginRight: 8 }} />
+            Diabetic Friendly
+          </DietButton>
+          <DietButton value="Vegan">
+            <img src={veganIcon} alt="Vegan" style={{ width: 24, height: 24, marginRight: 8 }} />
+            Vegan
+          </DietButton>
+          <DietButton value="Vegetarian">
+            <img src={vegetarianIcon} alt="Vegetarian" style={{ width: 24, height: 24, marginRight: 8 }} />
+            Vegetarian
+          </DietButton>
+          <DietButton value="Paleo">
+            <img src={paleoIcon} alt="Paleo" style={{ width: 24, height: 24, marginRight: 8 }} />
+            Paleo
           </DietButton>
         </ToggleButtonGroup>
 

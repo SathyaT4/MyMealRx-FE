@@ -1,204 +1,418 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; 
 import Grid from "@mui/material/Grid";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAlert from "components/MDAlert"; // Import MDAlert
+import MDAlert from "components/MDAlert";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Header from 'layouts/pages/profile/components/Header';
-import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
-import RestaurantIcon from "@mui/icons-material/Restaurant";
-import GenerateIcon from '@mui/icons-material/PlayArrow'; // Import an icon for the Generate button
+import GenerateIcon from '@mui/icons-material/PlayArrow';
+import veg from "assets/images/vegetarian.png";
+import vegan from "assets/images/vegan.png";
+import paleo from "assets/images/paleo.png";
+import eggs from 'assets/images/icons8-eggs-100.png';
+import milk from "assets/images/icons8-milk-80.png";
+import wheat from "assets/images/icons8-wheat-100.png";
+import treenuts from "assets/images/treenuts.png";
+import peanuts from "assets/images/peanuts.png";
+import soy from "assets/images/icons8-soy-64.png";
+import fish from "assets/images/icons8-fish-100.png";
+import shellfish from "assets/images/icons8-shellfish-100.png";
+import asian from "assets/images/asia.png";
+import american from "assets/images/america.png";
+import african from "assets/images/africa.png";
+import diabetics from "assets/images/sugarfree.png"
 
 function Sales() {
   const navigate = useNavigate();
   const [mealType, setMealType] = useState('');
-  const [err, setError] = useState('');
-  console.log(err)
-  const [preferences, setPreferences] = useState([]);
-  const [numMeals, setNumMeals] = useState('');
+  const [preferences, setPreferences] = useState(['Vegetarian', 'Vegan', 'Paleo', 'Diabetics']);
   const [numDays, setNumDays] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // State for error message
+  const [errorMessage, setErrorMessage] = useState('');
+  const [culturalBackground, setCulturalBackground] = useState('American');
+  const [dietPreferences, setDietPreferences] = useState([]);
+  const [allergens, setAllergens] = useState([]);
+  const [gender, setGender] = useState('');
+  const [prepTime, setPrepTime] = useState('');
+  const [priceSensitivity, setPriceSensitivity] = useState('Medium'); // Default to Medium
 
-  const fetchMealSuggestions = async () => {
-    try {
-      const response = await axios.get('http://localhost:7000/meal/getPreferences', {
-        params: { email: localStorage.getItem('email') },
-        headers: {
-          'jwt-token': `${localStorage.getItem('jwtToken')}`
-        }
-      });
-      setPreferences(response.data.data.preferences);
-      setMealType(response.data.data.mealType);
-    } catch (error) {
-      console.error('Error fetching meal suggestions:', error);
-      setError('Failed to fetch meal suggestions');
-    }
+  const loadDummyData = () => {
+    setPreferences(['Vegetarian', 'Vegan', 'Paleo', 'Diabetics']);
+    setMealType('Vegetarian');
+    setDietPreferences(['Vegan', 'Paleo']);
+    setAllergens(['Nuts', 'Dairy']);
+    setPrepTime('30 mins');
+    setPriceSensitivity('Medium');
+    setGender('Female');
+    setCulturalBackground('American');
+    setAllergens(['Dairy']);
+    setNumDays(3);
   };
 
   const handleGenerate = () => {
-    if (!numMeals || !numDays) {
-      setErrorMessage('Number of meals and number of days are required');
+    if (!numDays || numDays < 1 || numDays > 7) {
+      setErrorMessage('Number of days is required and must be between 1 and 7');
       return;
     }
     navigate('/applications/recipes', {
       state: {
-        numDays
+        mealType,
+        culturalBackground,
+        dietPreferences,
+        allergens,
+        gender,
+        prepTime,
+        priceSensitivity
       }
     });
   };
 
+  const togglePreference = (item) => {
+    setDietPreferences((prev) => 
+      prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
+    );
+  };
+
+  const toggleAllergen = (item) => {
+    setAllergens((prev) => 
+      prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
+    );
+  };
+
+  const fetchExclusions = async () => {
+    try {
+      const response = await axios.get('http://localhost:7000/meal/getPreferences', {
+        params: { email: localStorage.getItem('email') },
+        headers: { 'jwt-token': `${localStorage.getItem('jwtToken')}` }
+      });
+      setAllergens(response.data.data.preferences);
+      setPrepTime('30 mins');
+      setPriceSensitivity('Medium');
+      setNumDays(3)
+      const hasDairyOrEggs = response.data.data.preferences.includes('Dairy') || response.data.data.preferences.includes('Eggs');
+      const hasMeatOrFish = response.data.data.preferences.includes('Meat') && response.data.data.preferences.includes('Fish');
+      console.log(dietPreferences)
+      if (hasMeatOrFish === true) {
+        setDietPreferences(['Vegetarian']);
+      } if (hasMeatOrFish === false) {
+        setDietPreferences(['Paleo']);
+      }
+      if (hasDairyOrEggs === true || hasDairyOrEggs === true) {
+        setDietPreferences(['Vegan']);
+      } 
+    } catch (error) {
+      console.error('Error fetching meal suggestions:', error);
+    }
+  };
+
   useEffect(() => {
-    fetchMealSuggestions();
-  }, [mealType]);
+    if (localStorage.getItem("authenticated") === 'true')
+    {
+      fetchExclusions()
+    }
+    else{
+      loadDummyData();
+    }
+
+  }, []);
 
   const buttonTextColor = (active) => (active ? 'white' : 'black');
+
+  const preferenceImages = {
+    Vegetarian: veg,
+    Vegan: vegan,
+    Paleo: paleo,
+    Diabetics: diabetics
+  };
+
+  const allergenImages = {
+    Peanuts: peanuts,
+    'Tree Nuts': treenuts,
+    Dairy: milk,
+    Eggs: eggs,
+    Soy: soy,
+    Wheat: wheat,
+    Fish: fish,
+    Shellfish: shellfish
+  };
+
+  const culturalBackgroundImages = {
+    Asian: asian,
+    American: american,
+    African: african
+  };
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <Header />
       <MDBox 
         mb={2} 
         sx={{
-          backgroundColor: '#f5f5f5',
+          background: "linear-gradient(to right, #FFD194, #FF9A8B)",
           minHeight: '100vh',
           padding: '16px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        <Header>
-          <MDBox mt={5} mb={3} sx={{ color: 'black' }}>
-            <Grid container spacing={4}>
-              <Grid item xs={12} md={6}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, px: 2 }}>
-                  {errorMessage && (
-                    <MDAlert severity="error" sx={{ mb: 2 }}>
-                      {errorMessage}
-                    </MDAlert>
-                  )}
-                  <MDTypography variant="subtitle1" fontWeight="medium">
-                    Preferences (Exclusions)
-                  </MDTypography>
-                  <ButtonGroup variant="outlined" color="primary">
-                    {preferences.map((preference) => (
+        <MDBox 
+          mt={5} 
+          mb={3} 
+          sx={{ 
+            color: 'black', 
+            width: '100%', 
+            maxWidth: 1200 
+          }}
+        >
+          {/* Centered Text */}
+          <MDTypography 
+            variant="h4" 
+            fontWeight="bold" 
+            align="center" 
+            sx={{ mb: 4 }}
+          >
+            Discover Your Perfect Meal Plan!
+            <br />
+            Tailored to Your Preferences and Needs
+          </MDTypography>
+
+          <Grid container spacing={4}>
+            {/* Left side - preferences and options */}
+            <Grid item xs={12} md={6}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, px: 2 }}>
+                {errorMessage && (
+                  <MDAlert severity="error" sx={{ mb: 2 }}>
+                    {errorMessage}
+                  </MDAlert>
+                )}
+
+                <MDTypography variant="subtitle1" fontWeight="medium">
+                  {localStorage.getItem("authenticated") === 'true' ? "Your Cultural Background" : "Cultural Background"}
+                </MDTypography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 2 }}>
+                  {Object.keys(culturalBackgroundImages).map((background) => (
+                    <Button
+                      key={background}
+                      onClick={() => setCulturalBackground(background)}
+                      disabled={localStorage.getItem("authenticated") === 'true'}
+                      sx={{
+                        backgroundColor: culturalBackground === background ? 'orange' : 'lightgrey',
+                        color: culturalBackground === background ? 'white' : 'black',
+                        '&:hover': {
+                          backgroundColor: culturalBackground === background ? 'darkorange' : 'grey',
+                        },
+                        borderRadius: '8px',
+                        padding: '8px 16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                      }}
+                    >
+                      <img 
+                        src={culturalBackgroundImages[background]} 
+                        alt={background} 
+                        style={{ width: 24, height: 24 }} 
+                      />
+                      {background}
+                    </Button>
+                  ))}
+                </Box>
+
+
+                {localStorage.getItem("authenticated") === 'false'  && (
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <MDTypography variant="subtitle1" fontWeight="medium">
+                      Gender
+                    </MDTypography>
+                    <ButtonGroup variant="outlined" color="primary">
                       <Button
-                        key={preference}
+                        variant={gender === 'Male' ? 'outlined' : 'outlined'}
+                        onClick={() => setGender('Male')}
                         sx={{
-                          backgroundColor: 'orange',
-                          color: 'black',
-                          '&:hover': {
-                            backgroundColor: 'darkorange',
-                            color: 'white',
-                          },
+                          backgroundColor: gender === 'Male' ? 'orange' : 'lightgrey',
+                          color: buttonTextColor(gender === 'Male'),
+                          borderColor: gender === 'Male' ? 'orange' : 'grey',
                           borderRadius: '8px',
                           padding: '8px 16px',
                         }}
                       >
-                        {preference}
+                        Male
                       </Button>
-                    ))}
-                  </ButtonGroup>
-                  <MDTypography variant="subtitle1" fontWeight="medium" sx={{ mt: 2 }}>
-                    Meal Type
-                  </MDTypography>
-                  <ButtonGroup variant="outlined" color="primary" sx={{ mb: 3 }}>
+                      <Button
+                        variant={gender === 'Female' ? 'outlined' : 'outlined'}
+                        onClick={() => setGender('Female')}
+                        sx={{
+                          backgroundColor: gender === 'Female' ? 'orange' : 'lightgrey',
+                          color: buttonTextColor(gender === 'Female'),
+                          borderColor: gender === 'Female' ? 'orange' : 'grey',
+                          borderRadius: '8px',
+                          padding: '8px 16px',
+                        }}
+                      >
+                        Female
+                      </Button>
+                      <Button
+                        variant={gender === 'Non-Binary' ? 'outlined' : 'outlined'}
+                        onClick={() => setGender('Non-Binary')}
+                        sx={{
+                          backgroundColor: gender === 'Non-Binary' ? 'orange' : 'lightgrey',
+                          color: buttonTextColor(gender === 'Non-Binary'),
+                          borderColor: gender === 'Non-Binary' ? 'orange' : 'grey',
+                          borderRadius: '8px',
+                          padding: '8px 16px',
+                        }}
+                      >
+                        Non-Binary
+                      </Button>
+                    </ButtonGroup>
+                  </Box>
+                )}
+
+                {/* Diet Preferences */}
+                <MDTypography variant="subtitle1" fontWeight="medium">
+                  {localStorage.getItem("authenticated") === 'true' ? "Your Diet Preferences" : "Diet Preferences"}
+                </MDTypography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 2 }}>
+                  {preferences.map((preference) => (
                     <Button
-                      startIcon={<RestaurantMenuIcon />}
-                      variant={mealType === 'Veg' ? 'outlined' : 'contained'}
+                      key={preference}
+                      onClick={() => togglePreference(preference)}
+                      disabled={localStorage.getItem("authenticated") === 'true'}
                       sx={{
-                        backgroundColor: mealType === 'Veg' ? 'orange' : 'lightgrey',
-                        color: buttonTextColor(mealType === 'Veg'),
-                        borderColor: mealType === 'Veg' ? 'orange' : 'grey',
-                        boxShadow: mealType === 'Veg' ? '0 2px 4px rgba(0,0,0,0.2)' : 'none',
+                        backgroundColor: dietPreferences.includes(preference) ? 'orange' : 'lightgrey',
+                        color: dietPreferences.includes(preference) ? 'white' : 'black',
+                        '&:hover': {
+                          backgroundColor: dietPreferences.includes(preference) ? 'darkorange' : 'grey',
+                        },
                         borderRadius: '8px',
                         padding: '8px 16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
                       }}
-                      onClick={() => setMealType('Veg')}
                     >
-                      Vegetarian
+                      <img 
+                        src={preferenceImages[preference]} 
+                        alt={preference} 
+                        style={{ width: 24, height: 24 }} 
+                      />
+                      {preference}
                     </Button>
+                  ))}
+                </Box>
+
+                {/* Allergens */}
+                <MDTypography variant="subtitle1" fontWeight="medium">
+                  {localStorage.getItem("authenticated") === 'true' ? "Your Allergens" : "Allergens"}
+                </MDTypography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                  {Object.keys(allergenImages).map((allergen) => (
                     <Button
-                      startIcon={<RestaurantIcon />}
-                      variant={mealType === 'Nonveg' ? 'outlined' : 'contained'}
+                      key={allergen}
+                      onClick={() => toggleAllergen(allergen)}
                       sx={{
-                        backgroundColor: mealType === 'Nonveg' ? 'orange' : 'lightgrey',
-                        color: buttonTextColor(mealType === 'Nonveg'),
-                        borderColor: mealType === 'Nonveg' ? 'orange' : 'grey',
-                        boxShadow: mealType === 'Nonveg' ? '0 2px 4px rgba(0,0,0,0.2)' : 'none',
+                        backgroundColor: allergens.includes(allergen) ? 'orange' : 'lightgrey',
+                        color: allergens.includes(allergen) ? 'white' : 'black',
+                        '&:hover': {
+                          backgroundColor: allergens.includes(allergen) ? 'darkorange' : 'grey',
+                        },
                         borderRadius: '8px',
                         padding: '8px 16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
                       }}
-                      onClick={() => setMealType('Nonveg')}
                     >
-                      Non Vegetarian
+                      <img 
+                        src={allergenImages[allergen]} 
+                        alt={allergen} 
+                        style={{ width: 24, height: 24 }} 
+                      />
+                      {allergen}
                     </Button>
-                  </ButtonGroup>
-                  <MDTypography variant="subtitle1" fontWeight="medium" sx={{ mt: 2 }}>
-                    Number of Meals per Day
-                  </MDTypography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <TextField
-                      type="number"
-                      value={numMeals}
-                      onChange={(e) => setNumMeals(e.target.value)}
-                      inputProps={{ min: 0 }}
-                      sx={{
-                        '& .MuiInputBase-input': {
-                          padding: '12px',
-                        },
-                        '& .MuiOutlinedInput-root': {
-                          borderRadius: '8px',
-                        }
-                      }}
-                    />
-                  </Box>
-                  <MDTypography variant="subtitle1" fontWeight="medium" sx={{ mt: 2 }}>
-                    Number of Days
-                  </MDTypography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <TextField
-                      type="number"
-                      value={numDays}
-                      onChange={(e) => setNumDays(e.target.value)}
-                      inputProps={{ min: 0 }}
-                      sx={{
-                        '& .MuiInputBase-input': {
-                          padding: '12px',
-                        },
-                        '& .MuiOutlinedInput-root': {
-                          borderRadius: '8px',
-                        }
-                      }}
-                    />
-                  </Box>
+                  ))}
+                </Box>
+              </Box>
+            </Grid>
+
+            {/* Right side - inputs */}
+            <Grid item xs={12} md={6}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                <MDTypography variant="subtitle1" fontWeight="medium">
+                  Number of Days
+                </MDTypography>
+                <TextField
+                  variant="outlined"
+                  type="number"
+                  value={numDays}
+                  onChange={(e) => setNumDays(Math.min(7, Number(e.target.value)))}
+                  placeholder="Enter number of days (Max: 7)"
+                  inputProps={{
+                    min: 1,
+                    max: 7
+                  }}
+                />
+
+                <MDTypography variant="subtitle1" fontWeight="medium">
+                  Prep Time
+                </MDTypography>
+                <TextField
+                  variant="outlined"
+                  value={prepTime}
+                  onChange={(e) => setPrepTime(e.target.value)}
+                  placeholder="Enter preparation time"
+                />
+
+                <MDTypography variant="subtitle1" fontWeight="medium">
+                  Price Sensitivity
+                </MDTypography>
+                <Select
+                  variant="outlined"
+                  value={priceSensitivity}
+                  onChange={(e) => setPriceSensitivity(e.target.value)}
+                >
+                  <MenuItem value="Low">Low</MenuItem>
+                  <MenuItem value="Medium">Medium</MenuItem>
+                  <MenuItem value="High">High</MenuItem>
+                </Select>
+
+                {/* Generate Button */}
+                <Box mt={4}>
                   <Button
+                    onClick={handleGenerate}
                     variant="contained"
                     color="primary"
-                    startIcon={<GenerateIcon />}
                     sx={{
+                      width: '100%',
                       backgroundColor: 'orange',
-                      color: 'white',
                       '&:hover': {
                         backgroundColor: 'darkorange',
                       },
-                      borderRadius: '8px',
-                      padding: '8px 16px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      padding: '12px 0'
                     }}
-                    onClick={handleGenerate}
                   >
-                    Generate
+                    <GenerateIcon sx={{ mr: 1 }} />
+                    Generate Meal Plan
                   </Button>
                 </Box>
-              </Grid>
+              </Box>
             </Grid>
-          </MDBox>
-        </Header>
+          </Grid>
+        </MDBox>
       </MDBox>
       <Footer />
     </DashboardLayout>

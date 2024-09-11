@@ -1,28 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-import MDBox from 'components/MDBox';
-import MDTypography from 'components/MDTypography';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import FormField from 'layouts/applications/wizard/components/FormField';
+import { styled } from '@mui/material/styles';
+import male from "assets/images/icons8-male-50.png";
+import female from "assets/images/icons8-female-100.png";
+import nonbinary from "assets/images/icons8-non-binary-64.png";
+import lowfat from "assets/images/icons8-pixel-man-90.png";
+import mediumfat from "assets/images/icons8-standing-man-100.png";
+import highfat from "assets/images/icons8-fat-cop-96.png";
+import profile from "assets/images/icons8-glyph-96.png"
 
-// Custom styles
-const selectedButtonStyles = {
+// Custom styled components
+const Container = styled(Box)(({ theme }) => ({
+  background: 'linear-gradient(180deg, #FFFAF0 0%, #FFDEDE 100%)',
+  borderRadius: '15px',
+  padding: theme.spacing(4),
+  boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+}));
+
+const GenderImage = styled('img')(({ theme }) => ({
+  width: '50px',
+  height: '50px',
+  marginRight: theme.spacing(1),
+}));
+
+const BodyFatImage = styled('img')(({ theme }) => ({
+  width: '60px',
+  height: '60px',
+  marginRight: theme.spacing(1),
+}));
+
+const SelectedButton = styled(Button)(() => ({
   backgroundColor: '#FF8C00',
   color: '#FFFFFF',
   '&:hover': {
     backgroundColor: '#FF6F00',
   },
-};
+}));
 
-const unselectedButtonStyles = {
-  backgroundColor: '#FFBE8C',
-  color: '#000000',
-  '&:hover': {
-    backgroundColor: '#FF8C00',
-  },
-};
+
 
 function About({ handleDataChange }) {
   const [firstName, setFirstName] = useState('');
@@ -35,21 +56,6 @@ function About({ handleDataChange }) {
   const [selectedBodyFat, setSelectedBodyFat] = useState('');
 
   useEffect(() => {
-    // Notify parent component of initial state
-    handleDataChange({
-      firstName,
-      lastName,
-      phoneNumber,
-      age,
-      weight,
-      height,
-      gender: selectedGender,
-      bodyFat: selectedBodyFat
-    });
-  }, []); // Empty dependency array to run only on mount
-
-  useEffect(() => {
-    // Notify parent component whenever any field changes
     handleDataChange({
       firstName,
       lastName,
@@ -71,22 +77,23 @@ function About({ handleDataChange }) {
   };
 
   return (
-    <MDBox>
-      <MDBox width="82%" textAlign="center" mx="auto" my={4}>
-        <MDBox mb={1}>
-          <MDTypography variant="h5" fontWeight="regular">
+    <Container>
+      <Box width="82%" textAlign="center" mx="auto" my={4}>
+        <img src={profile} alt="Profile" style={{ width: '10%', borderRadius: '8px', marginBottom: '16px' }} />
+        <Box mb={1}>
+          <Typography variant="h5" fontWeight="regular">
             Update Your Information
-          </MDTypography>
-        </MDBox>
-        <MDTypography variant="body2" color="text">
+          </Typography>
+        </Box>
+        <Typography variant="body2" color="text">
           Provide your personal details below. This information will help us tailor your experience.
-        </MDTypography>
-      </MDBox>
-      <MDBox mt={2}>
+        </Typography>
+      </Box>
+      <Box mt={2}>
         <Grid container spacing={3}>
           {/* Row 1 */}
           <Grid item xs={12} sm={6}>
-            <MDBox mb={2}>
+            <Box mb={2}>
               <FormField
                 type="text"
                 label="First Name"
@@ -94,10 +101,10 @@ function About({ handleDataChange }) {
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
-            </MDBox>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <MDBox mb={2}>
+            <Box mb={2}>
               <FormField
                 type="text"
                 label="Last Name"
@@ -105,12 +112,12 @@ function About({ handleDataChange }) {
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
-            </MDBox>
+            </Box>
           </Grid>
 
           {/* Row 2 */}
           <Grid item xs={12} sm={6}>
-            <MDBox mb={2}>
+            <Box mb={2}>
               <FormField
                 type="text"
                 label="Phone Number"
@@ -118,10 +125,10 @@ function About({ handleDataChange }) {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
-            </MDBox>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <MDBox mb={2}>
+            <Box mb={2}>
               <FormField
                 type="number"
                 label="Age"
@@ -129,12 +136,12 @@ function About({ handleDataChange }) {
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
               />
-            </MDBox>
+            </Box>
           </Grid>
 
           {/* Row 3 */}
           <Grid item xs={12} sm={6}>
-            <MDBox mb={2}>
+            <Box mb={2}>
               <FormField
                 type="number"
                 label="Weight (kg)"
@@ -142,10 +149,10 @@ function About({ handleDataChange }) {
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
               />
-            </MDBox>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <MDBox mb={2}>
+            <Box mb={2}>
               <FormField
                 type="number"
                 label="Height (cm)"
@@ -153,65 +160,71 @@ function About({ handleDataChange }) {
                 value={height}
                 onChange={(e) => setHeight(e.target.value)}
               />
-            </MDBox>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <MDBox mb={2}>
-              <MDTypography variant="body1">
+            <Box mb={2}>
+              <Typography variant="body1">
                 Gender
-              </MDTypography>
+              </Typography>
               <ButtonGroup fullWidth>
-                <Button
-                  sx={selectedGender === 'Male' ? selectedButtonStyles : unselectedButtonStyles}
+                <SelectedButton
+                  sx={selectedGender === 'Male' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleGenderSelect('Male')}
                 >
+                  <GenderImage src={male} alt="Male" style={{ width: '50%'}}/>
                   Male
-                </Button>
-                <Button
-                  sx={selectedGender === 'Female' ? selectedButtonStyles : unselectedButtonStyles}
+                </SelectedButton>
+                <SelectedButton
+                  sx={selectedGender === 'Female' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleGenderSelect('Female')}
                 >
+                  <GenderImage src={female} alt="Female" style={{ width: '50%'}} />
                   Female
-                </Button>
-                <Button
-                  sx={selectedGender === 'non-binary' ? selectedButtonStyles : unselectedButtonStyles}
+                </SelectedButton>
+                <SelectedButton
+                  sx={selectedGender === 'non-binary' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleGenderSelect('non-binary')}
                 >
+                  <GenderImage src={nonbinary} alt="Non-binary" style={{ width: '50%'}} />
                   Non-binary
-                </Button>
+                </SelectedButton>
               </ButtonGroup>
-            </MDBox>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <MDBox mb={2}>
-              <MDTypography variant="body1">
+            <Box mb={2}>
+              <Typography variant="body1">
                 Body Fat Level
-              </MDTypography>
+              </Typography>
               <ButtonGroup fullWidth>
-                <Button
-                  sx={selectedBodyFat === 'low' ? selectedButtonStyles : unselectedButtonStyles}
+                <SelectedButton
+                  sx={selectedBodyFat === 'low' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleBodyFatSelect('low')}
                 >
+                  <BodyFatImage src={lowfat} alt="Low Fat" style={{ width: '50%'}}/>
                   Low
-                </Button>
-                <Button
-                  sx={selectedBodyFat === 'medium' ? selectedButtonStyles : unselectedButtonStyles}
+                </SelectedButton>
+                <SelectedButton
+                  sx={selectedBodyFat === 'medium' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleBodyFatSelect('medium')}
                 >
+                  <BodyFatImage src={mediumfat} alt="Medium Fat" style={{ width: '50%'}} />
                   Medium
-                </Button>
-                <Button
-                  sx={selectedBodyFat === 'high' ? selectedButtonStyles : unselectedButtonStyles}
+                </SelectedButton>
+                <SelectedButton
+                  sx={selectedBodyFat === 'high' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleBodyFatSelect('high')}
                 >
+                  <BodyFatImage src={highfat} alt="High Fat" style={{ width: '50%'}} />
                   High
-                </Button>
+                </SelectedButton>
               </ButtonGroup>
-            </MDBox>
+            </Box>
           </Grid>
         </Grid>
-      </MDBox>
-    </MDBox>
+      </Box>
+    </Container>
   );
 }
 

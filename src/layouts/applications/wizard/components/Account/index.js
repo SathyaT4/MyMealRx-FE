@@ -5,20 +5,27 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import PropTypes from 'prop-types';
+import dietimg from "assets/images/icons8-diet-96.png"
+
+const containerStyles = {
+  background: 'linear-gradient(180deg, #FFFAF0 0%, #FFDEDE 100%)',
+    borderRadius: '8px',
+  padding: '2rem',
+};
 
 const selectedButtonStyles = {
-  backgroundColor: '#FF6F00', // Orange
+  background: 'linear-gradient(to bottom right, #FF6F00, #FF8C00)', // Gradient background
   color: '#FFFFFF',
   width: '200px',
   height: '150px',
   fontSize: '24px',
   '&:hover': {
-    backgroundColor: '#FF8C00',
+    background: 'linear-gradient(to bottom right, #FF8C00, #FF6F00)',
   },
 };
 
 const unselectedButtonStyles = {
-  backgroundColor: '#FFF3E0', // Light Orange
+  background: '#FFF3E0', // Light Orange
   color: '#000000',
   width: '200px',
   height: '150px',
@@ -27,41 +34,38 @@ const unselectedButtonStyles = {
     backgroundColor: '#FF6F00',
   },
 };
-let preferences = []
-let mealType = ''
+
 function Diet({ handleDataChange }) {
   const [selectedDiet, setSelectedDiet] = React.useState('');
 
   const handleDietSelect = (diet) => {
     setSelectedDiet(diet);
-    console.log(diet)
-    if (diet === 'paleo')
-    {
-      mealType = 'Nonveg'
-      preferences = []
-    }
-    if (diet === 'vegan')
-    {
-      mealType = 'Veg'
-      preferences = ['Dairy','Eggs','Meat','Fish']
-    }
-    if (diet === 'anything')
-    {
-      mealType = 'Nonveg'
-      preferences = []
-    }
-    else
-    {
-      mealType = 'Veg'
-      preferences = ['Meat',"Fish"]
-    }
-    handleDataChange({ mealType, preferences });
+    console.log(diet);
 
+    let mealType = '';
+    let preferences = [];
+
+    if (diet === 'paleo') {
+      mealType = 'Nonveg';
+      preferences = [];
+    } else if (diet === 'vegan') {
+      mealType = 'Veg';
+      preferences = ['Dairy', 'Eggs', 'Meat', 'Fish'];
+    } else if (diet === 'anything') {
+      mealType = 'Nonveg';
+      preferences = [];
+    } else {
+      mealType = 'Veg';
+      preferences = ['Meat', 'Fish'];
+    }
+
+    handleDataChange({ mealType, preferences });
   };
 
   return (
-    <MDBox>
+    <MDBox sx={containerStyles}>
       <MDBox width="80%" textAlign="center" mx="auto" my={4}>
+      <img src={dietimg} alt="Profile" style={{ width: '10%', borderRadius: '8px', marginBottom: '16px' }} />
         <MDBox mb={1}>
           <MDTypography variant="h5" fontWeight="regular">
             What is your dietary preference?
@@ -161,4 +165,5 @@ function Diet({ handleDataChange }) {
 Diet.propTypes = {
   handleDataChange: PropTypes.func.isRequired,
 };
+
 export default Diet;

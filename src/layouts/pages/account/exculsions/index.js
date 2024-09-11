@@ -6,36 +6,59 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Image from 'mui-image';
-import MDAlert from 'components/MDAlert'; // Import MDAlert
+import MDAlert from 'components/MDAlert';
 
 // MyExclusions page components
 import BaseLayout from "layouts/pages/account/components/BaseLayout";
 import Header from 'layouts/pages/profile/components/Header';
 
+// Image imports
+import veg from "assets/images/vegetarian.png";
+import vegan from "assets/images/vegan.png";
+import paleo from "assets/images/paleo.png";
+import eggs from 'assets/images/icons8-eggs-100.png';
+import Dairy from "assets/images/icons8-milk-80.png";
+import wheat from "assets/images/icons8-wheat-100.png";
+import treenuts from "assets/images/treenuts.png";
+import peanuts from "assets/images/peanuts.png";
+import soy from "assets/images/icons8-soy-64.png";
+import fish from "assets/images/icons8-fish-100.png";
+import shellfish from "assets/images/icons8-shellfish-100.png";
+import diabetics from "assets/images/sugarfree.png";
+
 function MyExclusions() {
   const [selectedDiet, setSelectedDiet] = useState('');
+  const [selectedDietType, setSelectedDietType] = useState([]);
   const [selectedAllergens, setSelectedAllergens] = useState([]);
   const [dietPreferences, setDietPreferences] = useState([]);
   const [loading, setLoading] = useState(true);
   const [apiError, setApiError] = useState('');
-  const [showAlert, setShowAlert] = useState(false); // State for alert visibility
+  const [showAlert, setShowAlert] = useState(false);
+  const [cuisinePreferences, setCuisinePreferences] = useState([]);
 
-  // Fetch user exclusions from API
   const fetchExclusions = async () => {
     try {
       const response = await axios.get('http://localhost:7000/meal/getPreferences', {
         params: { email: localStorage.getItem('email') },
-        headers: {
-          'jwt-token': `${localStorage.getItem('jwtToken')}`
-        }
+        headers: { 'jwt-token': `${localStorage.getItem('jwtToken')}` }
       });
       setSelectedDiet(response.data.data.mealType);
       setSelectedAllergens(response.data.data.preferences);
       setDietPreferences(response.data.data.preferences);
+      setCuisinePreferences(response.data.data.cuisinePreferences || []);
+
+      const hasDairyOrEggs = response.data.data.preferences.includes('Dairy') || response.data.data.preferences.includes('Eggs');
+      const hasMeatOrFish = response.data.data.preferences.includes('Meat') && response.data.data.preferences.includes('Fish');
+      console.log(dietPreferences)
+      if (hasMeatOrFish === true) {
+        setSelectedDietType(['Vegetarian']);
+      } if (hasMeatOrFish === false) {
+        setSelectedDietType(['Paleo']);
+      }
+      if (hasDairyOrEggs === true || hasDairyOrEggs === true) {
+        setSelectedDietType(['Vegan']);
+      } 
     } catch (error) {
       console.error('Error fetching meal suggestions:', error);
       setApiError('Failed to fetch meal suggestions');
@@ -44,21 +67,19 @@ function MyExclusions() {
     }
   };
 
-  // Update user exclusions
   const updateExclusions = async () => {
     try {
       await axios.post('http://localhost:7000/meal/addPreferences', {
         email: localStorage.getItem('email'),
         mealType: selectedDiet,
         preferences: selectedAllergens,
+        cuisinePreferences,
       }, {
-        headers: {
-          'jwt-token': `${localStorage.getItem('jwtToken')}`
-        }
+        headers: { 'jwt-token': `${localStorage.getItem('jwtToken')}` }
       });
       setApiError('Exclusions updated successfully');
-      setShowAlert(true); // Show the alert
-      setTimeout(() => setShowAlert(false), 3000); // Hide the alert after 3 seconds
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 3000);
       fetchExclusions();
     } catch (error) {
       console.error('Error updating exclusions:', error);
@@ -71,8 +92,14 @@ function MyExclusions() {
   }, []);
 
   const handleAllergenToggle = (allergen) => {
-    setSelectedAllergens((prev) =>
+    setSelectedAllergens(prev =>
       prev.includes(allergen) ? prev.filter(a => a !== allergen) : [...prev, allergen]
+    );
+  };
+
+  const handleDietToggle = (diet) => {
+    setSelectedDietType(prev =>
+      prev.includes(diet) ? prev.filter(a => a !== diet) : [...prev, diet]
     );
   };
 
@@ -89,7 +116,6 @@ function MyExclusions() {
       <Header title="My Exclusions" subtitle="Manage your diet preferences and allergen exclusions here." />
 
       <Box mt={4} mb={3} px={2}>
-        {/* Error Alert */}
         {showAlert && (
           <Box
             position="fixed"
@@ -105,175 +131,195 @@ function MyExclusions() {
           </Box>
         )}
 
-        {/* User Diet Preferences */}
+        {/* Diet Preferences Section */}
         <Box
           mb={3}
           p={2}
           border={1}
           borderColor="grey.300"
           borderRadius="borderRadius"
-          display="flex"
-          alignItems="center"
-          sx={{ backgroundColor: '#fffae5' }}
+          sx={{ background: 'linear-gradient(135deg, #FFF9E6, #FFCC80)' }}
         >
-          <Box>
-            <Typography variant="h6" fontWeight="bold" sx={{ color: 'black' }}>
-              Diet Preferences
-              <IconButton size="small" sx={{ color: 'grey' }}>
-                <InfoIcon />
-              </IconButton>
-            </Typography>
-            <Typography variant="body1" mt={2} sx={{ color: 'black' }}>
-              List of preset exclusions and preferences by the user.
-            </Typography>
-            <Box mt={2}>
-              {dietPreferences.map((preference) => (
-                <Button
-                  key={preference}
-                  variant="contained"
-                  sx={{
-                    color: 'white',
-                    backgroundColor: 'orange',
-                    marginRight: '8px',
-                    marginBottom: '8px',
-                    borderColor: 'black',
-                    '&:hover': {
-                      backgroundColor: 'green',
-                    },
-                    cursor: 'default',
-                    pointerEvents: 'none',
-                  }}
-                  startIcon={<CheckCircleIcon />}
-                >
-                  {preference}
-                </Button>
-              ))}
-            </Box>
-          </Box>
-        </Box>
-
-        {/* Veg or Non-Veg Option */}
-        <Box
-          mb={3}
-          p={2}
-          border={1}
-          borderColor="grey.300"
-          borderRadius="borderRadius"
-          display="flex"
-          alignItems="center"
-          sx={{ backgroundColor: '#fffae5' }}
-        >
-          <Box>
-            <Typography variant="h6" fontWeight="bold" sx={{ color: 'black' }}>
-              Veg or Non-Veg
-            </Typography>
-            <Typography variant="body1" mt={2} sx={{ color: 'black' }}>
-              Choose between vegetarian or non-vegetarian options to customize your meal plans.
-            </Typography>
-            <ButtonGroup variant="contained" sx={{ mt: 2 }}>
-              <Button
-                variant={selectedDiet === 'Veg' ? 'outlined' : 'contained'}
-                sx={{
-                  color: selectedDiet === 'Veg' ? 'white' : 'orange',
-                  backgroundColor: selectedDiet === 'Veg' ? 'orange' : 'inherit',
-                  borderColor: 'orange',
-                  '&:hover': {
-                    backgroundColor: selectedDiet === 'Veg' ? 'orange' : 'inherit',
-                  },
-                }}
-                onClick={() => setSelectedDiet('Veg')}
-              >
-                Vegetarian
-              </Button>
-              <Button
-                variant={selectedDiet === 'Nonveg' ? 'outlined' : 'contained'}
-                sx={{
-                  color: selectedDiet === 'Nonveg' ? 'white' : 'orange',
-                  backgroundColor: selectedDiet === 'Nonveg' ? 'orange' : 'inherit',
-                  borderColor: 'orange',
-                  '&:hover': {
-                    backgroundColor: selectedDiet === 'Nonveg' ? 'orange' : 'inherit',
-                  },
-                }}
-                onClick={() => setSelectedDiet('Nonveg')}
-              >
-                Non-Vegetarian
-              </Button>
-            </ButtonGroup>
-          </Box>
-        </Box>
-
-        {/* Common Allergens and Other Filters */}
-        <Box
-          p={2}
-          border={1}
-          borderColor="grey.300"
-          borderRadius="borderRadius"
-          sx={{ backgroundColor: '#fffae5' }}
-        >
-          <Box display="flex" alignItems="center">
-            <Box>
-              <Typography variant="h6" fontWeight="bold" sx={{ color: 'black' }}>
-                Common Allergens & Filters
-              </Typography>
-              <Typography variant="body1" mt={2} sx={{ color: 'black' }}>
-                Select common allergens and other filters to exclude specific ingredients from your meal plans. This helps in avoiding recipes that may cause allergic reactions or that you prefer not to consume.
-              </Typography>
-            </Box>
-          </Box>
-
+          <Typography variant="h6" fontWeight="bold">
+            My Exclusions
+          </Typography>
+          <Typography variant="body1" mt={2}>
+            List of preset exclusions made by the user.
+          </Typography>
           <Box mt={2}>
-            <Typography variant="body2" fontWeight="bold" sx={{ color: 'black' }}>
-              <strong>Allergens:</strong>
-            </Typography>
-            <Grid container spacing={2} mt={1}>
-              {['Gluten', 'Peanuts', 'Eggs', 'Fish', 'Tree Nuts', 'Dairy', 'Soy', 'Shellfish'].map(allergen => (
-                <Grid item xs={6} sm={4} key={allergen}>
-                  <Button
-                    color='error'
-                    variant={selectedAllergens.includes(allergen) ? 'outlined' : 'contained'}
-                    sx={{
-                      color: selectedAllergens.includes(allergen) ? 'white' : 'orange',
-                      backgroundColor: selectedAllergens.includes(allergen) ? 'orange' : 'white',
-                      borderColor: selectedAllergens.includes(allergen) ? 'white' : 'white',
-                      '&:hover': {
-                        backgroundColor: selectedAllergens.includes(allergen) ? 'orange' : 'yellow',
-                      },
-                    }}
-                    onClick={() => handleAllergenToggle(allergen)}
-                  >
-                    {allergen}
-                  </Button>
-                </Grid>
-              ))}
-            </Grid>
+            {dietPreferences.map((preference) => (
+              <Button
+                key={preference}
+                variant="contained"
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#FF8C00',
+                  marginRight: '8px',
+                  marginBottom: '8px',
+                  '&:hover': {
+                    backgroundColor: 'darkorange',
+                  },
+                }}
+                startIcon={<CheckCircleIcon />}
+              >
+                {preference}
+              </Button>
+            ))}
           </Box>
+        </Box>
 
+        {/* Cuisine Preferences Section */}
+        <Box
+          mb={3}
+          p={2}
+          border={1}
+          borderColor="grey.300"
+          borderRadius="borderRadius"
+          sx={{ background: 'linear-gradient(135deg, #FFF9E6, #FFCC80)' }}
+        >
+          <Typography variant="h6" fontWeight="bold">
+            Diet Preferences
+          </Typography>
+          <Typography variant="body1" mt={2}>
+            Select your diet preferences.
+          </Typography>
+          <Grid container spacing={2} mt={1}>
+            {[
+              { label: 'Vegetarian', image: veg },
+              { label: 'Vegan', image: vegan },
+              { label: 'Paleo', image: paleo },
+              { label: 'Diabetic Freindly', image: diabetics },
+            ].map(({ label, image }) => (
+              <Grid item key={label}>
+                <Button
+                  color='error'
+                  variant={selectedDietType.includes(label) ? 'outlined' : 'contained'}
+                  sx={{
+                    color: selectedDietType.includes(label) ? 'white' : '#FF8C00',
+                    backgroundColor: selectedDietType.includes(label) ? '#FF8C00' : 'white',
+                    '&:hover': {
+                      backgroundColor: selectedDietType.includes(label) ? '#FF8C00' : 'yellow',
+                    },
+                  }}
+                  startIcon={<img src={image} alt={label} style={{ width: 20, height: 20, marginRight: 8 }} />}
+                  onClick={() => handleDietToggle(label)}
+                >
+                  {label}
+                </Button>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* Diet Type Section */}
+        <Box
+          mb={3}
+          p={2}
+          border={1}
+          borderColor="grey.300"
+          borderRadius="borderRadius"
+          sx={{ background: 'linear-gradient(135deg, #FFF9E6, #FFCC80)' }}
+        >
+          <Typography variant="h6" fontWeight="bold">
+            Veg or Non-Veg
+          </Typography>
+          <Typography variant="body1" mt={2}>
+            Choose between vegetarian or non-vegetarian options to customize your meal plans.
+          </Typography>
+          <ButtonGroup variant="contained" sx={{ mt: 2 }}>
+            <Button
+              variant={selectedDiet === 'Veg' ? 'outlined' : 'contained'}
+              sx={{
+                color: selectedDiet === 'Veg' ? 'white' : '#FF8C00',
+                backgroundColor: selectedDiet === 'Veg' ? '#FF8C00' : 'inherit',
+                '&:hover': {
+                  backgroundColor: selectedDiet === 'Veg' ? '#FF8C00' : 'inherit',
+                },
+              }}
+              onClick={() => setSelectedDiet('Veg')}
+              startIcon={<img src={veg} alt="Vegetarian" style={{ width: 20, height: 20, marginRight: 8 }} />}
+            >
+              Veg
+            </Button>
+            <Button
+              variant={selectedDiet === 'Nonveg' ? 'outlined' : 'contained'}
+              sx={{
+                color: selectedDiet === 'Nonveg' ? 'white' : '#FF8C00',
+                backgroundColor: selectedDiet === 'Nonveg' ? '#FF8C00' : 'inherit',
+                '&:hover': {
+                  backgroundColor: selectedDiet === 'Nonveg' ? '#FF8C00' : 'inherit',
+                },
+              }}
+              onClick={() => setSelectedDiet('Nonveg')}
+              startIcon={<img src={paleo} alt="Non-Vegetarian" style={{ width: 20, height: 20, marginRight: 8 }} />}
+            >
+              Non-Veg
+            </Button>
+          </ButtonGroup>
+        </Box>
+
+        {/* Allergen Exclusions Section */}
+        <Box
+          mb={3}
+          p={2}
+          border={1}
+          borderColor="grey.300"
+          borderRadius="borderRadius"
+          sx={{ background: 'linear-gradient(135deg, #FFF9E6, #FFCC80)' }}
+        >
+          <Typography variant="h6" fontWeight="bold">
+            Allergens
+          </Typography>
+          <Typography variant="body1" mt={2}>
+            Select allergens to exclude from your diet.
+          </Typography>
+          <Grid container spacing={2} mt={1}>
+            {[
+              { label: 'Eggs', image: eggs },
+              { label: 'Dairy', image: Dairy },
+              { label: 'Wheat', image: wheat },
+              { label: 'Tree Nuts', image: treenuts },
+              { label: 'Peanuts', image: peanuts },
+              { label: 'Soy', image: soy },
+              { label: 'Fish', image: fish },
+              { label: 'Shellfish', image: shellfish },
+            ].map(({ label, image }) => (
+              <Grid item key={label}>
+                <Button
+                  variant={selectedAllergens.includes(label) ? 'outlined' : 'contained'}
+                  sx={{
+                    color: selectedAllergens.includes(label) ? 'white' : '#FF8C00',
+                    backgroundColor: selectedAllergens.includes(label) ? '#FF8C00' : 'white',
+                    '&:hover': {
+                      backgroundColor: selectedAllergens.includes(label) ? '#FF8C00' : '#FF8C00',
+                    },
+                  }}
+                  startIcon={<img src={image} alt={label} style={{ width: 20, height: 20, marginRight: 8 }} />}
+                  onClick={() => handleAllergenToggle(label)}
+                >
+                  {label}
+                </Button>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* Save Button */}
+        <Box mt={3} textAlign="center">
           <Button
             variant="contained"
-            color="error"
-            sx={{ mt: 3, backgroundColor: 'gold', color: 'white', '&:hover': { backgroundColor: 'gold' } }}
+            color="primary"
             onClick={updateExclusions}
+            sx={{
+              backgroundColor: '#FF8C00',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: '#FF8C00',
+              },
+            }}
           >
-            Apply Filters
+            Save Changes
           </Button>
-        </Box>
-
-        {/* Image Section */}
-        <Box mt={4} display="flex" justifyContent="center">
-          <Image
-            src="/path/to/your/image.jpg"
-            alt="Healthy Eating"
-            width={400}
-            height={250}
-            fit="cover"
-            duration={300}
-            easing="ease-in-out"
-            showLoading={<CircularProgress />}
-            // errorIcon={<ErrorIcon />}
-            shift="left"
-            shiftDuration={300}
-          />
         </Box>
       </Box>
     </BaseLayout>

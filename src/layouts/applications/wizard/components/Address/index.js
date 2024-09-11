@@ -9,6 +9,13 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import allergy from "assets/images/icons8-food-allergy-64.png"
+
+const containerStyles = {
+  background: 'linear-gradient(180deg, #FFFAF0 0%, #FFDEDE 100%)',
+    borderRadius: '8px',
+  padding: '2rem',
+};
 
 // Custom styles
 const selectedButtonStyles = {
@@ -42,8 +49,9 @@ function Allergens({handleDataChange}) {
   };
 
   return (
-    <MDBox>
-      <MDBox width="80%" textAlign="center" mx="auto" my={4}>
+    <MDBox sx={containerStyles}>     
+     <MDBox width="80%" textAlign="center" mx="auto" my={4}>
+     <img src={allergy} alt="Profile" style={{ width: '10%', borderRadius: '8px', marginBottom: '16px' }} />
         <MDBox mb={1}>
           <MDTypography variant="h5" fontWeight="regular">
             Do you have any allergies?

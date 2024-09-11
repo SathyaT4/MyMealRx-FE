@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import mealRxLogo from "assets/images/mealicon.png"; // Import your logo image
 
 function Header() {
+  // const navigate = useNavigate()
   return (
     <AppBar
       position="static"
@@ -26,7 +27,7 @@ function Header() {
             <Typography
               variant="h5" // Larger text for the website name
               component={Link}
-              to="/"
+              to="/dashboards/landing"
               sx={{
                 textDecoration: "none",
                 color: "white",
@@ -49,7 +50,7 @@ function Header() {
             <Button
               color="inherit"
               component={Link}
-              to="/dashboard/analytics"
+              to="/dashboards/analytics"
               sx={{
                 fontSize: { xs: "0.8rem", sm: "1rem" }, 
                 "&:hover": {
@@ -62,7 +63,7 @@ function Header() {
             <Button
               color="inherit"
               component={Link}
-              to="/dashboard/sales"
+              to="/dashboards/analytics"
               sx={{
                 fontSize: { xs: "0.8rem", sm: "1rem" }, // Responsive font size
                 "&:hover": {
@@ -76,7 +77,7 @@ function Header() {
               variant="outlined"
               color="inherit"
               component={Link}
-              to="/sign-in"
+              to="/authentication/sign-in"
               sx={{
                 borderColor: "white",
                 borderRadius: "20px", // Rounded edges for the button
