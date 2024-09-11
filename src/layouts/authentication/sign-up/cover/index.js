@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Consolidated imports
+import { Link } from "react-router-dom"; // Consolidated imports
 import axios from "axios";
 
 // @mui material components
@@ -26,11 +26,12 @@ function Cover() {
   const [password, setPassword] = useState("");
   const [agree, setAgree] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  // const navigate = useNavigate();
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
+  console.log(isSmallScreen)
   const handleSignUp = async () => {
     try {
       if (!agree) {
@@ -44,15 +45,28 @@ function Cover() {
         password,
       });
 
+      // Clear any previous error
+      setError("");
+
+      // Show success message
+      setMessage("User is registered. Just verify from your email.");
+
+      setName("");
+      setEmail("");
+      setPassword("");
+      setAgree(false);
+
+      // Store token in localStorage or sessionStorage if needed
       const { token } = response.data;
 
       // Store token in localStorage or sessionStorage
       localStorage.setItem("jwtToken", token);
 
       // Redirect to sign-in or another page
-      navigate("/authentication/sign-in?redirectFromSignUp=true");
+      // navigate("/authentication/sign-in?redirectFromSignUp=true");
     } catch (signupError) {
       setError("Failed to register. Please try again.");
+      setMessage(""); // Clear success message if error occurs
       console.error("Registration error: ", signupError);
     }
   };
@@ -63,16 +77,7 @@ function Cover() {
       description="Enter your email and password to register"
       illustration={bgImage}
     >
-      <Card
-        sx={{
-          padding: isSmallScreen ? "16px" : "32px",
-          backgroundColor: "#fff3e0",
-          borderRadius: "8px",
-          boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
-          maxWidth: isSmallScreen ? "90%" : "500px",
-          margin: "0 auto",
-        }}
-      >
+      <Card sx={{ padding: "16px", backgroundColor: "#fff3e0", borderRadius: "8px" }}>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form" onSubmit={(e) => e.preventDefault()}>
             <MDBox mb={2}>
@@ -130,12 +135,7 @@ function Cover() {
                 variant="button"
                 fontWeight="regular"
                 color="text"
-                sx={{
-                  cursor: "pointer",
-                  userSelect: "none",
-                  ml: -1,
-                  color: "#ff9800",
-                }}
+                sx={{ cursor: "pointer", userSelect: "none", ml: -1, color: "#ff9800" }}
               >
                 &nbsp;&nbsp;I agree to the&nbsp;
               </MDTypography>
@@ -173,6 +173,43 @@ function Cover() {
               >
                 Sign Up
               </MDButton>
+
+              {/* Conditionally show success or error message */}
+              {message && (
+                <span
+                  style={{
+                    display: "block",
+                    color: "#fff",
+                    backgroundColor: "#4CAF50", // Green background for success
+                    padding: "10px 20px",
+                    borderRadius: "8px",
+                    fontWeight: "bold",
+                    marginTop: "15px",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                    textAlign: "center",
+                  }}
+                >
+                  {message}
+                </span>
+              )}
+
+              {error && (
+                <span
+                  style={{
+                    display: "block",
+                    color: "#fff",
+                    backgroundColor: "#f44336", // Red background for error
+                    padding: "10px 20px",
+                    borderRadius: "8px",
+                    fontWeight: "bold",
+                    marginTop: "15px",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                    textAlign: "center",
+                  }}
+                >
+                  {error}
+                </span>
+              )}
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
