@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Consolidated imports
+import { Link } from "react-router-dom"; // Consolidated imports
 import axios from "axios";
 
 // @mui material components
@@ -24,7 +24,8 @@ function Cover() {
   const [password, setPassword] = useState("");
   const [agree, setAgree] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  // const navigate = useNavigate();
 
   const handleSignUp = async () => {
     try {
@@ -39,16 +40,23 @@ function Cover() {
         password,
       });
 
+      // Clear any previous error
+      setError("");
+
+      // Show success message
+      setMessage("User is registered. Just verify from your email.");
+
+      setName("");
+      setEmail("");
+      setPassword("");
+      setAgree(false);
+
+      // Store token in localStorage or sessionStorage if needed
       const { token } = response.data;
-  
-
-      // Store token in localStorage or sessionStorage
       localStorage.setItem("jwtToken", token);
-
-      // Redirect to sign-in or another page
-      navigate("/authentication/sign-in?redirectFromSignUp=true');");
     } catch (signupError) {
       setError("Failed to register. Please try again.");
+      setMessage(""); // Clear success message if error occurs
       console.error("Registration error: ", signupError);
     }
   };
@@ -59,7 +67,7 @@ function Cover() {
       description="Enter your email and password to register"
       illustration={bgImage}
     >
-      <Card sx={{ padding: '16px', backgroundColor: '#fff3e0', borderRadius: '8px' }}>
+      <Card sx={{ padding: "16px", backgroundColor: "#fff3e0", borderRadius: "8px" }}>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form" onSubmit={(e) => e.preventDefault()}>
             <MDBox mb={2}>
@@ -70,7 +78,11 @@ function Cover() {
                 fullWidth
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                sx={{ backgroundColor: '#fff3e0', borderColor: '#ff9800', '& .MuiInputLabel-root': { color: '#ff9800' } }}
+                sx={{
+                  backgroundColor: "#fff3e0",
+                  borderColor: "#ff9800",
+                  "& .MuiInputLabel-root": { color: "#ff9800" },
+                }}
               />
             </MDBox>
             <MDBox mb={2}>
@@ -81,7 +93,11 @@ function Cover() {
                 fullWidth
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                sx={{ backgroundColor: '#fff3e0', borderColor: '#ff9800', '& .MuiInputLabel-root': { color: '#ff9800' } }}
+                sx={{
+                  backgroundColor: "#fff3e0",
+                  borderColor: "#ff9800",
+                  "& .MuiInputLabel-root": { color: "#ff9800" },
+                }}
               />
             </MDBox>
             <MDBox mb={2}>
@@ -92,20 +108,24 @@ function Cover() {
                 fullWidth
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                sx={{ backgroundColor: '#fff3e0', borderColor: '#ff9800', '& .MuiInputLabel-root': { color: '#ff9800' } }}
+                sx={{
+                  backgroundColor: "#fff3e0",
+                  borderColor: "#ff9800",
+                  "& .MuiInputLabel-root": { color: "#ff9800" },
+                }}
               />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox
                 checked={agree}
                 onChange={(e) => setAgree(e.target.checked)}
-                sx={{ '& .MuiCheckbox-root': { color: '#ff9800' } }}
+                sx={{ "& .MuiCheckbox-root": { color: "#ff9800" } }}
               />
               <MDTypography
                 variant="button"
                 fontWeight="regular"
                 color="text"
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1, color: '#ff9800' }}
+                sx={{ cursor: "pointer", userSelect: "none", ml: -1, color: "#ff9800" }}
               >
                 &nbsp;&nbsp;I agree to the&nbsp;
               </MDTypography>
@@ -116,7 +136,7 @@ function Cover() {
                 fontWeight="bold"
                 color="info"
                 textGradient
-                sx={{ color: '#ff9800' }}
+                sx={{ color: "#ff9800" }}
               >
                 Terms and Conditions
               </MDTypography>
@@ -134,10 +154,50 @@ function Cover() {
                 color="info"
                 fullWidth
                 onClick={handleSignUp}
-                sx={{ background: 'linear-gradient(45deg, #ff9800 30%, #ff5722 90%)', '&:hover': { background: 'linear-gradient(45deg, #ff5722 30%, #ff9800 90%)' } }}
+                sx={{
+                  background: "linear-gradient(45deg, #ff9800 30%, #ff5722 90%)",
+                  "&:hover": { background: "linear-gradient(45deg, #ff5722 30%, #ff9800 90%)" },
+                }}
               >
                 Sign Up
               </MDButton>
+
+              {/* Conditionally show success or error message */}
+              {message && (
+                <span
+                  style={{
+                    display: "block",
+                    color: "#fff",
+                    backgroundColor: "#4CAF50", // Green background for success
+                    padding: "10px 20px",
+                    borderRadius: "8px",
+                    fontWeight: "bold",
+                    marginTop: "15px",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                    textAlign: "center",
+                  }}
+                >
+                  {message}
+                </span>
+              )}
+
+              {error && (
+                <span
+                  style={{
+                    display: "block",
+                    color: "#fff",
+                    backgroundColor: "#f44336", // Red background for error
+                    padding: "10px 20px",
+                    borderRadius: "8px",
+                    fontWeight: "bold",
+                    marginTop: "15px",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                    textAlign: "center",
+                  }}
+                >
+                  {error}
+                </span>
+              )}
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
@@ -149,7 +209,7 @@ function Cover() {
                   color="info"
                   fontWeight="medium"
                   textGradient
-                  sx={{ color: '#ff9800' }}
+                  sx={{ color: "#ff9800" }}
                 >
                   Sign In
                 </MDTypography>
