@@ -112,23 +112,11 @@ const routes = [
     icon: <Icon fontSize="medium">dashboard</Icon>,
     collapse: [
       {
-        name: "Home",
-        key: "analytics",
-        route: "/dashboards/analytics",
-        component: <Analytics />,
-      },
-      {
-        name: "Generator",
+        name: "Meal Planner",
         key: "generator",
         route: "/dashboards/generator",
         component: <Sales />,
       },
-      {
-        name: "Landing",
-        key: "landing",
-        route: "dashboards/landing",
-        component: <Landing />
-      }
     ],
   },
   // { type: "title", title: "Pages", key: "title-pages" },
@@ -244,6 +232,18 @@ const routes = [
         key: "newuser",
         route: "/applications/newuser",
         component: <Wizard />,
+      },
+      {
+        name: "Landing",
+        key: "landing",
+        route: "dashboards/landing",
+        component: <Landing />
+      },
+      {
+        name: "Home",
+        key: "analytics",
+        route: "/dashboards/analytics",
+        component: <Analytics />,
       },
   //   ],
   // },

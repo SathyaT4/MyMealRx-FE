@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, TextField, Typography, Box, ToggleButton, ToggleButtonGroup, Grid, useTheme, useMediaQuery } from "@mui/material";
 import { styled } from "@mui/system";
+import MealPlan from "layouts/applications/recipes";
 import Header from "layouts/authentication/components/Header";
 import healthyFoodImage from "assets/images/balanced-diet.jpg";
 import balancedDietImage from "assets/images/food1.jpeg";
@@ -37,7 +38,6 @@ const Container = styled(Box)(({ theme }) => ({
   textAlign: "center",
   padding: theme.spacing(4),
   background: "linear-gradient(to right, #FDCB82, #FEB47B)",
-
   borderRadius: theme.shape.borderRadius,
   boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)",
   margin: theme.spacing(3),
@@ -93,6 +93,8 @@ function Landing() {
 
   const [diet, setDiet] = useState("Diabetic Friendly");
   const [days, setDays] = useState(3);
+  const [meal, showMeal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // Added error state
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -104,7 +106,19 @@ function Landing() {
   };
 
   const handleGenerateClick = () => {
-    alert(`Generating meal plan for diet: ${diet}, Days: ${days}`);
+    if (days < 3 || days > 7) {
+      setErrorMessage('Please choose between 3 and 7 days.');
+      return;
+    }
+
+    setErrorMessage('');
+    // alert(`Generating meal plan for diet: ${diet}, Days: ${days}`);
+    showMeal(true); // Show the meal plan once generated
+  };
+
+  const handleTryAgain = () => {
+    showMeal(false); // Hide the meal plan and bring back the form
+    setErrorMessage(''); // Reset error message
   };
 
   return (
@@ -133,48 +147,84 @@ function Landing() {
         <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#FF7E5F", mt: 4, fontSize: { xs: "1.2rem", sm: "1.5rem" } }}>
           Ready to Transform Your Diet? Select Your Preferences:
         </Typography>
-        <ToggleButtonGroup
-          value={diet}
-          exclusive
-          onChange={handleDietChange}
-          sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", mb: 3 }}
-        >
-          <DietButton value="Anything">
-            <img src={anythingIcon} alt="Anything" style={{ width: 24, height: 24, marginRight: 8 }} />
-            Anything
-          </DietButton>
-          <DietButton value="Diabetic Friendly">
-            <img src={diabeticIcon} alt="Diabetic Friendly" style={{ width: 24, height: 24, marginRight: 8 }} />
-            Diabetic Friendly
-          </DietButton>
-          <DietButton value="Vegan">
-            <img src={veganIcon} alt="Vegan" style={{ width: 24, height: 24, marginRight: 8 }} />
-            Vegan
-          </DietButton>
-          <DietButton value="Vegetarian">
-            <img src={vegetarianIcon} alt="Vegetarian" style={{ width: 24, height: 24, marginRight: 8 }} />
-            Vegetarian
-          </DietButton>
-          <DietButton value="Paleo">
-            <img src={paleoIcon} alt="Paleo" style={{ width: 24, height: 24, marginRight: 8 }} />
-            Paleo
-          </DietButton>
-        </ToggleButtonGroup>
+        { !meal ? (
+        <>
+          <ToggleButtonGroup
+            value={diet}
+            exclusive
+            onChange={handleDietChange}
+            sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", mb: 3 }}
+          >
+            <DietButton value="Anything">
+              <img src={anythingIcon} alt="Anything" style={{ width: 24, height: 24, marginRight: 8 }} />
+              Anything
+            </DietButton>
+            <DietButton value="Diabetic Friendly">
+              <img src={diabeticIcon} alt="Diabetic Friendly" style={{ width: 24, height: 24, marginRight: 8 }} />
+              Diabetic Friendly
+            </DietButton>
+            <DietButton value="Vegan">
+              <img src={veganIcon} alt="Vegan" style={{ width: 24, height: 24, marginRight: 8 }} />
+              Vegan
+            </DietButton>
+            <DietButton value="Vegetarian">
+              <img src={vegetarianIcon} alt="Vegetarian" style={{ width: 24, height: 24, marginRight: 8 }} />
+              Vegetarian
+            </DietButton>
+            <DietButton value="Paleo">
+              <img src={paleoIcon} alt="Paleo" style={{ width: 24, height: 24, marginRight: 8 }} />
+              Paleo
+            </DietButton>
+          </ToggleButtonGroup>
 
-        {/* Number of Days Input */}
-        <InputField
-          label="Number of Days (3 to 7)"
-          type="number"
-          value={days}
-          onChange={(e) => setDays(Math.max(3, Math.min(7, e.target.value)))}
-          variant="outlined"
-          fullWidth
-        />
+          {/* Number of Days Input */}
+          <InputField
+            label="Number of Days (3 to 7)"
+            type="number"
+            value={days}
+            onChange={(e) => setDays(Math.max(3, Math.min(7, e.target.value)))}
+            variant="outlined"
+            fullWidth
+          />
+          {errorMessage && (
+            <Typography variant="body2" color="error" sx={{ mb: 2 }}>
+              {errorMessage}
+            </Typography>
+          )}
 
-        {/* Generate Button */}
-        <StyledButton onClick={handleGenerateClick}>
-          Generate Your Personalized Meal Plan
-        </StyledButton>
+          {/* Generate Button */}
+          <StyledButton onClick={handleGenerateClick}>
+            Generate Your Personalized Meal Plan
+          </StyledButton>
+        </>
+                ) : (
+                  <Grid container spacing={4}>
+                     <Grid item xs={12}>
+                      <Button
+                        fullWidth
+                        onClick={handleTryAgain}
+                        sx={{
+                          backgroundColor: 'skyblue',
+                          color: 'white',
+                          '&:hover': {
+                            backgroundColor: 'lightblue',
+                          },
+                          borderRadius: '8px',
+                          padding: '16px',
+                        }}
+                      >
+                        Re-Generate again with new Preferences
+                      </Button>
+                    </Grid>
+                    {/* MealPlan component */}
+                    <Grid item xs={12}>
+                      <MealPlan />
+                    </Grid>
+      
+                    {/* Try Again Button */}
+                   
+                  </Grid>
+              )}
       </Container>
     </div>
   );

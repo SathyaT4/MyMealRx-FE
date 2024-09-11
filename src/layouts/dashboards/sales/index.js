@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import Grid from "@mui/material/Grid";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAlert from "components/MDAlert";
+import MealPlan from 'layouts/applications/recipes';
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -33,8 +34,9 @@ import african from "assets/images/africa.png";
 import diabetics from "assets/images/sugarfree.png"
 
 function Sales() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [mealType, setMealType] = useState('');
+  console.log(mealType)
   const [preferences, setPreferences] = useState(['Vegetarian', 'Vegan', 'Paleo', 'Diabetics']);
   const [numDays, setNumDays] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -44,7 +46,11 @@ function Sales() {
   const [gender, setGender] = useState('');
   const [prepTime, setPrepTime] = useState('');
   const [priceSensitivity, setPriceSensitivity] = useState('Medium'); // Default to Medium
-
+  const [meal , showMeal] = useState(false)
+  const handleTryAgain = () => {
+    showMeal(false); // Hide the meal plan and bring back the form
+    setErrorMessage('');
+  };
   const loadDummyData = () => {
     setPreferences(['Vegetarian', 'Vegan', 'Paleo', 'Diabetics']);
     setMealType('Vegetarian');
@@ -63,17 +69,7 @@ function Sales() {
       setErrorMessage('Number of days is required and must be between 1 and 7');
       return;
     }
-    navigate('/applications/recipes', {
-      state: {
-        mealType,
-        culturalBackground,
-        dietPreferences,
-        allergens,
-        gender,
-        prepTime,
-        priceSensitivity
-      }
-    });
+    showMeal(true)
   };
 
   const togglePreference = (item) => {
@@ -186,7 +182,8 @@ function Sales() {
             <br />
             Tailored to Your Preferences and Needs
           </MDTypography>
-
+         
+          {!meal ? (
           <Grid container spacing={4}>
             {/* Left side - preferences and options */}
             <Grid item xs={12} md={6}>
@@ -412,6 +409,34 @@ function Sales() {
               </Box>
             </Grid>
           </Grid>
+        ) : (
+            <Grid container spacing={4}>
+               <Grid item xs={12}>
+                <Button
+                  fullWidth
+                  onClick={handleTryAgain}
+                  sx={{
+                    backgroundColor: 'skyblue',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: 'lightblue',
+                    },
+                    borderRadius: '8px',
+                    padding: '16px',
+                  }}
+                >
+                  Generate again with new Preferences
+                </Button>
+              </Grid>
+              {/* MealPlan component */}
+              <Grid item xs={12}>
+                <MealPlan />
+              </Grid>
+
+              {/* Try Again Button */}
+             
+            </Grid>
+        )}
         </MDBox>
       </MDBox>
       <Footer />
