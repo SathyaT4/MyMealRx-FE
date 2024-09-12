@@ -1,68 +1,119 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import PropTypes from 'prop-types';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import PropTypes from "prop-types";
+import FoodLoader from "components/Loader/FoodLoader";
+import {
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  Box,
+} from "@mui/material";
+import DayCard from "./components/DayCard";
+import MealDetail from "./components/MealDetail";
+
+
+function formatDate(dayString) {
+  const today = new Date();
+  const match = dayString.match(/\d+/);
+  const dayOffset = match ? parseInt(match[0], 10) : 1;
+  today.setDate(today.getDate() + dayOffset);
+  const options = { day: "numeric", month: "long", year: "numeric" };
+  return new Intl.DateTimeFormat("en-US", options).format(today);
+}
 
 function MealPlan({ numDays }) {
-  const [mealData, setMealData] = useState([]);
+  const [selectedMeal, setSelectedMeal] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [mealPlan, setMealPlan] = useState([]);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+
+  const handleMealClick = (meal) => {
+    setSelectedMeal(meal);
+    setOpen(true);
+  };
+
 
   useEffect(() => {
-    const fetchMealData = async () => {
-      setLoading(true); // Set loading to true before fetching data
+    const fetchMealPlan = async () => {
+      setLoading(true);
       try {
-        // Simulate a 3-second delay for demonstration
-        setTimeout(async () => {
-          try {
-            const response = await axios.get('http://localhost:7000/recommendation/recipeRecommendation', {
-              params: { days: numDays }
-            });
-            setMealData(response.data);
-            setLoading(false); // Set loading to false after data is fetched
-          } catch (err) {
-            console.error('Error fetching meal data:', err);
-            setError('Failed to fetch meal data'); // Set error message if there's an issue
-            setLoading(false); // Ensure loading is set to false even if there's an error
+        const response = await axios.get(
+          "http://localhost:7000/recommendation/recipeRecommendation",
+          {
+            params: { days: numDays },
           }
-        }, 3000); // 3-second delay
+        );
+        const plan = response.data.meal_plan;
+        console.log("Meal Plan:", plan);
+        setMealPlan(plan);
+        setError("");
       } catch (err) {
-        console.error('Error fetching meal data:', err);
-        setError('Failed to fetch meal data'); // Set error message if there's an issue
-        setLoading(false); // Ensure loading is set to false even if there's an error
+        setError("Failed to load meal plan.");
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (numDays) {
-      fetchMealData();
-    }
+    fetchMealPlan();
   }, [numDays]);
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <CircularProgress />
+      <Box display="flex" justifyContent="center" alignItems="center" height="70vh">
+        <FoodLoader />
       </Box>
-    ); // Show spinner centered on the page
+    );
   }
 
   if (error) {
-    return <div>{error}</div>; // Display error message if there's an issue
+    return (
+      <Typography variant="h6" align="center" color="error">
+        {error}
+      </Typography>
+    );
   }
 
   return (
-    <div>
-      <h2>Meal Plan for {numDays} Days</h2>
-      <ul>
-        {mealData.length > 0 ? (
-          mealData.map((meal, index) => (
-            <li key={index}>{meal.name}</li>
-          ))
-        ) : (
-          <li>No meals available for the selected number of days.</li>
-        )}
-      </ul>
+    <div style={{ padding: "16px", background: "linear-gradient(to right, #FFD194, #FF9A8B)" }}>
+      <Grid container spacing={4} direction="column">
+        {mealPlan.map((dayObj, index) => {
+          // Assuming the day is the key of the object like "day 1", "day 2", etc.
+          const day = Object.keys(dayObj)[0]; // "day 1", "day 2", etc.
+          const meals = dayObj[day]; // Array of meals for this day
+
+          return (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+              <Card
+                variant="outlined"
+                sx={{
+                  margin: "10px auto",
+                  padding: "10px",
+                  background: "linear-gradient(to right, #ffafbd, #ffc3a0)",
+                  borderRadius: "12px",
+                  maxWidth: "100%", // Ensure the card doesn't overflow its container
+                }}
+              >
+                <CardContent>
+                  <Typography variant="h5" align="center" sx={{ mb: 2, color: "#fff" }}>
+                    {formatDate(day)}
+                  </Typography>
+
+                  
+
+                  <DayCard meals={meals} onMealClick={handleMealClick} />
+                </CardContent>
+              </Card>
+            </Grid>
+          );
+        })}
+      </Grid>
+
+      {selectedMeal && (
+        <MealDetail meal={selectedMeal} open={open} onClose={() => setOpen(false)} />
+      )}
     </div>
   );
 }

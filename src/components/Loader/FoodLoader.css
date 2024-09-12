@@ -1,0 +1,58 @@
+.food-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Space between food items */
+  }
+  
+  .food-item {
+    font-size: 3rem;
+    opacity: 0;
+    transform: translateY(-50px);
+    animation: slide-in 0.5s forwards ease-in-out;
+  }
+  
+  /* Slide-in animation */
+  @keyframes slide-in {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Blinking animation */
+  @keyframes blink {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  /* Staggering each food item with delays */
+  .food-item:nth-child(1) {
+    animation-delay: 0.2s;
+  }
+  
+  .food-item:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+  
+  .food-item:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+  
+  .food-item:nth-child(4) {
+    animation-delay: 0.8s;
+  }
+  
+  .food-item:nth-child(5) {
+    animation-delay: 1s;
+  }
+  
+  /* After the slide-in animation completes, food items will start blinking */
+  .food-item {
+    animation: slide-in 0.5s forwards ease-in-out, blink 1.5s infinite 2s ease-in-out;
+  }
+  
