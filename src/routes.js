@@ -62,7 +62,7 @@ import Wizard from "layouts/applications/wizard";
 // import OrderDetails from "layouts/ecommerce/orders/order-details";
 import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpCover from "layouts/authentication/sign-up/cover";
-import User from "assets/images/user.png"
+import User from "assets/images/icons8-user-16.png"
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -70,21 +70,23 @@ import Landing from "layouts/dashboards/land";
 
 // Images
 
-const usernme = localStorage.getItem('usernme')
+// const usernme = localStorage.getItem('usernme')
 const routes = [
   {
     type: "collapse",
   name: (
-    <Box display="flex" alignItems="center" sx={{marginRight: 2}}>
-      <Avatar src={User} alt='name' sx={{ width: 40, height: 40, marginRight: 2 }} />
-      <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'black' ,marginRight: 2}}>
-      {usernme}
-      </Typography>
-    </Box>
+    
+<Box alignItems="center" sx={{  }}>
+<Avatar src={User} alt='name' sx={{ width: 40, height: 40, marginRight: 2 }} />
+  <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'black', marginRight: -15 }}>
+    {/* {usernme} */}
+    Ankit Guptha
+  </Typography>
+</Box>
   ),
   key: "userName",
     collapse: [
-      {
+      ...(localStorage.getItem('authenticated') === 'true' ? [{
         name: "My Profile",
         key: "my-profile",
         route: "/pages/profile/profile-overview",
@@ -101,7 +103,20 @@ const routes = [
         key: "logout",
         route: "/authentication/sign-in",
         component: <SignInIllustration />,
+      },] : [{
+        name: "Logout",
+        key: "logout",
+        route: "/authentication/sign-in",
+        component: <SignInIllustration />,
       },
+      {
+        name: "NewUser",
+        key: "newuser",
+        route: "/applications/newuser",
+        component: <Wizard />,
+      },
+    ]),
+      
     ],
   },
   { type: "divider", key: "divider-0" },
@@ -226,12 +241,6 @@ const routes = [
         key: "kanban",
         route: "/applications/recipes",
         component: <Recipes />,
-      },
-      {
-        name: "NewUser",
-        key: "newuser",
-        route: "/applications/newuser",
-        component: <Wizard />,
       },
       {
         name: "Landing",
