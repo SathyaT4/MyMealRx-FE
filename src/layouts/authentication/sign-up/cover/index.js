@@ -44,7 +44,7 @@ function Cover() {
         return;
       }
 
-      const response = await axios.post("10.1.0.105:7000/auth/new", {
+      const response = await axios.post("http://10.1.0.105:7000/auth/new", {
         name,
         email,
         password,

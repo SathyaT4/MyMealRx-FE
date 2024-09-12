@@ -31,7 +31,7 @@ function Illustration() {
 
   const handleSignIn = async () => {
     try {
-      const response = await axios.post("10.1.0.105:7000/auth/login", {
+      const response = await axios.post("http://10.1.0.105:7000/auth/login", {
         email,
         password,
       });
