@@ -8,15 +8,17 @@ function item(theme) {
     width: "100%",
     borderRadius: "1px",
     cursor: "pointer",
-    background: "#f5f5dc", // Orange gradient for all items
+    // background: "#f5f5dc", // Orange gradient for all items
     transition: transitions.create("background-color", {
       easing: transitions.easing.easeInOut,
       duration: transitions.duration.sharp,
     }),
 
+    // background: "linear-gradient(45deg, #ff9800 30%, #ff5722 90%)",
     "&:hover, &:focus": {
-      background: "rgba(255,152,0,0.8)", // Lighter orange hover effect
+      background: "rgba(255, 152, 0, 0.2)", // More transparent on hover
     },
+
   };
 }
 
@@ -32,7 +34,7 @@ function itemContent(theme) {
     padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
     fontWeight: fontWeightRegular,
     fontSize: size.sm,
-    color: "black", // White text for visibility on orange gradient
+    color: "white", // White text for visibility on orange gradient
   };
 }
 
