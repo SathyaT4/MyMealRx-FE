@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
 import Grid from "@mui/material/Grid";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAlert from "components/MDAlert";
-import MealPlan from 'layouts/applications/recipes';
+import MealPlan from 'layouts/applications/recipes'; // Update import path if necessary
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -31,10 +30,9 @@ import shellfish from "assets/images/icons8-shellfish-100.png";
 import asian from "assets/images/asia.png";
 import american from "assets/images/america.png";
 import african from "assets/images/africa.png";
-import diabetics from "assets/images/sugarfree.png"
+import diabetics from "assets/images/sugarfree.png";
 
 function Sales() {
-  // const navigate = useNavigate();
   const [mealType, setMealType] = useState('');
   console.log(mealType)
   const [preferences, setPreferences] = useState(['Vegetarian', 'Vegan', 'Paleo', 'Diabetics']);
@@ -46,11 +44,13 @@ function Sales() {
   const [gender, setGender] = useState('');
   const [prepTime, setPrepTime] = useState('');
   const [priceSensitivity, setPriceSensitivity] = useState('Medium'); // Default to Medium
-  const [meal , showMeal] = useState(false)
+  const [meal, showMeal] = useState(false);
+
   const handleTryAgain = () => {
     showMeal(false); // Hide the meal plan and bring back the form
     setErrorMessage('');
   };
+
   const loadDummyData = () => {
     setPreferences(['Vegetarian', 'Vegan', 'Paleo', 'Diabetics']);
     setMealType('Vegetarian');
@@ -69,7 +69,7 @@ function Sales() {
       setErrorMessage('Number of days is required and must be between 1 and 7');
       return;
     }
-    showMeal(true)
+    showMeal(true);
   };
 
   const togglePreference = (item) => {
@@ -96,13 +96,12 @@ function Sales() {
       setNumDays(3)
       const hasDairyOrEggs = response.data.data.preferences.includes('Dairy') || response.data.data.preferences.includes('Eggs');
       const hasMeatOrFish = response.data.data.preferences.includes('Meat') && response.data.data.preferences.includes('Fish');
-      console.log(dietPreferences)
-      if (hasMeatOrFish === true) {
+      if (hasMeatOrFish) {
         setDietPreferences(['Vegetarian']);
-      } if (hasMeatOrFish === false) {
+      } else {
         setDietPreferences(['Paleo']);
       }
-      if (hasDairyOrEggs === true || hasDairyOrEggs === true) {
+      if (hasDairyOrEggs) {
         setDietPreferences(['Vegan']);
       } 
     } catch (error) {
@@ -111,14 +110,11 @@ function Sales() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("authenticated") === 'true')
-    {
-      fetchExclusions()
-    }
-    else{
+    if (localStorage.getItem("authenticated") === 'true') {
+      fetchExclusions();
+    } else {
       loadDummyData();
     }
-
   }, []);
 
   const buttonTextColor = (active) => (active ? 'white' : 'black');
@@ -171,7 +167,6 @@ function Sales() {
             maxWidth: 1200 
           }}
         >
-          {/* Centered Text */}
           <MDTypography 
             variant="h4" 
             fontWeight="bold" 
@@ -185,7 +180,6 @@ function Sales() {
          
           {!meal ? (
           <Grid container spacing={4}>
-            {/* Left side - preferences and options */}
             <Grid item xs={12} md={6}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, px: 2 }}>
                 {errorMessage && (
@@ -225,7 +219,6 @@ function Sales() {
                     </Button>
                   ))}
                 </Box>
-
 
                 {localStorage.getItem("authenticated") === 'false'  && (
                   <Box sx={{ display: 'flex', gap: 2 }}>
@@ -276,7 +269,6 @@ function Sales() {
                   </Box>
                 )}
 
-                {/* Diet Preferences */}
                 <MDTypography variant="subtitle1" fontWeight="medium">
                   {localStorage.getItem("authenticated") === 'true' ? "Your Diet Preferences" : "Diet Preferences"}
                 </MDTypography>
@@ -309,7 +301,6 @@ function Sales() {
                   ))}
                 </Box>
 
-                {/* Allergens */}
                 <MDTypography variant="subtitle1" fontWeight="medium">
                   {localStorage.getItem("authenticated") === 'true' ? "Your Allergens" : "Allergens"}
                 </MDTypography>
@@ -343,7 +334,6 @@ function Sales() {
               </Box>
             </Grid>
 
-            {/* Right side - inputs */}
             <Grid item xs={12} md={6}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 <MDTypography variant="subtitle1" fontWeight="medium">
@@ -384,7 +374,6 @@ function Sales() {
                   <MenuItem value="High">High</MenuItem>
                 </Select>
 
-                {/* Generate Button */}
                 <Box mt={4}>
                   <Button
                     onClick={handleGenerate}
@@ -428,13 +417,10 @@ function Sales() {
                   Generate again with new Preferences
                 </Button>
               </Grid>
-              {/* MealPlan component */}
               <Grid item xs={12}>
-                <MealPlan />
+                {/* Pass numDays as a prop */}
+                <MealPlan numDays={numDays} />
               </Grid>
-
-              {/* Try Again Button */}
-             
             </Grid>
         )}
         </MDBox>

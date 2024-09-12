@@ -90,7 +90,7 @@ const InputField = styled(TextField)(({ theme }) => ({
 }));
 
 function Landing() {
-
+  localStorage.setItem("authenticated",false)
   const [diet, setDiet] = useState("Diabetic Friendly");
   const [days, setDays] = useState(3);
   const [meal, showMeal] = useState(false);
@@ -218,7 +218,7 @@ function Landing() {
                     </Grid>
                     {/* MealPlan component */}
                     <Grid item xs={12}>
-                      <MealPlan />
+                    <MealPlan numDays={days} />
                     </Grid>
       
                     {/* Try Again Button */}

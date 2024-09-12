@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useGlobalState } from 'globalContext'; // Import the hook
 
 // @mui material components
 import Grid from '@mui/material/Grid';
@@ -24,6 +23,7 @@ import Footer from 'examples/Footer';
 import About from 'layouts/applications/wizard/components/About';
 import Diet from 'layouts/applications/wizard/components/Account'; // Fixed import
 import Allergens from 'layouts/applications/wizard/components/Address'; // Fixed import
+
 
 // Custom styles
 const stepperStyles = {
@@ -102,16 +102,19 @@ function Wizard() {
           weight: formData.weight,
           height: formData.height,
           gender: formData.gender,
+          bodyFatLevel: formData.bodyFatLevel,
           preferences: list,
+          cultureBackgroud: "American",
+          isProfileCreated: true,
         }, {
           headers: {
             'jwt-token': `${localStorage.getItem('jwtToken')}`
           }
         });
         console.log(response);
-        navigate('/analytics');
+        navigate('/generator');
       } catch (error) {
-        console.error("There was an error submitting the form:", error);
+        console.error("Error occurred while posting preferences:", error); // Improved error handling
       }
     } else {
       setActiveStep(activeStep + 1);

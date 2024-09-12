@@ -27,13 +27,18 @@ function Cover() {
   const [agree, setAgree] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  // const navigate = useNavigate();
+  const [validationErrors, setValidationErrors] = useState({}); // To handle field-specific errors
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  console.log(isSmallScreen)
+  console.log(isSmallScreen);
+
   const handleSignUp = async () => {
     try {
+      // Clear existing error messages
+      setError("");
+      setValidationErrors({});
+      
       if (!agree) {
         setError("You must agree to the terms and conditions");
         return;
@@ -45,29 +50,44 @@ function Cover() {
         password,
       });
 
-      // Clear any previous error
-      setError("");
+      // Assuming 200 status means success
+      if (response.data.type === "success") {
+        setMessage("User is registered. Just verify from your email.");
+        setName("");
+        setEmail("");
+        setPassword("");
+        setAgree(false);
 
-      // Show success message
-      setMessage("User is registered. Just verify from your email.");
-
-      setName("");
-      setEmail("");
-      setPassword("");
-      setAgree(false);
-
-      // Store token in localStorage or sessionStorage if needed
-      const { token } = response.data;
-
-      // Store token in localStorage or sessionStorage
-      localStorage.setItem("jwtToken", token);
-
-      // Redirect to sign-in or another page
-      // navigate("/authentication/sign-in?redirectFromSignUp=true");
+        // const { token } = response.data;
+        // localStorage.setItem("jwtToken", token);
+        setTimeout(() => {
+          setMessage("");
+        }, 3000);
+      } else {
+        // Handle non-200 responses if needed
+        setError(response.data.result);
+        setTimeout(() => {
+          setError("");
+        }, 3000);
+      }
     } catch (signupError) {
-      setError("Failed to register. Please try again.");
-      setMessage(""); // Clear success message if error occurs
-      console.error("Registration error: ", signupError);
+      if (signupError.response && signupError.response.data) {
+        const { status, data } = signupError.response;
+        
+        // Handle validation errors from backend
+        if (status === 400 && data.errors) {
+          setValidationErrors(data.errors);
+        } else if (status === 409) {
+          setError("Email already in use. Please try with a different email.");
+        } else {
+          // General server-side error
+          setError("Failed to register. Please try again.");
+        }
+      } else {
+        // Client-side or network error
+        setError("Network error. Please check your connection and try again.");
+      }
+      setMessage(""); // Clear success message if there's an error
     }
   };
 
@@ -88,6 +108,8 @@ function Cover() {
                 fullWidth
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                error={!!validationErrors.name}
+                helperText={validationErrors.name || ""}
                 sx={{
                   backgroundColor: "#fff3e0",
                   borderColor: "#ff9800",
@@ -103,6 +125,8 @@ function Cover() {
                 fullWidth
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                error={!!validationErrors.email}
+                helperText={validationErrors.email || ""}
                 sx={{
                   backgroundColor: "#fff3e0",
                   borderColor: "#ff9800",
@@ -118,6 +142,8 @@ function Cover() {
                 fullWidth
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                error={!!validationErrors.password}
+                helperText={validationErrors.password || ""}
                 sx={{
                   backgroundColor: "#fff3e0",
                   borderColor: "#ff9800",

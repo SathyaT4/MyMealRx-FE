@@ -62,7 +62,7 @@ import Wizard from "layouts/applications/wizard";
 // import OrderDetails from "layouts/ecommerce/orders/order-details";
 import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpCover from "layouts/authentication/sign-up/cover";
-import User from "assets/images/icons8-user-16.png"
+import User from "assets/images/user.png"
 
 // @mui icons
 import Icon from "@mui/material/Icon";
