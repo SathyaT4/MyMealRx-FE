@@ -70,19 +70,19 @@ import Landing from "layouts/dashboards/land";
 
 // Images
 
-// const usernme = localStorage.getItem('usernme')
+const usernme = localStorage.getItem('usernme')
 const routes = [
   {
     type: "collapse",
   name: (
     
-<Box alignItems="center" sx={{  }}>
-<Avatar src={User} alt='name' sx={{ width: 40, height: 40, marginRight: 2 }} />
-  <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'black', marginRight: -15 }}>
-    {/* {usernme} */}
-    Ankit Guptha
+<Box display="flex" alignItems="left" sx={{ padding: '20px 0' }}>
+  <Avatar src={User} alt='name' sx={{ width: 40, height: 40, marginRight: -1 }} />
+  <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'black' }}>
+    {usernme}
   </Typography>
 </Box>
+
   ),
   key: "userName",
     collapse: [

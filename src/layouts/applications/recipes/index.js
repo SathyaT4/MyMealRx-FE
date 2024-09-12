@@ -16,7 +16,7 @@ function MealPlan({ numDays }) {
         // Simulate a 3-second delay for demonstration
         setTimeout(async () => {
           try {
-            const response = await axios.get('http://localhost:7000/meal/getMealPlan', {
+            const response = await axios.get('http://localhost:7000/recommendation/recipeRecommendation', {
               params: { days: numDays }
             });
             setMealData(response.data);
