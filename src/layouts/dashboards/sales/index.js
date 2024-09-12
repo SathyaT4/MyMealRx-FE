@@ -401,21 +401,22 @@ function Sales() {
         ) : (
             <Grid container spacing={4}>
                <Grid item xs={12}>
-                <Button
-                  fullWidth
-                  onClick={handleTryAgain}
-                  sx={{
-                    backgroundColor: 'skyblue',
-                    color: 'white',
-                    '&:hover': {
-                      backgroundColor: 'lightblue',
-                    },
-                    borderRadius: '8px',
-                    padding: '16px',
-                  }}
-                >
-                  Generate again with new Preferences
-                </Button>
+               <Button
+                        fullWidth
+                        onClick={handleTryAgain}
+                        sx={{
+                          backgroundColor: '#744179',
+                          color: '#FFFF',
+                          '&:hover': {
+                            backgroundColor: '#9D699B',
+                            color: '#FFFF',
+                          },
+                          borderRadius: '8px',
+                          padding: '16px',
+                        }}
+                      >
+                        Re-Generate again with new Preferences
+                      </Button>
               </Grid>
               <Grid item xs={12}>
                 {/* Pass numDays as a prop */}

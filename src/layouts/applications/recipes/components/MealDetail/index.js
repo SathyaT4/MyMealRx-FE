@@ -6,7 +6,7 @@ import { styled, useTheme } from '@mui/system';
 
 // Custom styles using `styled`
 const StyledDialogContent = styled(DialogContent)(({ theme, isSmallScreen }) => ({
-  background: 'linear-gradient(to right, #ffe5d9, #ffecb3)', // Light orange gradient
+  background: 'linear-gradient(to right, #FDCB82, #FEB47B)', // Light orange gradient
   padding: isSmallScreen ? theme.spacing(1) : theme.spacing(2),
 }));
 

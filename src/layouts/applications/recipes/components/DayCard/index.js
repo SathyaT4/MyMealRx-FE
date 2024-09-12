@@ -33,17 +33,6 @@ function DayCard({ meals, onMealClick }) {
         {Object.entries(groupedMeals).map(([mealType, mealList]) => (
           <Box key={mealType} mb={2}>
             <Box
-              component="h3"
-              sx={{
-                textAlign: 'center',
-                marginBottom: '10px',
-                fontSize: isSmallScreen ? '16px' : '20px',
-                fontWeight: 'bold',
-              }}
-            >
-              Your Plan
-            </Box>
-            <Box
               display="flex"
               flexDirection={isSmallScreen ? 'column' : 'row'} // Stack meals vertically on small screens
               flexWrap="wrap" // Wrap meals to fit the container width

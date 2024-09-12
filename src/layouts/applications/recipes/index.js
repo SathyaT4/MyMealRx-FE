@@ -77,7 +77,7 @@ function MealPlan({ numDays }) {
   }
 
   return (
-    <div style={{ padding: "16px", background: "linear-gradient(to right, #FFD194, #FF9A8B)" }}>
+    <div style={{ padding: "16px", background: "linear-gradient(to right, #FDCB82, #FEB47B)" }}>
       <Grid container spacing={4} direction="column">
         {mealPlan.map((dayObj, index) => {
           // Assuming the day is the key of the object like "day 1", "day 2", etc.
@@ -91,7 +91,7 @@ function MealPlan({ numDays }) {
                 sx={{
                   margin: "10px auto",
                   padding: "10px",
-                  background: "linear-gradient(to right, #ffafbd, #ffc3a0)",
+                  background: "linear-gradient(to right, #FDCB82, #FEB47B)",
                   borderRadius: "12px",
                   maxWidth: "100%", // Ensure the card doesn't overflow its container
                 }}

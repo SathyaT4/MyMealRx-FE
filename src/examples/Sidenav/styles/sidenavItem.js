@@ -16,7 +16,7 @@ function item(theme) {
 
     // background: "linear-gradient(45deg, #ff9800 30%, #ff5722 90%)",
     "&:hover, &:focus": {
-      background: "rgba(255, 152, 0, 0.2)", // More transparent on hover
+      background: "rgba(255, 255, 255, 0.2)", // More transparent on hover
     },
 
   };

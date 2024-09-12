@@ -146,7 +146,7 @@ export default function App() {
         {layout === "dashboard" && localStorage.getItem('authenticated') === 'true' && (
             <>
               <Sidenav
-                color={sidenavColor}
+                color='#FFFF'
                 brand={mealicon}
                 brandName="My Meal RX"
                 routes={routes}
