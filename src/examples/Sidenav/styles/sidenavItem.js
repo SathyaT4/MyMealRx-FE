@@ -6,7 +6,7 @@ function item(theme) {
     mt: 0.375,
     mb: 0.3,
     width: "100%",
-    borderRadius: "15px",
+    borderRadius: "1px",
     cursor: "pointer",
     background: "#f5f5dc", // Orange gradient for all items
     transition: transitions.create("background-color", {

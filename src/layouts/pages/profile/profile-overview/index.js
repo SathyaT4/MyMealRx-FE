@@ -43,7 +43,7 @@ function Overview() {
   // Function to fetch user data from API
   const fetchUserData = async () => {
     try {
-      const response = await axios.get('http://localhost:7000/meal/getPreferences', {
+      const response = await axios.get('10.1.0.105:7000/meal/getPreferences', {
         params: { email: localStorage.getItem('email') },
         headers: {
           'jwt-token': `${localStorage.getItem('jwtToken')}`

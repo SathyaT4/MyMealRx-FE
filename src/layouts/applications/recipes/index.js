@@ -40,7 +40,7 @@ function MealPlan({ numDays }) {
       setLoading(true);
       try {
         const response = await axios.get(
-          "http://localhost:7000/recommendation/recipeRecommendation",
+          "10.1.0.105:7000/recommendation/recipeRecommendation",
           {
             params: { days: numDays },
           }
