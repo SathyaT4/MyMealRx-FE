@@ -239,6 +239,12 @@ const routes = [
       //           component: <NewProduct />,
       //         },
       {
+        name: "Home",
+        key: "analytics",
+        route: "/dashboards/analytics",
+        component: <Analytics />,
+      },
+      {
         name: "Recipes",
         key: "kanban",
         route: "/applications/recipes",
@@ -250,12 +256,7 @@ const routes = [
         route: "dashboards/landing",
         component: <Landing />
       },
-      {
-        name: "Home",
-        key: "analytics",
-        route: "/dashboards/analytics",
-        component: <Analytics />,
-      },
+      
   //   ],
   // },
   // {

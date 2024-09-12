@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Typography, Card, CardContent, Box } from '@mui/material';
 import { styled } from '@mui/system';
@@ -149,16 +148,6 @@ ApplicationCard.propTypes = {
 
 // HomePage Component
 function Analytics() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem('jwtToken');
-    if (!token) {
-      navigate('/login'); // Redirect to login page if not authenticated
-    }
-  }, [navigate]);
-
-
   return (
     <GradientContainer>
       <Header />
