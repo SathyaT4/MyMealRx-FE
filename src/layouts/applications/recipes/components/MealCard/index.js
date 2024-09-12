@@ -46,7 +46,7 @@ function MealCard({ meal, onDetailClick }) {
           endIcon={<ExpandMoreIcon />}
           isSmallScreen={isSmallScreen}
         >
-          {expanded ? 'Hide Details' : 'Show Details'}
+          {expanded ? 'Hide Recipes' : 'Show Recipes'}
         </ExpandButton>
         <Collapse in={expanded}>
           <List>
@@ -76,7 +76,7 @@ function MealCard({ meal, onDetailClick }) {
             )}
           </List>
           <ViewRecipeButton onClick={() => onDetailClick(meal)} isSmallScreen={isSmallScreen}>
-            View Full Recipe
+            View More
           </ViewRecipeButton>
         </Collapse>
       </CardContent>

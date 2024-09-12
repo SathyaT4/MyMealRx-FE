@@ -42,6 +42,7 @@ function Illustration() {
         localStorage.setItem("email", email);
         localStorage.setItem("usernme", user.name);
         localStorage.setItem("authenticated", true);
+        localStorage.setItem("createdProfile",user.isProfileCreated)
         if (redirectFromSignUp === "true") {
           navigate("/applications/newuser");
         } else {

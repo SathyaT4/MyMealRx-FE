@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dialog, DialogContent, Typography, List, ListItem, ListItemText, Button, Collapse, useMediaQuery } from '@mui/material';
+import { Dialog, DialogContent, Typography, List, ListItem, Box, ListItemText, Button, Collapse, useMediaQuery } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled, useTheme } from '@mui/system';
 
@@ -56,167 +56,181 @@ function MealDetail({ meal, open, onClose }) {
 
         {meal.Beverage && (
           <>
-            <SectionTitle isSmallScreen={isSmallScreen} variant="h6">
-              Beverage: {meal.Beverage.recipe_name}
-            </SectionTitle>
-            <CollapseButton
-              onClick={() => handleExpandClick('Beverage')}
-              endIcon={<ExpandMoreIcon />}
-              isSmallScreen={isSmallScreen}
-            >
-              {expanded.Beverage ? 'Hide Details' : 'Show Details'}
-            </CollapseButton>
-            <Collapse in={expanded.Beverage}>
-              <CollapseButton
-                onClick={() => handleExpandClick('BeverageIngredients')}
-                endIcon={<ExpandMoreIcon />}
-                style={{ marginTop: '10px' }}
-                isSmallScreen={isSmallScreen}
-              >
-                {expanded.BeverageIngredients ? 'Hide Ingredients' : 'Show Ingredients'}
-              </CollapseButton>
-              <Collapse in={expanded.BeverageIngredients}>
-                <Typography variant="subtitle1">Ingredients</Typography>
-                <List>
-                  {meal.Beverage.ingredients.map((ingredient, index) => (
-                    <StyledListItem key={index} isSmallScreen={isSmallScreen}>
-                      <ListItemText
-                        primary={`${ingredient.quantity.measure} ${ingredient.name}`}
-                      />
-                    </StyledListItem>
-                  ))}
-                </List>
-              </Collapse>
-              <CollapseButton
-                onClick={() => handleExpandClick('BeverageInstructions')}
-                endIcon={<ExpandMoreIcon />}
-                style={{ marginTop: '10px' }}
-                isSmallScreen={isSmallScreen}
-              >
-                {expanded.BeverageInstructions ? 'Hide Instructions' : 'Show Instructions'}
-              </CollapseButton>
-              <Collapse in={expanded.BeverageInstructions}>
-                <Typography variant="subtitle1">Instructions</Typography>
-                <List>
-                  {meal.Beverage.instructions.map((instruction, index) => (
-                    <StyledListItem key={index} isSmallScreen={isSmallScreen}>
-                      <ListItemText primary={instruction.original_text} />
-                    </StyledListItem>
-                  ))}
-                </List>
-              </Collapse>
-            </Collapse>
+                  <SectionTitle isSmallScreen={isSmallScreen} variant="h6">
+                    Beverage: {meal.Beverage.recipe_name}
+                  </SectionTitle>
+                  <Box 
+                    display="flex" 
+                    flexDirection="row" 
+                    justifyContent={isSmallScreen ? 'center' : 'flex-start'} 
+                    alignItems="center"
+                    gap={2} // To add space between the buttons
+                  >
+                    <CollapseButton
+                      onClick={() => handleExpandClick('BeverageIngredients')}
+                      endIcon={<ExpandMoreIcon />}
+                      style={{ marginTop: '10px' }}
+                      isSmallScreen={isSmallScreen}
+                    >
+                      {expanded.BeverageIngredients ? 'Hide' : 'Show Ingredients'}
+                    </CollapseButton>
+
+                    <CollapseButton
+                      onClick={() => handleExpandClick('BeverageInstructions')}
+                      endIcon={<ExpandMoreIcon />}
+                      style={{ marginTop: '10px' }}
+                      isSmallScreen={isSmallScreen}
+                    >
+                      {expanded.BeverageInstructions ? 'Hide' : 'Show Instructions'}
+                    </CollapseButton>
+                  </Box>
+
+                  <Collapse in={expanded.BeverageIngredients}>
+                    <Typography variant="subtitle1">Ingredients</Typography>
+                    <List>
+                      {meal.Beverage.ingredients.map((ingredient, index) => (
+                        <StyledListItem key={index} isSmallScreen={isSmallScreen}>
+                          <ListItemText
+                            primary={`${ingredient.quantity.measure} ${ingredient.name}`}
+                          />
+                        </StyledListItem>
+                      ))}
+                    </List>
+                  </Collapse>
+
+                  <Collapse in={expanded.BeverageInstructions}>
+                    <Typography variant="subtitle1">Instructions</Typography>
+                    <List>
+                      {meal.Beverage.instructions.map((instruction, index) => (
+                        <StyledListItem key={index} isSmallScreen={isSmallScreen}>
+                          <ListItemText primary={instruction.original_text} />
+                        </StyledListItem>
+                      ))}
+                    </List>
+                  </Collapse>
           </>
         )}
 
         {meal["Main Course"] && (
           <>
-            <SectionTitle isSmallScreen={isSmallScreen} variant="h6">
-              Main Course: {meal["Main Course"].recipe_name}
-            </SectionTitle>
-            <CollapseButton
-              onClick={() => handleExpandClick('MainCourse')}
-              endIcon={<ExpandMoreIcon />}
-              isSmallScreen={isSmallScreen}
-            >
-              {expanded.MainCourse ? 'Hide Details' : 'Show Details'}
-            </CollapseButton>
-            <Collapse in={expanded.MainCourse}>
-              <CollapseButton
-                onClick={() => handleExpandClick('MainCourseIngredients')}
-                endIcon={<ExpandMoreIcon />}
-                style={{ marginTop: '10px' }}
-                isSmallScreen={isSmallScreen}
-              >
-                {expanded.MainCourseIngredients ? 'Hide Ingredients' : 'Show Ingredients'}
-              </CollapseButton>
-              <Collapse in={expanded.MainCourseIngredients}>
-                <Typography variant="subtitle1">Ingredients</Typography>
-                <List>
-                  {meal["Main Course"].ingredients.map((ingredient, index) => (
-                    <StyledListItem key={index} isSmallScreen={isSmallScreen}>
-                      <ListItemText
-                        primary={`${ingredient.quantity.measure} ${ingredient.name}`}
-                      />
-                    </StyledListItem>
-                  ))}
-                </List>
-              </Collapse>
-              <CollapseButton
-                onClick={() => handleExpandClick('MainCourseInstructions')}
-                endIcon={<ExpandMoreIcon />}
-                style={{ marginTop: '10px' }}
-                isSmallScreen={isSmallScreen}
-              >
-                {expanded.MainCourseInstructions ? 'Hide Instructions' : 'Show Instructions'}
-              </CollapseButton>
-              <Collapse in={expanded.MainCourseInstructions}>
-                <Typography variant="subtitle1">Instructions</Typography>
-                <List>
-                  {meal["Main Course"].instructions.map((instruction, index) => (
-                    <StyledListItem key={index} isSmallScreen={isSmallScreen}>
-                      <ListItemText primary={instruction.original_text} />
-                    </StyledListItem>
-                  ))}
-                </List>
-              </Collapse>
-            </Collapse>
-          </>
+  <SectionTitle isSmallScreen={isSmallScreen} variant="h6">
+    Main Course: {meal["Main Course"].recipe_name}
+  </SectionTitle>
+
+  <Box 
+    display="flex" 
+    flexDirection="row" 
+    justifyContent={isSmallScreen ? 'center' : 'flex-start'} 
+    alignItems="center"
+    gap={2} // To add space between the buttons
+  >
+    <CollapseButton
+      onClick={() => handleExpandClick('MainCourseIngredients')}
+      endIcon={<ExpandMoreIcon />}
+      style={{ marginTop: '10px' }}
+      isSmallScreen={isSmallScreen}
+    >
+      {expanded.MainCourseIngredients ? 'Hide Ingredients' : 'Show Ingredients'}
+    </CollapseButton>
+
+    <CollapseButton
+      onClick={() => handleExpandClick('MainCourseInstructions')}
+      endIcon={<ExpandMoreIcon />}
+      style={{ marginTop: '10px' }}
+      isSmallScreen={isSmallScreen}
+    >
+      {expanded.MainCourseInstructions ? 'Hide Instructions' : 'Show Instructions'}
+    </CollapseButton>
+  </Box>
+
+  {/* Collapse for Ingredients */}
+  <Collapse in={expanded.MainCourseIngredients}>
+    <Typography variant="subtitle1">Ingredients</Typography>
+    <List>
+      {meal["Main Course"].ingredients.map((ingredient, index) => (
+        <StyledListItem key={index} isSmallScreen={isSmallScreen}>
+          <ListItemText
+            primary={`${ingredient.quantity.measure} ${ingredient.name}`}
+          />
+        </StyledListItem>
+      ))}
+    </List>
+  </Collapse>
+
+  {/* Collapse for Instructions */}
+  <Collapse in={expanded.MainCourseInstructions}>
+    <Typography variant="subtitle1">Instructions</Typography>
+    <List>
+      {meal["Main Course"].instructions.map((instruction, index) => (
+        <StyledListItem key={index} isSmallScreen={isSmallScreen}>
+          <ListItemText primary={instruction.original_text} />
+        </StyledListItem>
+      ))}
+    </List>
+  </Collapse>
+</>
         )}
 
         {meal.Side && (
-          <>
-            <SectionTitle isSmallScreen={isSmallScreen} variant="h6">
-              Side: {meal.Side.recipe_name}
-            </SectionTitle>
-            <CollapseButton
-              onClick={() => handleExpandClick('Side')}
-              endIcon={<ExpandMoreIcon />}
-              isSmallScreen={isSmallScreen}
-            >
-              {expanded.Side ? 'Hide Details' : 'Show Details'}
-            </CollapseButton>
-            <Collapse in={expanded.Side}>
-              <CollapseButton
-                onClick={() => handleExpandClick('SideIngredients')}
-                endIcon={<ExpandMoreIcon />}
-                style={{ marginTop: '10px' }}
-                isSmallScreen={isSmallScreen}
-              >
-                {expanded.SideIngredients ? 'Hide Ingredients' : 'Show Ingredients'}
-              </CollapseButton>
-              <Collapse in={expanded.SideIngredients}>
-                <Typography variant="subtitle1">Ingredients</Typography>
-                <List>
-                  {meal.Side.ingredients.map((ingredient, index) => (
-                    <StyledListItem key={index} isSmallScreen={isSmallScreen}>
-                      <ListItemText
-                        primary={`${ingredient.quantity.measure} ${ingredient.name}`}
-                      />
-                    </StyledListItem>
-                  ))}
-                </List>
-              </Collapse>
-              <CollapseButton
-                onClick={() => handleExpandClick('SideInstructions')}
-                endIcon={<ExpandMoreIcon />}
-                style={{ marginTop: '10px' }}
-                isSmallScreen={isSmallScreen}
-              >
-                {expanded.SideInstructions ? 'Hide Instructions' : 'Show Instructions'}
-              </CollapseButton>
-              <Collapse in={expanded.SideInstructions}>
-                <Typography variant="subtitle1">Instructions</Typography>
-                <List>
-                  {meal.Side.instructions.map((instruction, index) => (
-                    <StyledListItem key={index} isSmallScreen={isSmallScreen}>
-                      <ListItemText primary={instruction.original_text} />
-                    </StyledListItem>
-                  ))}
-                </List>
-              </Collapse>
-            </Collapse>
-          </>
+         <>
+         <SectionTitle isSmallScreen={isSmallScreen} variant="h6">
+           Side: {meal.Side.recipe_name}
+         </SectionTitle>
+         
+         {/* Box for Buttons */}
+         <Box 
+           display="flex" 
+           flexDirection="row" 
+           justifyContent={isSmallScreen ? 'center' : 'flex-start'} 
+           alignItems="center"
+           gap={2} // To add space between the buttons
+         >
+           <CollapseButton
+             onClick={() => handleExpandClick('SideIngredients')}
+             endIcon={<ExpandMoreIcon />}
+             style={{ marginTop: '10px' }}
+             isSmallScreen={isSmallScreen}
+           >
+             {expanded.SideIngredients ? 'Hide Ingredients' : 'Show Ingredients'}
+           </CollapseButton>
+       
+           <CollapseButton
+             onClick={() => handleExpandClick('SideInstructions')}
+             endIcon={<ExpandMoreIcon />}
+             style={{ marginTop: '10px' }}
+             isSmallScreen={isSmallScreen}
+           >
+             {expanded.SideInstructions ? 'Hide Instructions' : 'Show Instructions'}
+           </CollapseButton>
+         </Box>
+       
+         {/* Collapse for Ingredients */}
+         <Collapse in={expanded.SideIngredients}>
+           <Typography variant="subtitle1">Ingredients</Typography>
+           <List>
+             {meal.Side.ingredients.map((ingredient, index) => (
+               <StyledListItem key={index} isSmallScreen={isSmallScreen}>
+                 <ListItemText
+                   primary={`${ingredient.quantity.measure} ${ingredient.name}`}
+                 />
+               </StyledListItem>
+             ))}
+           </List>
+         </Collapse>
+       
+         {/* Collapse for Instructions */}
+         <Collapse in={expanded.SideInstructions}>
+           <Typography variant="subtitle1">Instructions</Typography>
+           <List>
+             {meal.Side.instructions.map((instruction, index) => (
+               <StyledListItem key={index} isSmallScreen={isSmallScreen}>
+                 <ListItemText primary={instruction.original_text} />
+               </StyledListItem>
+             ))}
+           </List>
+         </Collapse>
+       </>
+       
         )}
       </StyledDialogContent>
     </Dialog>

@@ -54,7 +54,7 @@ function Sales() {
   const loadDummyData = () => {
     setPreferences(['Vegetarian', 'Vegan', 'Paleo', 'Diabetics']);
     setMealType('Vegetarian');
-    setDietPreferences(['Vegan', 'Paleo']);
+    setDietPreferences(['Diabetics', 'Paleo']);
     setAllergens(['Nuts', 'Dairy']);
     setPrepTime('30 mins');
     setPriceSensitivity('Medium');
@@ -110,7 +110,7 @@ function Sales() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("authenticated") === 'true') {
+    if (localStorage.getItem("createdProfile") === 'true') {
       fetchExclusions();
     } else {
       loadDummyData();
@@ -150,7 +150,7 @@ function Sales() {
       <MDBox 
         mb={2} 
         sx={{
-          background: "linear-gradient(to right, #FFD194, #FF9A8B)",
+          background: "linear-gradient(to right, #FDCB82, #FEB47B)",
           minHeight: '100vh',
           padding: '16px',
           display: 'flex',
@@ -189,14 +189,14 @@ function Sales() {
                 )}
 
                 <MDTypography variant="subtitle1" fontWeight="medium">
-                  {localStorage.getItem("authenticated") === 'true' ? "Your Cultural Background" : "Cultural Background"}
+                  {localStorage.getItem("createdProfile") === 'true' ? "Your Cultural Background" : "Cultural Background"}
                 </MDTypography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 2 }}>
                   {Object.keys(culturalBackgroundImages).map((background) => (
                     <Button
                       key={background}
                       onClick={() => setCulturalBackground(background)}
-                      disabled={localStorage.getItem("authenticated") === 'true'}
+                      disabled={localStorage.getItem("createdProfile") === 'true'}
                       sx={{
                         backgroundColor: culturalBackground === background ? 'orange' : 'lightgrey',
                         color: culturalBackground === background ? 'white' : 'black',
@@ -220,7 +220,7 @@ function Sales() {
                   ))}
                 </Box>
 
-                {localStorage.getItem("authenticated") === 'false'  && (
+                {localStorage.getItem("createdProfile") === 'false'  && (
                   <Box sx={{ display: 'flex', gap: 2 }}>
                     <MDTypography variant="subtitle1" fontWeight="medium">
                       Gender
@@ -270,14 +270,14 @@ function Sales() {
                 )}
 
                 <MDTypography variant="subtitle1" fontWeight="medium">
-                  {localStorage.getItem("authenticated") === 'true' ? "Your Diet Preferences" : "Diet Preferences"}
+                  {localStorage.getItem("createdProfile") === 'true' ? "Your Diet Preferences" : "Diet Preferences"}
                 </MDTypography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 2 }}>
                   {preferences.map((preference) => (
                     <Button
                       key={preference}
                       onClick={() => togglePreference(preference)}
-                      disabled={localStorage.getItem("authenticated") === 'true'}
+                      disabled={localStorage.getItem("createdProfile") === 'true'}
                       sx={{
                         backgroundColor: dietPreferences.includes(preference) ? 'orange' : 'lightgrey',
                         color: dietPreferences.includes(preference) ? 'white' : 'black',
@@ -302,7 +302,7 @@ function Sales() {
                 </Box>
 
                 <MDTypography variant="subtitle1" fontWeight="medium">
-                  {localStorage.getItem("authenticated") === 'true' ? "Your Allergens" : "Allergens"}
+                  {localStorage.getItem("createdProfile") === 'true' ? "Your Allergens" : "Allergens"}
                 </MDTypography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
                   {Object.keys(allergenImages).map((allergen) => (

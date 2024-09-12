@@ -112,6 +112,7 @@ function Wizard() {
           }
         });
         console.log(response);
+        localStorage.setItem("createdProfile",true)
         navigate('/generator');
       } catch (error) {
         console.error("Error occurred while posting preferences:", error); // Improved error handling

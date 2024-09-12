@@ -30,7 +30,7 @@ function Header() {
               to="/dashboards/landing"
               sx={{
                 textDecoration: "none",
-                color: "white",
+                color: "#744179",
                 fontWeight: "bold",
                 fontSize: { xs: "1.2rem", sm: "1.5rem" },
               }}
@@ -52,6 +52,7 @@ function Header() {
               component={Link}
               to="/dashboards/analytics"
               sx={{
+                color: "#744179",
                 fontSize: { xs: "0.8rem", sm: "1rem" }, 
                 "&:hover": {
                   backgroundColor: "rgba(255, 255, 255, 0.1)", 
@@ -65,6 +66,7 @@ function Header() {
               component={Link}
               to="/dashboards/analytics"
               sx={{
+                color: "#744179",
                 fontSize: { xs: "0.8rem", sm: "1rem" }, // Responsive font size
                 "&:hover": {
                   backgroundColor: "rgba(255, 255, 255, 0.1)", // Button hover effect
@@ -79,6 +81,7 @@ function Header() {
               component={Link}
               to="/authentication/sign-in"
               sx={{
+                color: "#744179",
                 borderColor: "white",
                 borderRadius: "20px", // Rounded edges for the button
                 fontSize: { xs: "0.8rem", sm: "1rem" },

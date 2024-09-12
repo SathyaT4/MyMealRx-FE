@@ -86,7 +86,7 @@ const routes = [
   ),
   key: "userName",
     collapse: [
-      ...(localStorage.getItem('authenticated') === 'true' ? [{
+      ...(localStorage.getItem('createdProfile') === 'true' ? [{
         name: "My Profile",
         key: "my-profile",
         route: "/pages/profile/profile-overview",
@@ -103,18 +103,20 @@ const routes = [
         key: "logout",
         route: "/authentication/sign-in",
         component: <SignInIllustration />,
-      },] : [{
+      },] : [
+        {
+          name: "NewUser",
+          key: "newuser",
+          route: "/applications/newuser",
+          component: <Wizard />,
+        },
+        {
         name: "Logout",
         key: "logout",
         route: "/authentication/sign-in",
         component: <SignInIllustration />,
       },
-      {
-        name: "NewUser",
-        key: "newuser",
-        route: "/applications/newuser",
-        component: <Wizard />,
-      },
+      
     ]),
       
     ],
@@ -122,7 +124,7 @@ const routes = [
   { type: "divider", key: "divider-0" },
   {
     type: "collapse",
-    name: "Home",
+    name: "Generator",
     key: "dashboards",
     icon: <Icon fontSize="medium">dashboard</Icon>,
     collapse: [

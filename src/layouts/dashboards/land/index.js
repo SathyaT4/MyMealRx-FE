@@ -21,7 +21,8 @@ const StyledButton = styled(Button)(({ theme }) => ({
   boxShadow: "0px 5px 15px rgba(255, 123, 123, 0.4)",
   '&:hover': {
     background: "linear-gradient(to right, #FF6A5F, #FD2A55)",
-    boxShadow: theme.shadows[6],
+    // boxShadow: theme.shadows[6],
+    color: "#744179"
   },
   marginTop: theme.spacing(3),
   [theme.breakpoints.down("sm")]: {
@@ -126,7 +127,7 @@ function Landing() {
       <Header />
       <Container>
         {/* Header and Welcome Text */}
-        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: "bold", color: "#FD3A69", fontSize: { xs: "1.5rem", sm: "2rem" } }}>
+        <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: "bold", color: "#744179", fontSize: { xs: "1.5rem", sm: "2rem" } }}>
           Take Control of Your Diet, Effortlessly
         </Typography>
         <Typography variant="h6" gutterBottom sx={{ color: "#555", maxWidth: "600px", mb: 4, fontSize: { xs: "0.9rem", sm: "1.1rem" } }}>
@@ -144,7 +145,7 @@ function Landing() {
         </Grid>
 
         {/* Prompt and Diet Selection */}
-        <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#FF7E5F", mt: 4, fontSize: { xs: "1.2rem", sm: "1.5rem" } }}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#e55b16", mt: 4, fontSize: { xs: "1.2rem", sm: "1.5rem" } }}>
           Ready to Transform Your Diet? Select Your Preferences:
         </Typography>
         { !meal ? (
@@ -204,10 +205,11 @@ function Landing() {
                         fullWidth
                         onClick={handleTryAgain}
                         sx={{
-                          backgroundColor: 'skyblue',
-                          color: 'white',
+                          backgroundColor: '#744179',
+                          color: '#FFFF',
                           '&:hover': {
-                            backgroundColor: 'lightblue',
+                            backgroundColor: '#9D699B',
+                            color: '#FFFF',
                           },
                           borderRadius: '8px',
                           padding: '16px',
