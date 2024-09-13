@@ -7,12 +7,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import FormField from 'layouts/applications/wizard/components/FormField';
 import { styled } from '@mui/material/styles';
-import male from "assets/images/icons8-male-50.png";
-import female from "assets/images/icons8-female-100.png";
-import nonbinary from "assets/images/icons8-non-binary-64.png";
-import lowfat from "assets/images/icons8-pixel-man-90.png";
-import mediumfat from "assets/images/icons8-standing-man-100.png";
-import highfat from "assets/images/icons8-fat-cop-96.png";
 import profile from "assets/images/icons8-glyph-96.png"
 
 // Custom styled components
@@ -23,17 +17,6 @@ const Container = styled(Box)(({ theme }) => ({
   boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
 }));
 
-const GenderImage = styled('img')(({ theme }) => ({
-  width: '50px',
-  height: '50px',
-  marginRight: theme.spacing(1),
-}));
-
-const BodyFatImage = styled('img')(({ theme }) => ({
-  width: '60px',
-  height: '60px',
-  marginRight: theme.spacing(1),
-}));
 
 const SelectedButton = styled(Button)(() => ({
   backgroundColor: '#FF8C00',
@@ -172,21 +155,18 @@ function About({ handleDataChange }) {
                   sx={selectedGender === 'Male' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleGenderSelect('Male')}
                 >
-                  <GenderImage src={male} alt="Male" style={{ width: '50%'}}/>
                   Male
                 </SelectedButton>
                 <SelectedButton
                   sx={selectedGender === 'Female' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleGenderSelect('Female')}
                 >
-                  <GenderImage src={female} alt="Female" style={{ width: '50%'}} />
                   Female
                 </SelectedButton>
                 <SelectedButton
                   sx={selectedGender === 'non-binary' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleGenderSelect('non-binary')}
                 >
-                  <GenderImage src={nonbinary} alt="Non-binary" style={{ width: '50%'}} />
                   Non-binary
                 </SelectedButton>
               </ButtonGroup>
@@ -202,21 +182,18 @@ function About({ handleDataChange }) {
                   sx={selectedBodyFat === 'low' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleBodyFatSelect('low')}
                 >
-                  <BodyFatImage src={lowfat} alt="Low Fat" style={{ width: '50%'}}/>
                   Low
                 </SelectedButton>
                 <SelectedButton
                   sx={selectedBodyFat === 'medium' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleBodyFatSelect('medium')}
                 >
-                  <BodyFatImage src={mediumfat} alt="Medium Fat" style={{ width: '50%'}} />
                   Medium
                 </SelectedButton>
                 <SelectedButton
                   sx={selectedBodyFat === 'high' ? {} : { backgroundColor: '#FFBE8C', color: '#000000' }}
                   onClick={() => handleBodyFatSelect('high')}
                 >
-                  <BodyFatImage src={highfat} alt="High Fat" style={{ width: '50%'}} />
                   High
                 </SelectedButton>
               </ButtonGroup>
